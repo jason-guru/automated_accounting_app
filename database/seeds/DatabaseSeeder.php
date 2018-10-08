@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(DesignationsTableSeeder::class);
         $this->call(InitialsTableSeeder::class);
+        $this->call(VatSchemeTableSeeder::class);
+        $this->call(VatSubmitTypeTableSeeder::class);
 
         Model::reguard();
     }

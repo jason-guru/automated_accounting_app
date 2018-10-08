@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use App\Http\Requests\SearchRequest;
+use App\Models\Country;
+use App\Models\CompanyType;
 
 
 class ClientSearchController extends Controller
@@ -13,6 +15,8 @@ class ClientSearchController extends Controller
     protected $client;
     protected $api_key;
     protected $countries;
+    protected $companies;
+    protected $company_types;
 
     public function __construct()
     {   
@@ -20,6 +24,8 @@ class ClientSearchController extends Controller
         $this->client = new Client([
             'base_uri' => "https://api.companieshouse.gov.uk"
         ]);
+        $this->countries = Country::all();
+        $this->company_types = CompanyType::all();
     }
 
     /**
@@ -38,33 +44,20 @@ class ClientSearchController extends Controller
     public function show_search_result(SearchRequest $request)
     {
         try{
+            $countries = $this->countries;
+            $company_types = $this->company_types;
             $client_id = $request->client_id;
             $response = $this->client->request('GET', '/company/'.$client_id, [
                 'auth' => [$this->api_key, '']
             ]);
             if($response->getStatusCode() == 200){
                 $client_data = json_decode($response->getBody()->getContents(), true);
-                return view('backend.clients.search-result', compact('client_data'));
+                return view('backend.clients.search-result', compact('client_data', 'countries', 'company_types'));
             }
         }catch(\Exception $exception)
         {
             //return $exception->getMessage();
             return redirect()->back()->withFlashDanger('Invalid client Id entered, please check the id and try again');
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @return 
-     * Stores the search result and additional data to the record
-    */
-    public function store_search_result(Request $request)
-    {
-        try{
-            
-        }catch(\Exception $exception)
-        {
-            return $exception->getMessage();
         }
     }
 }
