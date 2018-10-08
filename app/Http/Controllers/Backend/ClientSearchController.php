@@ -12,6 +12,7 @@ class ClientSearchController extends Controller
 {
     protected $client;
     protected $api_key;
+    protected $countries;
 
     public function __construct()
     {   

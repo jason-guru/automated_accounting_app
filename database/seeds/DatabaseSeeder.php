@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(AuthTableSeeder::class);
+        $this->call(CompanyTypesTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(DesignationsTableSeeder::class);
+        $this->call(InitialsTableSeeder::class);
 
         Model::reguard();
     }
