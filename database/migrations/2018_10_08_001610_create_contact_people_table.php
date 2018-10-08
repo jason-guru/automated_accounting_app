@@ -34,6 +34,7 @@ class CreateContactPeopleTable extends Migration
             $table->integer('country_id');
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }
