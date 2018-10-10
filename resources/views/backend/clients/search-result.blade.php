@@ -32,7 +32,7 @@
                             <label for="company-type-id">Client Type</label>
                             <select name="company_type_id" id="company-type-id" class="form-control">
                                 @foreach($company_types as $company_type)
-                                    <option value="{{$company_type->id}}">{{$company_type->name}}</option>
+                                    <option value="{{$company_type->id}}" {{$company_type->code == $client_data['type'] ? 'selected' : ''}}>{{$company_type->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,7 +80,7 @@
                             <label for="country-id">Country</label>
                             <select name="country_id" id="country-id" class="form-control">
                                 @foreach($countries as $country)
-                                    <option value="{{$country->id}}">{{$country->name}}</option>
+                                    <option value="{{$country->id}}" {{$country->name == $client_data['registered_office_address']['country'] ? 'selected' : ''}}>{{$country->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -115,6 +115,8 @@
                 </div>
             </div>
         </div>{{-- End of Contact info header --}}
+        {{-- Place the Business Info section here --}}
+        <button type="submit" class="btn btn-success pull-right">Save</button>
         </form>
     </div>
 </div>

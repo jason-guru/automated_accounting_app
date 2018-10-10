@@ -9,7 +9,6 @@ use App\Http\Requests\SearchRequest;
 use App\Models\Country;
 use App\Models\CompanyType;
 
-
 class ClientSearchController extends Controller
 {
     protected $client;

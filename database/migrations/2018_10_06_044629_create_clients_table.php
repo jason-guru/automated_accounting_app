@@ -32,6 +32,7 @@ class CreateClientsTable extends Migration
             $table->string('website')->nullable(true);
             $table->string('email')->nullable(true);
             $table->boolean('is_active')->default(true);
+            $table->boolean('remind')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

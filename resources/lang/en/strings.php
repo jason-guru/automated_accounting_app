@@ -39,6 +39,9 @@ return [
             ],
             'reminders'   => [
                 'title'   => 'Reminders'
+            ],
+            'frequency'   => [
+                'title'   => 'Frequency'
             ]
         ],
 

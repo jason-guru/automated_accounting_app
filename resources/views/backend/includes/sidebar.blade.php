@@ -29,13 +29,18 @@
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.information') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/clients')) }}">
+                        <a href="{{ route('admin.deadlines.information') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
                             Information
                         </a>
                     </li>
                     <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.reminders') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/clients')) }}">
+                        <a href="{{ route('admin.deadlines.reminders') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
                             Reminders
+                        </a>
+                    </li>
+                    <li class="nav-items">
+                        <a href="{{ route('admin.deadlines.frequency') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
+                            Frequency
                         </a>
                     </li>
                 </ul>

@@ -33,7 +33,6 @@ class CreateBusinessInfosTable extends Migration
             $table->string('utr')->nullable(true);
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
-            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }

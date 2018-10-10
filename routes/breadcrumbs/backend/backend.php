@@ -29,5 +29,10 @@ Breadcrumbs::for('admin.deadlines.reminders', function ($trail) {
     $trail->push(__('strings.backend.deadlines.reminders.title'), route('admin.deadlines.reminders'));
 });
 
+Breadcrumbs::for('admin.deadlines.frequency', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push(__('strings.backend.deadlines.frequency.title'), route('admin.deadlines.frequency'));
+});
+
 require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';

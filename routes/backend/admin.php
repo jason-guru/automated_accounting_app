@@ -15,3 +15,5 @@ Route::resource('clients', 'ClientController');
 
 Route::get('deadlines/information', 'DeadlineController@information')->name('deadlines.information');
 Route::get('deadlines/reminders', 'DeadlineController@reminders')->name('deadlines.reminders');
+Route::get('deadlines/frequency', 'DeadlineController@frequency')->name('deadlines.frequency');
+Route::post('deadlines/frequency/store', 'DeadlineController@frequency_store')->name('deadlines.frequency.store');
