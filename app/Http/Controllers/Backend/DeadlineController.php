@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\FrequencyRepository;
+use App\Repositories\Backend\ReminderRepository;
 
 class DeadlineController extends Controller
 {
     protected $frequency_repository;
+    protected $reminder_repository;
 
-    public function __construct(FrequencyRepository $frequency_repository)
+    public function __construct(FrequencyRepository $frequency_repository, ReminderRepository $reminder_repository)
     {
         $this->frequency_repository = $frequency_repository;
+        $this->reminder_repository = $reminder_repository;
     }
     public function information()
     {
@@ -21,7 +24,8 @@ class DeadlineController extends Controller
 
     public function reminders()
     {
-        return view('backend.deadlines.reminders');
+        $reminders = $this->reminder_repository->paginate(10);
+        return view('backend.deadlines.reminders', compact('reminders'));
     }
 
     public function frequency()

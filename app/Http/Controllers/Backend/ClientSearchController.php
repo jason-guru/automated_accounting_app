@@ -45,8 +45,8 @@ class ClientSearchController extends Controller
         try{
             $countries = $this->countries;
             $company_types = $this->company_types;
-            $client_id = $request->client_id;
-            $response = $this->client->request('GET', '/company/'.$client_id, [
+            $company_number = trim($request->company_number);
+            $response = $this->client->request('GET', '/company/'.$company_number, [
                 'auth' => [$this->api_key, '']
             ]);
             if($response->getStatusCode() == 200){

@@ -28,15 +28,31 @@
                                             <th>Client ID</th>
                                             <th>Client Name</th>
                                             <th>Client Type</th>
-                                            <th>Default Contact</th>
                                             <th>Contact Email</th>
                                             <th>Contact No</th>
-                                            <th>Book Start</th>
-                                            <th>Status</th>
+                                            <th>Next Due</th>
+                                            <th>Reminder</th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        
+                                            @foreach ($clients as $client)
+                                            <tr>
+                                                <td>{{$client->company_number}}</td>
+                                                <td>{{$client->company_name}}</td>
+                                                <td>{{$client->company_type->name}}</td>
+                                                <td>{{$client->email}}</td>
+                                                <td>{{$client->phone}}</td>
+                                                <td>{{$client->accounts_next_due}}</td>
+                                                <td>
+                                                    <label class="switch switch-label switch-pill switch-success mr-2" for="to-remind-{{$client->id}}">
+                                                    <input class="switch-input" data-id="{{$client->id}}" type="checkbox" name="remind[]" id="to-remind-{{$client->id}}" value="{{$client->remind}}" {{$client->remind == 1 ? "checked" : ""}} data-url="{{route('admin.clients.update', ['id' => $client->id])}}">
+                                                        <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{!!$client->action_buttons!!}</td>
+                                            </tr> 
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -44,15 +60,15 @@
                         </div><!--row-->
                         <div class="row">
                             <div class="col-7">
-                                {{-- <div class="float-left">
-                                    {!! $users->total() !!} {{ trans_choice('labels.backend.access.users.table.total', $users->total()) }}
-                                </div> --}}
+                                <div class="float-left">
+                                    {!! $clients->total() !!} {{ trans_choice('total client(s)', $clients->total()) }}
+                                </div>
                             </div><!--col-->
                 
                             <div class="col-5">
-                                {{-- <div class="float-right">
-                                    {!! $users->render() !!}
-                                </div> --}}
+                                <div class="float-right">
+                                    {!! $clients->render() !!}
+                                </div>
                             </div><!--col-->
                         </div><!--row-->
                 </div><!--card-body-->

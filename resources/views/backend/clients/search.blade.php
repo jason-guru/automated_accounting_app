@@ -19,7 +19,7 @@
             @csrf
             <div class="form-group">
                 <label for="">Enter Client Id</label>
-                <input type="text" class="form-control" name="client_id">
+                <input type="text" class="form-control" name="company_number">
             </div>
             <button type="submit" class="btn btn-success btn-sm">Search</button>
         </form>

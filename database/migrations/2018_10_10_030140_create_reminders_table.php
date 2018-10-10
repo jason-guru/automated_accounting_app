@@ -18,9 +18,9 @@ class CreateRemindersTable extends Migration
             $table->integer('client_id');
             $table->integer('frequency_id');
             $table->date('first_remind');
-            $table->date('second_remind');
-            $table->date('third_remind');
-            $table->boolean('is_active');
+            $table->date('second_remind')->nullable(true);
+            $table->date('third_remind')->nullable(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

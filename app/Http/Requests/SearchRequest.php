@@ -17,6 +17,18 @@ class SearchRequest extends FormRequest
     }
 
     /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'company_number.unique' => 'The Client ID already exist. Please try another client ID.'
+        ];
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -24,7 +36,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'=> 'required|Numeric'
+            'company_number'=> 'required|Numeric|unique:clients'
         ];
     }
 }

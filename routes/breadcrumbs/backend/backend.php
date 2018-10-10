@@ -8,6 +8,14 @@ Breadcrumbs::for('admin.clients.index', function ($trail) {
     $trail->parent('admin.dashboard');
     $trail->push(__('strings.backend.clients.title'), route('admin.clients.index'));
 });
+Breadcrumbs::for('admin.clients.show', function ($trail, $id) {
+    $trail->parent('admin.clients.index');
+    $trail->push('View Client', route('admin.clients.show', ['id' => $id]));
+});
+Breadcrumbs::for('admin.clients.edit', function ($trail, $id) {
+    $trail->parent('admin.clients.index');
+    $trail->push('Edit Client', route('admin.clients.edit', ['id' => $id]));
+});
 
 Breadcrumbs::for('admin.client.search', function ($trail) {
     $trail->parent('admin.clients.index');

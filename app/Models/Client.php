@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Attribute\ClientAttribute;
 use SoftDeletes;
 
 class Client extends Model
 {
+    use ClientAttribute;
+    
     protected $fillable = [
         'company_number', 'company_name', 'company_type_id', 'accounts_next_due', 'accounts_overdue', 'address_line_1', 'address_line_2', 'postcode', 'city', 'county', 'country_id', 'phone', 'website', 'email', 'is_active', 'remind'
     ];
@@ -16,6 +19,16 @@ class Client extends Model
     public function contact_person()
     {
         return $this->hasMany(ContactPerson::class);
+    }
+
+    public function company_type()
+    {
+        return $this->belongsTo(CompanyType::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 
     public function business_info()

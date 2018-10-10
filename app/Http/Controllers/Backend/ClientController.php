@@ -6,15 +6,28 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Repositories\Backend\ClientRepository;
+use App\Repositories\Backend\ReminderRepository;
+use App\Repositories\Backend\FrequencyRepository;
+use App\Models\Country;
+use App\Models\CompanyType;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
 
     protected $client_repository;
+    protected $countries;
+    protected $company_types;
+    protected $reminder_repository;
+    protected $frequency_repository;
 
-    public function __construct(ClientRepository $client_repository)
+    public function __construct(ClientRepository $client_repository, ReminderRepository $reminder_repository, FrequencyRepository $frequency_repository)
     {
         $this->client_repository = $client_repository;
+        $this->countries = Country::all();
+        $this->company_types = CompanyType::all();
+        $this->reminder_repository = $reminder_repository;
+        $this->frequency_repository = $frequency_repository;
     }
     
 
@@ -25,12 +38,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('backend.clients.index');
-    }
-
-    public function search()
-    {
-        
+        $clients = $this->client_repository->paginate(10);
+        return view('backend.clients.index', compact('clients'));
     }
 
     /**
@@ -51,7 +60,11 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        dd($request);
+        $client = $this->client_repository->create($request->except('_token'));
+        //set the reminder table data
+        $active_frequency = $this->frequency_repository->where('is_active', 1)->first();
+        $this->reminder_repository->set_reminders($client->id, $client->accounts_next_due, $active_frequency);
+        return redirect()->route('admin.clients.index')->withFlashSuccess('Client created successfully');
     }
 
     /**
@@ -62,7 +75,8 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        
+        $client = $this->client_repository->getById($id);
+        return view('backend.clients.show', compact('client'));
     }
 
     /**
@@ -73,7 +87,10 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company_types = $this->company_types;
+        $countries = $this->countries;
+        $client = $this->client_repository->getById($id);
+        return view('backend.clients.edit', compact('client', 'countries', 'company_types'));
     }
 
     /**
@@ -85,7 +102,16 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = $this->client_repository->updateById($id, $request->except('_token'));
+        if($request->remind_update){
+            $this->reminder_repository->updateById($client->reminder->id, ['is_active' => $request->remind]);
+            return response()->json([
+                'success' => true
+            ]);
+        }else{
+            return redirect()->route('admin.clients.index')->withFlashSuccess('Client updated Successfully');
+        }
+        
     }
 
     /**
@@ -96,6 +122,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->client_repository->deleteById($id);
+        return back()->withFlashSuccess('Client successfully deleted');
     }
 }
