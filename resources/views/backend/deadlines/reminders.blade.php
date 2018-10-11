@@ -43,7 +43,15 @@
                                 <td>{{$reminder->second_remind}}</td>
                                 <td>{{$reminder->third_remind}}</td>
                                 <td>{!!$reminder->is_active ? '<span class="bg-success px-2"><b>Active</b></span>' : '<span class="bg-danger px-1"><b>Inactive</b></span>'!!}</td>
-                                <td>{{$reminder->has_reminded}}</td>
+                                @if($reminder->has_reminded == 000)
+                                    <td>Not yet</td>
+                                @elseif($reminder->has_reminded == 100)
+                                    <td>First Sent</td>
+                                @elseif($reminder->has_reminded == 110)
+                                    <td>Second Sent</td>
+                                @elseif($reminder->has_reminded == 111)
+                                    <td>Third Sent</td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

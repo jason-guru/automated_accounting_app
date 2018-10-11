@@ -15,7 +15,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        //
+        'App\Events\Backend\ReminderEvent' => [
+            'App\Listeners\Backend\SendReminderNotification'
+        ],
+        'App\Events\Backend\AccountStatus' => [
+            'App\Listeners\Backend\AccountManager'
+        ]
     ];
 
     /**

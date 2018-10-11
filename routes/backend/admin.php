@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Events\Backend\AccountStatus;
 
 /*
  * All route names are prefixed with 'admin.'.
@@ -20,4 +21,6 @@ Route::get('deadlines/frequency', 'DeadlineController@frequency')->name('deadlin
 Route::post('deadlines/frequency/store', 'DeadlineController@frequency_store')->name('deadlines.frequency.store');
 
 // Test routes
-Route::get('deadlines/test', 'DeadlineController@reminder_manager');
+Route::get('deadlines/test', function(){
+    event(new AccountStatus());
+});

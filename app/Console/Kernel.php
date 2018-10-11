@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Events\Backend\ReminderEvent;
 
 /**
  * Class Kernel.
@@ -28,6 +29,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+            event(new AccountManager());
+            event(new ReminderEvent());
+        })->everyMinute();
     }
 
     /**

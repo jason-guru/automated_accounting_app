@@ -40,7 +40,7 @@
                     </li>
                     <li class="nav-items">
                         <a href="{{ route('admin.deadlines.format') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
-                            Format
+                            Format Settings
                         </a>
                     </li>
                 </ul>

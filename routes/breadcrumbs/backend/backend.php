@@ -29,7 +29,7 @@ Breadcrumbs::for('admin.client.search.result', function ($trail) {
 
 Breadcrumbs::for('admin.deadlines.format', function ($trail) {
     $trail->parent('admin.dashboard');
-    $trail->push('Format', route('admin.deadlines.format'));
+    $trail->push('Format Settings', route('admin.deadlines.format'));
 });
 
 Breadcrumbs::for('admin.deadlines.reminders', function ($trail) {

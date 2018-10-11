@@ -26,7 +26,7 @@ class ReminderRepository extends BaseRepository
      * Set the value of the reminder table as per due date
      * 
     */
-    public function set_reminders($id, $due_date, $active_frequency)
+    public function set_reminders($id, $due_date, $active_frequency, $reminder_id = null)
     {
         $first_date=$second_date=$third_date=null;
         $first_date = Carbon::parse($due_date)->subYear();
@@ -45,6 +45,10 @@ class ReminderRepository extends BaseRepository
             'is_active' => true,
             'has_reminded' => 000
         ];
-        $this->model->create($prep_data);
+        if(is_null($reminder_id)):
+            $this->model->create($prep_data);
+        else:
+            parent::updateById($reminder_id, $prep_data);
+        endif;
     }
 }
