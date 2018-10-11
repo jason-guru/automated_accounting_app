@@ -27,9 +27,9 @@ Breadcrumbs::for('admin.client.search.result', function ($trail) {
     $trail->push('Details', route('admin.client.search.result'));
 });
 
-Breadcrumbs::for('admin.deadlines.information', function ($trail) {
+Breadcrumbs::for('admin.deadlines.format', function ($trail) {
     $trail->parent('admin.dashboard');
-    $trail->push(__('strings.backend.deadlines.information.title'), route('admin.deadlines.information'));
+    $trail->push('Format', route('admin.deadlines.format'));
 });
 
 Breadcrumbs::for('admin.deadlines.reminders', function ($trail) {

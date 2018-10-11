@@ -14,7 +14,7 @@
         </h4>
     </div>
     <div class="card-body">
-        <form action="{{route('admin.clients.store')}}" method="post">
+        <form action="{{route('admin.clients.store')}}" method="POST">
         @csrf
         <div class="card">
             <div class="card-header">
@@ -100,7 +100,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input name="phone" id="phone" type="text" class="form-control" value="">
+                            <input name="phone" id="phone" type="text" placeholder="+44760092100" class="form-control" value="" required maxlength="13">
                         </div>
 
                         <div class="form-group">
@@ -111,7 +111,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input name="email" id="email" type="email" class="form-control" value="">
+                            <input name="email" id="email" type="email" class="form-control" value="" required placeholder="john@mail.com">
                         </div>
                     </div>
                 </div>

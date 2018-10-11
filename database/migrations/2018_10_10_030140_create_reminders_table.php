@@ -20,6 +20,7 @@ class CreateRemindersTable extends Migration
             $table->date('first_remind');
             $table->date('second_remind')->nullable(true);
             $table->date('third_remind')->nullable(true);
+            $table->binary('has_reminded');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

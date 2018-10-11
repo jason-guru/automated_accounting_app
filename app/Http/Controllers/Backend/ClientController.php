@@ -11,6 +11,7 @@ use App\Repositories\Backend\FrequencyRepository;
 use App\Models\Country;
 use App\Models\CompanyType;
 use Carbon\Carbon;
+use Validator;
 
 class ClientController extends Controller
 {
@@ -58,7 +59,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
         $client = $this->client_repository->create($request->except('_token'));
         //set the reminder table data

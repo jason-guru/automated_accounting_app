@@ -40,6 +40,10 @@ return [
         'secret' => env('COMPANY_HOUSE_API_KEY')
     ],
 
+    'bulletin_sms' => [
+        'secret' => env('BULLETIN_SMS_API_KEY'),
+    ],
+
     /*
      * Socialite Credentials
      * Redirect URL's need to be the same as specified on each network you set up this application on

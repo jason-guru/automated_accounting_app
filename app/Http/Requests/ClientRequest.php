@@ -24,7 +24,8 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_number' => 'numeric|unique:clients'
+            'company_number' => 'numeric|unique:clients',
+            'phone' => 'required'
         ];
     }
 }

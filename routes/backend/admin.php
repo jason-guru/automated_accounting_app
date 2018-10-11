@@ -13,7 +13,11 @@ Route::get('client/search', 'ClientSearchController@show_search')->name('client.
 Route::post('client/search/result', 'ClientSearchController@show_search_result')->name('client.search.result');
 Route::resource('clients', 'ClientController');
 
-Route::get('deadlines/information', 'DeadlineController@information')->name('deadlines.information');
+Route::get('deadlines/format', 'DeadlineController@format')->name('deadlines.format');
+Route::post('deadlines/format/store-update', 'DeadlineController@format_store_update')->name('dealines.format.store_update');
 Route::get('deadlines/reminders', 'DeadlineController@reminders')->name('deadlines.reminders');
 Route::get('deadlines/frequency', 'DeadlineController@frequency')->name('deadlines.frequency');
 Route::post('deadlines/frequency/store', 'DeadlineController@frequency_store')->name('deadlines.frequency.store');
+
+// Test routes
+Route::get('deadlines/test', 'DeadlineController@reminder_manager');

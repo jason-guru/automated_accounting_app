@@ -42,7 +42,8 @@ class ReminderRepository extends BaseRepository
             'first_remind' => $first_date,
             'second_remind' => $second_date,
             'third_remind' => $third_date,
-            'is_active' => true
+            'is_active' => true,
+            'has_reminded' => 000
         ];
         $this->model->create($prep_data);
     }

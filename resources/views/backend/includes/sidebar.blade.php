@@ -13,7 +13,7 @@
             {{-- The clients section --}}
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/clients*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/client*'), 'open') }}">
                 <a href="#" class="nav-link nav-dropdown-toggle">
-                    <i class="nav-icon icon-briefcase"></i> @lang('menus.backend.sidebar.clients')
+                    <i class="nav-icon icon-people"></i> @lang('menus.backend.sidebar.clients')
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-items">
@@ -25,14 +25,9 @@
             </li>
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/deadlines*'), 'open') }}">
                 <a href="#" class="nav-link nav-dropdown-toggle">
-                    <i class="nav-icon icon-briefcase"></i> @lang('menus.backend.sidebar.deadlines')
+                    <i class="nav-icon icon-cursor"></i> Deadlines
                 </a>
                 <ul class="nav-dropdown-items">
-                    <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.information') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
-                            Information
-                        </a>
-                    </li>
                     <li class="nav-items">
                         <a href="{{ route('admin.deadlines.reminders') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
                             Reminders
@@ -41,6 +36,11 @@
                     <li class="nav-items">
                         <a href="{{ route('admin.deadlines.frequency') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
                             Frequency
+                        </a>
+                    </li>
+                    <li class="nav-items">
+                        <a href="{{ route('admin.deadlines.format') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
+                            Format
                         </a>
                     </li>
                 </ul>

@@ -30,6 +30,7 @@
                             <th>Second Reminder</th>
                             <th>Third Reminder</th>
                             <th>Status</th>
+                            <th>Has Reminded</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,7 @@
                                 <td>{{$reminder->second_remind}}</td>
                                 <td>{{$reminder->third_remind}}</td>
                                 <td>{!!$reminder->is_active ? '<span class="bg-success px-2"><b>Active</b></span>' : '<span class="bg-danger px-1"><b>Inactive</b></span>'!!}</td>
+                                <td>{{$reminder->has_reminded}}</td>
                             </tr>
                         @endforeach
                         </tbody>
