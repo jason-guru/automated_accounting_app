@@ -80,6 +80,7 @@
                   </select>
               </div>
                 <input type="hidden" name="client_id" value="{{$client_id}}">
+        <a href="{{route('admin.clients.show', ['id'=> $client_id])}}" class="btn btn-danger">Back</a>
         <button type="submit" class="btn btn-success pull-right">Save</button>
         </form>
     </div>

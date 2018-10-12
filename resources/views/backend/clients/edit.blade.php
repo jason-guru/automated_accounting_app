@@ -118,6 +118,7 @@
             </div>
         </div>{{-- End of Contact info header --}}
         {{-- Place the Business Info section here --}}
+        <a href="{{route('admin.clients.index')}}" class="btn btn-danger">Back</a>
         <button type="submit" class="btn btn-success pull-right">Update</button>
         </form>
     </div>
