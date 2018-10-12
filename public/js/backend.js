@@ -3119,6 +3119,25 @@ function updateRemindState(url, remindValue) {
     });
 }
 
+$('#add-contact-person').click(function (e) {
+    e.preventDefault();
+    var url = $('form#contact-modal-form').attr('action');
+    var formData = $('form#contact-modal-form').serialize();
+    $.ajax({
+        url: url,
+        type: 'get',
+        data: formData,
+        dataType: 'json',
+        success: function success(response) {
+            $('table#contact-person-listing').css('display', 'table');
+            $('table#contact-person-listing tbody').append(response.view);
+        }, error: function error(e) {
+            console.log(e);
+        }
+    });
+    $('#contactModal').modal('toggle');
+});
+
 /***/ }),
 
 /***/ "./resources/js/backend/app.js":

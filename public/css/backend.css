@@ -16559,3 +16559,7 @@ body {
   padding-bottom: 1rem;
 }
 
+#contact-person-listing {
+  display: none;
+}
+

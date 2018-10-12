@@ -16,7 +16,7 @@ class Client extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function contact_person()
+    public function contact_people()
     {
         return $this->hasMany(ContactPerson::class);
     }
@@ -45,7 +45,7 @@ class Client extends Model
     {
         parent::boot();
         static::deleting(function($client){
-            $client->contact_person()->delete();
+            $client->contact_people()->delete();
             $client->business_info()->delete();
             $client->reminder()->delete();
         });

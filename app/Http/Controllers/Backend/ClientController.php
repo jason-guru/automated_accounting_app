@@ -8,6 +8,7 @@ use App\Http\Requests\ClientRequest;
 use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\FrequencyRepository;
+use App\Repositories\Backend\ContactPersonRepository;
 use App\Models\Country;
 use App\Models\CompanyType;
 use Carbon\Carbon;
@@ -21,14 +22,16 @@ class ClientController extends Controller
     protected $company_types;
     protected $reminder_repository;
     protected $frequency_repository;
+    protected $contact_person_repository;
 
-    public function __construct(ClientRepository $client_repository, ReminderRepository $reminder_repository, FrequencyRepository $frequency_repository)
+    public function __construct(ClientRepository $client_repository, ReminderRepository $reminder_repository, FrequencyRepository $frequency_repository, ContactPersonRepository $contact_person_repository)
     {
         $this->client_repository = $client_repository;
         $this->countries = Country::all();
         $this->company_types = CompanyType::all();
         $this->reminder_repository = $reminder_repository;
         $this->frequency_repository = $frequency_repository;
+        $this->contact_person_repository = $contact_person_repository;
     }
     
 
@@ -61,7 +64,31 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client = $this->client_repository->create($request->except('_token'));
+        $client = $this->client_repository->create($request->except('_token', 'designation_id', 'initial_id', 'first_name', 'middle_name', 'last_name', 'contact_email', 'contact_phone', 'contact_address_line_1', 'contact_address_line_2', 'contact_city', 'contact_postcode', 'contact_county', 'contact_country_id'));
+
+        $counter = count($request->first_name);
+        for($i=0; $i< $counter; $i++){
+            $client_contact_people = [
+                'client_id' => $client->id,
+                'designation_id' => $request->designation_id[$i],
+                'initial_id' => $request->initial_id[$i],
+                'first_name' => $request->first_name[$i],
+                'middle_name' => $request->middle_name[$i],
+                'last_name' => $request->last_name[$i],
+                'email' => $request->contact_email[$i],
+                'phone' => $request->contact_phone[$i],
+                'address_line_1' => $request->contact_address_line_1[$i],
+                'address_line_2' => $request->contact_address_line_2[$i],
+                'city' => $request->contact_city[$i],
+                'postcode' => $request->contact_postcode[$i],
+                'county' => $request->contact_county[$i],
+                'country_id' => $request->contact_country_id[$i]
+            ];
+            if(!is_null($request->first_name[$i])){
+                $this->contact_person_repository->create($client_contact_people);
+            }
+        }
+        
         //set the reminder table data
         $active_frequency = $this->frequency_repository->where('is_active', 1)->first();
         $this->reminder_repository->set_reminders($client->id, $client->accounts_next_due, $active_frequency);

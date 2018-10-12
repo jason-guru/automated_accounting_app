@@ -19,7 +19,7 @@
             <a class="nav-link" href="{{ route('admin.dashboard') }}">@lang('navs.frontend.dashboard')</a>
         </li>
 
-        @if(config('locale.status') && count(config('locale.languages')) > 1)
+        {{-- @if(config('locale.status') && count(config('locale.languages')) > 1)
             <li class="nav-item px-3 dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="d-md-down-none">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})</span>
@@ -27,11 +27,11 @@
 
                 @include('includes.partials.lang')
             </li>
-        @endif
+        @endif --}}
     </ul>
 
-    <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
+    <ul class="nav navbar-nav ml-auto mr-4">
+        {{-- <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="icon-bell"></i>
                 <span class="badge badge-pill badge-danger">5</span>
@@ -41,19 +41,19 @@
             <a class="nav-link" href="#">
                 <i class="icon-list"></i>
             </a>
-        </li>
-        <li class="nav-item d-md-down-none">
+        </li> --}}
+        {{-- <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#">
                 <i class="icon-location-pin"></i>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">
             <span class="d-md-down-none">{{ $logged_in_user->full_name }}</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-header text-center">
+            {{-- <div class="dropdown-header text-center">
               <strong>Account</strong>
             </div>
             <a class="dropdown-item" href="#">
@@ -74,17 +74,17 @@
             </a>
             <div class="dropdown-header text-center">
               <strong>Settings</strong>
-            </div>
-            <a class="dropdown-item" href="#">
+            </div> --}}
+            <a class="dropdown-item" href="{{route('frontend.user.account')}}">
               <i class="fa fa-user"></i> Profile
             </a>
-            <a class="dropdown-item" href="#">
+            {{-- <a class="dropdown-item" href="#">
               <i class="fa fa-wrench"></i> Settings
             </a>
             <a class="dropdown-item" href="#">
               <i class="fa fa-file"></i> Projects
               <span class="badge badge-primary">42</span>
-            </a>
+            </a> --}}
             <div class="divider"></div>
             <a class="dropdown-item" href="{{ route('frontend.auth.logout') }}">
                 <i class="fas fa-lock"></i> @lang('navs.general.logout')
@@ -93,10 +93,10 @@
         </li>
     </ul>
 
-    <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+    {{-- <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
         <span class="navbar-toggler-icon"></span>
     </button>
     <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
         <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> --}}
 </header>

@@ -22,18 +22,24 @@
             <div class="col">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#basic-info" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-info"></i> Basic Info</a>
+                        <a class="nav-link active" data-toggle="tab" href="#contact-person" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-user"></i> Contact People</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#basic-info" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-info"></i> Basic Info</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#address" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-address-book"></i> Address</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#contact-info" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-user"></i> Contact Info</a>
+                        <a class="nav-link" data-toggle="tab" href="#contact-info" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-building"></i> Company Contact Info</a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active show" id="basic-info" role="tabpanel" aria-expanded="true">
+                    <div class="tab-pane active show" id="contact-person" role="tabpanel" aria-expanded="true">
+                        @include('backend.clients.show.tabs.contact-person')
+                    </div><!--tab-->
+                    <div class="tab-pane" id="basic-info" role="tabpanel" aria-expanded="true">
                         @include('backend.clients.show.tabs.basic-info')
                     </div><!--tab-->
                     <div class="tab-pane" id="address" role="tabpanel" aria-expanded="true">
