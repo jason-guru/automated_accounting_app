@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\MessageFormat;
 
 class MessageSeeder extends Seeder
 {
