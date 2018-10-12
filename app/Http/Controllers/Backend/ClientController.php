@@ -66,6 +66,7 @@ class ClientController extends Controller
     {
         $client = $this->client_repository->create($request->except('_token', 'designation_id', 'initial_id', 'first_name', 'middle_name', 'last_name', 'contact_email', 'contact_phone', 'contact_address_line_1', 'contact_address_line_2', 'contact_city', 'contact_postcode', 'contact_county', 'contact_country_id'));
 
+        if(is_array($request->first_name)):
         $counter = count($request->first_name);
         for($i=0; $i< $counter; $i++){
             $client_contact_people = [
@@ -88,7 +89,7 @@ class ClientController extends Controller
                 $this->contact_person_repository->create($client_contact_people);
             }
         }
-        
+        endif;
         //set the reminder table data
         $active_frequency = $this->frequency_repository->where('is_active', 1)->first();
         $this->reminder_repository->set_reminders($client->id, $client->accounts_next_due, $active_frequency);

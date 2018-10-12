@@ -12,7 +12,7 @@ Route::resource('clients', 'ClientController');
 
 Route::get('client/search', 'ClientSearchController@show_search')->name('client.search');
 Route::post('client/search/result', 'ClientSearchController@show_search_result')->name('client.search.result');
-Route::get('client/search/contact-person', 'ClientSearchCOntroller@prep_contact_person_view')->name('client.search.contact_person');
+Route::get('client/search/contact-person', 'ClientSearchController@prep_contact_person_view')->name('client.search.contact_person');
 Route::resource('clients', 'ClientController');
 
 Route::get('deadlines/format', 'DeadlineController@format')->name('deadlines.format');
