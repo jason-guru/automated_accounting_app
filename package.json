@@ -52,6 +52,7 @@
     }
   },
   "dependencies": {
-    "@chenfengyuan/datepicker": "^1.0.0"
+    "@chenfengyuan/datepicker": "^1.0.0",
+    "moment": "^2.22.2"
   }
 }

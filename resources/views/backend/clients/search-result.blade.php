@@ -135,76 +135,7 @@
             </div>
         </div>{{-- End of Contact info header --}}
         {{-- Place the Business Info section here --}}
-        <div class="card">
-            <div class="card-header">
-                Business Info
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">Business Start Date</label>
-                            <input name="bussiness_start_date" id="" class="form-control" data-toggle="datepicker" value="{{array_key_exists('date_of_creation', $client_data) ? Carbon\Carbon::parse($client_data['date_of_creation'])->format('d-m-Y') : ''}}">
-                        </div>
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">Book Start Date</label>
-                            <input data-toggle="datepicker" name="book_start_date" id="" class="form-control" value="{{array_key_exists('period_start_on', $client_data['accounts']['next_accounts']) ? Carbon\Carbon::parse($client_data['accounts']['next_accounts']['period_start_on'])->format('d-m-Y') : ''}}">
-                        </div>
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">Year End Date</label>
-                            <input data-toggle="datepicker" name="year_end_date" id="" class="form-control" value="{{array_key_exists('period_end_on', $client_data['accounts']['next_accounts']) ? Carbon\Carbon::parse($client_data['accounts']['next_accounts']['period_end_on'])->format('d-m-Y') : ''}}">
-                        </div>
-                        <div class="form-group" :class="noCompanyNumberDisplay">
-                        <label for="">Company Reg No.</label>
-                            <input type="text" name="company_reg_number" id="" class="form-control" v-model="companyNumber">
-                        </div>
-                        <div class="form-group">
-                            <label for="">UTR Number</label>
-                            <input type="text" name="utr_number" id="" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="">UTR</label>
-                            <input type="text" name="utr" id="" class="form-control">
-                        </div>
-                        
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">Vat Submit Type</label>
-                            <select name="vat_submit_type_id" id="" class="form-control">
-                                @foreach ($vat_submit_types as $vat_submit_type )
-                                    <option value="{{$vat_submit_type->id}}">{{$vat_submit_type->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">VAT Registration Number</label>
-                            <input type="text" name="vat_reg_number" id="" class="form-control">
-                        </div>
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">VAT Registration Date</label>
-                            <input data-toggle="datepicker" name="vat_reg_date" id="" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Social Media</label>
-                            <input type="text" name="social_media" id="" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Last Bookkeeping Done</label>
-                            <input data-toggle="datepicker" name="last_bookkeeping_done" id="" class="form-control" value="{{array_key_exists('made_up_to', $client_data['accounts']['last_accounts']) ? Carbon\Carbon::parse($client_data['accounts']['last_accounts']['made_up_to'])->format('d-m-Y') : ''}}">
-                        </div>
-                        <div class="form-group" :class="noDisplayforIndividual">
-                            <label for="">Vat Scheme</label> 
-                            <select name="vat_scheme_id" id="" class="form-control">
-                                @foreach ($vat_schemes as $vat_scheme )
-                                    <option value="{{$vat_scheme->id}}">{{$vat_scheme->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <business-info :client-data='{{json_encode($client_data)}}' :company-types='{{json_encode($company_types)}}' :vat-schemes='{{json_encode($vat_schemes)}}' :vat-submit-types='{{json_encode($vat_submit_types)}}'></business-info>
         <button type="submit" class="btn btn-success pull-right">Save</button>
         </form>
     </div>

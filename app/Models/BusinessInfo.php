@@ -16,4 +16,14 @@ class BusinessInfo extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function vat_scheme()
+    {
+        return $this->belongsTo(VatScheme::class);
+    }
+
+    public function vat_submit_type()
+    {
+        return $this->belongsTo(VatSubmitType::class);
+    }
 }

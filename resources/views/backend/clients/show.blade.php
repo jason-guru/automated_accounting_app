@@ -33,6 +33,9 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#contact-info" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-building"></i> Company Contact Info</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#business-info" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-briefcase"></i> Business Info</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -47,6 +50,9 @@
                     </div><!--tab-->
                     <div class="tab-pane" id="contact-info" role="tabpanel" aria-expanded="true">
                         @include('backend.clients.show.tabs.contact')
+                    </div><!--tab-->
+                    <div class="tab-pane" id="business-info" role="tabpanel" aria-expanded="true">
+                        @include('backend.clients.show.tabs.business-info')
                     </div><!--tab-->
                 </div><!--tab-content-->
             </div><!--col-->

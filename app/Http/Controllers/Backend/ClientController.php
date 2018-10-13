@@ -99,19 +99,19 @@ class ClientController extends Controller
             }
         }
         endif;
-
+        
         $this->business_info_repository->create([
             'client_id' => $client->id,
             'company_type_id' => $request->company_type_id,
-            'bussiness_start_date' => Carbon::parse($request->bussiness_start_date)->format('Y-m-d'),
-            'book_start_date' => Carbon::parse($request->book_start_date)->format('Y-m-d'),
-            'year_end_date' => Carbon::parse($request->year_end_date)->format('Y-m-d'),
+            'business_start_date' => !is_null($request->business_start_date) ? Carbon::parse($request->business_start_date)->format('Y-m-d'): null,
+            'book_start_date' => !is_null($request->book_start_date) ?Carbon::parse($request->book_start_date)->format('Y-m-d'): null,
+            'year_end_date' => !is_null($request->year_end_date) ? Carbon::parse($request->year_end_date)->format('Y-m-d') : null,
             'company_reg_number' => $request->company_reg_number,
             'utr_number' => $request->utr_number,
             'vat_scheme_id' => $request->vat_scheme_id,
             'vat_submit_type_id' => $request->vat_submit_type_id,
             'vat_reg_number' => $request->vat_reg_number,
-            'vat_reg_date' => Carbon::parse($request->vat_reg_date)->format('Y-m-d'),
+            'vat_reg_date' => !is_null($request->vat_reg_date) ? Carbon::parse($request->vat_reg_date)->format('Y-m-d') : null,
             'social_media' => $request->social_media,
             'last_bookkeeping_done' => Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d'),
             'utr' => $request->utr
@@ -161,8 +161,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = $this->client_repository->updateById($id, $request->except('_token','bussiness_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
-        $this->business_info_repository->updateById($client->business_info->id, $request->only('bussiness_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+        $client = $this->client_repository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+        $this->business_info_repository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
         if($request->remind_update){
             $this->reminder_repository->updateById($client->reminder->id, ['is_active' => $request->remind]);
             return response()->json([
