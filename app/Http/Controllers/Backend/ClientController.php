@@ -9,10 +9,13 @@ use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\FrequencyRepository;
 use App\Repositories\Backend\ContactPersonRepository;
+use App\Repositories\Backend\BusinessInfoRepository;
 use App\Models\Country;
 use App\Models\CompanyType;
 use Carbon\Carbon;
 use Validator;
+use App\Models\VatScheme;
+use App\Models\VatSubmitType;
 
 class ClientController extends Controller
 {
@@ -23,15 +26,21 @@ class ClientController extends Controller
     protected $reminder_repository;
     protected $frequency_repository;
     protected $contact_person_repository;
+    protected $business_info_repository;
+    protected $vat_schemes;
+    protected $vat_submit_types;
 
-    public function __construct(ClientRepository $client_repository, ReminderRepository $reminder_repository, FrequencyRepository $frequency_repository, ContactPersonRepository $contact_person_repository)
+    public function __construct(ClientRepository $client_repository, ReminderRepository $reminder_repository, FrequencyRepository $frequency_repository, ContactPersonRepository $contact_person_repository, BusinessInfoRepository $business_info_repository)
     {
         $this->client_repository = $client_repository;
         $this->countries = Country::all();
         $this->company_types = CompanyType::all();
+        $this->vat_schemes = VatScheme::all();
+        $this->vat_submit_types = VatSubmitType::all();
         $this->reminder_repository = $reminder_repository;
         $this->frequency_repository = $frequency_repository;
         $this->contact_person_repository = $contact_person_repository;
+        $this->business_info_repository = $business_info_repository;
     }
     
 
@@ -90,6 +99,24 @@ class ClientController extends Controller
             }
         }
         endif;
+
+        $this->business_info_repository->create([
+            'client_id' => $client->id,
+            'company_type_id' => $request->company_type_id,
+            'bussiness_start_date' => Carbon::parse($request->bussiness_start_date)->format('Y-m-d'),
+            'book_start_date' => Carbon::parse($request->book_start_date)->format('Y-m-d'),
+            'year_end_date' => Carbon::parse($request->year_end_date)->format('Y-m-d'),
+            'company_reg_number' => $request->company_reg_number,
+            'utr_number' => $request->utr_number,
+            'vat_scheme_id' => $request->vat_scheme_id,
+            'vat_submit_type_id' => $request->vat_submit_type_id,
+            'vat_reg_number' => $request->vat_reg_number,
+            'vat_reg_date' => Carbon::parse($request->vat_reg_date)->format('Y-m-d'),
+            'social_media' => $request->social_media,
+            'last_bookkeeping_done' => Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d'),
+            'utr' => $request->utr
+        ]);
+
         //set the reminder table data
         $active_frequency = $this->frequency_repository->where('is_active', 1)->first();
         $this->reminder_repository->set_reminders($client->id, $client->accounts_next_due, $active_frequency);
@@ -116,10 +143,13 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
+        $vat_schemes = $this->vat_schemes;
+        $vat_submit_types = $this->vat_submit_types;
         $company_types = $this->company_types;
         $countries = $this->countries;
         $client = $this->client_repository->getById($id);
-        return view('backend.clients.edit', compact('client', 'countries', 'company_types'));
+        $business_info = $this->business_info_repository->where('client_id', $id)->first();
+        return view('backend.clients.edit', compact('client', 'countries', 'company_types', 'business_info', 'vat_schemes', 'vat_submit_types'));
     }
 
     /**
@@ -131,7 +161,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = $this->client_repository->updateById($id, $request->except('_token'));
+        $client = $this->client_repository->updateById($id, $request->except('_token','bussiness_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+        $this->business_info_repository->updateById($client->business_info->id, $request->only('bussiness_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
         if($request->remind_update){
             $this->reminder_repository->updateById($client->reminder->id, ['is_active' => $request->remind]);
             return response()->json([

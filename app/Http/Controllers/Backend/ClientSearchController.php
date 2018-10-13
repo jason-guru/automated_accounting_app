@@ -10,6 +10,8 @@ use App\Models\Country;
 use App\Models\CompanyType;
 use App\Models\Designation;
 use App\Models\Initial;
+use App\Models\VatScheme;
+use App\Models\VatSubmitType;
 
 class ClientSearchController extends Controller
 {
@@ -20,6 +22,8 @@ class ClientSearchController extends Controller
     protected $company_types;
     protected $designations;
     protected $initials;
+    protected $vat_schemes;
+    protected $vat_submit_types;
 
     public function __construct()
     {   
@@ -31,6 +35,8 @@ class ClientSearchController extends Controller
         $this->company_types = CompanyType::all();
         $this->designations = Designation::all();
         $this->initials = Initial::all();
+        $this->vat_schemes = VatScheme::all();
+        $this->vat_submit_types = VatSubmitType::all();
     }
 
     /**
@@ -53,13 +59,15 @@ class ClientSearchController extends Controller
             $company_types = $this->company_types;
             $designations = $this->designations;
             $initials = $this->initials;
+            $vat_schemes = $this->vat_schemes;
+            $vat_submit_types = $this->vat_submit_types;
             $company_number = trim($request->company_number);
             $response = $this->client->request('GET', '/company/'.$company_number, [
                 'auth' => [$this->api_key, '']
             ]);
             if($response->getStatusCode() == 200){
                 $client_data = json_decode($response->getBody()->getContents(), true);
-                return view('backend.clients.search-result', compact('client_data', 'countries', 'company_types', 'designations', 'initials'));
+                return view('backend.clients.search-result', compact('client_data', 'countries', 'company_types', 'designations', 'initials', 'vat_submit_types', 'vat_schemes'));
             }
         }catch(\Exception $exception)
         {

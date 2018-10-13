@@ -17,15 +17,16 @@ class CreateBusinessInfosTable extends Migration
             $table->increments('id');
             $table->integer('client_id');
             // business Info
-            $table->date('business_start_date');
+            $table->integer('company_type_id');
+            $table->date('business_start_date')->nullable(true);
             $table->date('book_start_date')->nullable(true);
             $table->date('year_end_date')->nullable(true);
-            $table->string('company_reg_number');
+            $table->string('company_reg_number')->nullable(true);
             $table->string('utr_number')->nullable(true);
             // vat_schemes table
-            $table->integer('vat_scheme_id');
+            $table->integer('vat_scheme_id')->nullable(true);
             // vat_submit_types table
-            $table->integer('vat_submit_type_id');
+            $table->integer('vat_submit_type_id')->nullable(true);
             $table->string('vat_reg_number')->nullable(true);
             $table->date('vat_reg_date')->nullable(true);
             $table->string('social_media')->nullable(true);

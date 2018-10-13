@@ -15,7 +15,7 @@ class FrequencyTableSeeder extends Seeder
             'Once per Year', 'Twice per Year', 'Thrice per Year'
         ];
         foreach($frequencies as $key => $frequency):
-            if($key == 0){
+            if($key == 2){
                 $active = true;
             }else{
                 $active = false;

@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<div class="card">
+<div class="card" id="search-result">
     <div class="card-header">
         <h4 class="card-title mb-0">
             Client Management
@@ -32,9 +32,9 @@
 
                         <div class="form-group">
                             <label for="company-type-id">Client Type</label>
-                            <select name="company_type_id" id="company-type-id" class="form-control">
+                            <select name="company_type_id" id="company-type-id" class="form-control" disabled>
                                 @foreach($company_types as $company_type)
-                                    <option value="{{$company_type->id}}" {{$company_type->code == $client->company_type->code ? 'selected' : ''}}>{{$company_type->name}}</option>
+                                    <option value="{{$company_type->id}}" {{$company_type->id == $client->company_type_id ? 'selected' : ''}}>{{$company_type->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -117,11 +117,84 @@
                 </div>
             </div>
         </div>{{-- End of Contact info header --}}
+        <div class="card">
+            <div class="card-header">
+                Business Info
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">Business Start Date</label>
+                            <input name="bussiness_start_date" id="" class="form-control" data-toggle="datepicker" value="{{$business_info->bussiness_start_date}}">
+                        </div>
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">Book Start Date</label>
+                            <input data-toggle="datepicker" name="book_start_date" id="" class="form-control" value="{{$business_info->book_start_date}}">
+                        </div>
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">Year End Date</label>
+                            <input data-toggle="datepicker" name="year_end_date" id="" class="form-control" value="{{$business_info->year_end_date}}">
+                        </div>
+                        <div class="form-group {{$business_info->company_type_id == 6 || $business_info->company_type_id == 2 || $business_info->company_type_id == 3 || $business_info->company_type_id == 4 || $business_info->company_type_id == 7 ? "d-none" : ""}}">
+                        <label for="">Company Reg No.</label>
+                            <input type="text" name="company_reg_number" id="" value="{{$business_info->company_reg_number}}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">UTR Number</label>
+                            <input type="text" name="utr_number" id="" class="form-control" value="{{$business_info->utr_number}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">UTR</label>
+                            <input type="text" name="utr" id="" class="form-control" value="{{$business_info->utr}}">
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">Vat Submit Type</label>
+                            <select name="vat_submit_type_id" id="" class="form-control">
+                                @foreach ($vat_submit_types as $vat_submit_type )
+                                    <option value="{{$vat_submit_type->id}}" {{$business_info->vat_submit_type_id == $vat_submit_type->id ? "selected" : ""}}>{{$vat_submit_type->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">VAT Registration Number</label>
+                            <input type="text" name="vat_reg_number" id="" class="form-control" value="{{$business_info->vat_reg_number}}">
+                        </div>
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">VAT Registration Date</label>
+                            <input data-toggle="datepicker" name="vat_reg_date" id="" class="form-control" value="{{$business_info->vat_reg_date}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Social Media</label>
+                            <input type="text" name="social_media" id="" class="form-control" value="{{$business_info->social_media}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Last Bookkeeping Done</label>
+                        <input data-toggle="datepicker" name="last_bookkeeping_done" id="" class="form-control" value="{{$business_info->last_bookkeeping_done}}">
+                        </div>
+                        <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
+                            <label for="">Vat Scheme</label> 
+                            <select name="vat_scheme_id" id="" class="form-control">
+                                @foreach ($vat_schemes as $vat_scheme)
+                                    <option value="{{$vat_scheme->id}}" {{$business_info->vat_scheme_id == $vat_scheme->id?"selected": ""}}>{{$vat_scheme->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{-- Place the Business Info section here --}}
+
         <a href="{{route('admin.clients.index')}}" class="btn btn-danger">Back</a>
         <button type="submit" class="btn btn-success pull-right">Update</button>
         </form>
     </div>
 </div>
-   
+<script>
+    var companyNumber =  {{ $client->company_number }};
+</script>
 @endsection

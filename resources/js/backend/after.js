@@ -53,3 +53,11 @@ $('#add-contact-person').click(function(e){
     });
     $('#contactModal').modal('toggle');
 });
+
+import _ from '@chenfengyuan/datepicker';
+require('@chenfengyuan/datepicker/dist/datepicker.min.css');
+$('[data-toggle="datepicker"]').datepicker({
+    format: 'dd-mm-yyyy',
+    autoHide: true
+    }
+);

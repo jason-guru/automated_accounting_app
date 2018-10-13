@@ -17,7 +17,7 @@ class CreateMessageFormatsTable extends Migration
             $table->increments('id');
             $table->text('sms_format');
             $table->text('email_format');
-            $table->boolean('is_active')->nullable(true);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
