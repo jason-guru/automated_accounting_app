@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 window.Vue = Vue;
 Vue.component('business-info', require('./components/BusinessInfoComponent.vue'));
+Vue.component('non-api-business-info', require('./components/NonApiBusinessInfoComponent.vue'));
 export const eventBus = new Vue();
 
 const app = new Vue({

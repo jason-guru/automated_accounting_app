@@ -31,17 +31,18 @@
                             <th>Third Reminder</th>
                             <th>Status</th>
                             <th>Has Reminded</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($reminders as $reminder)
                             <tr>
-                                <td>{{$reminder->client->company_number}}</td>
+                                <td>{{!is_null($reminder->client->company_number) ? $reminder->client->company_number : "Not Assigned" }}</td>
                                 <td>{{$reminder->client->company_name}}</td>
                                 <td>{{$reminder->frequency->name}}</td>
-                                <td>{{$reminder->first_remind}}</td>
-                                <td>{{$reminder->second_remind}}</td>
-                                <td>{{$reminder->third_remind}}</td>
+                                <td>{{!is_null($reminder->first_remind) ? Carbon\Carbon::parse($reminder->first_remind)->format('d-m-Y') : "Not Assigned"}}</td>
+                                <td>{{$reminder->second_remind ? Carbon\Carbon::parse($reminder->second_remind)->format('d-m-Y') : "Not Assigned"}}</td>
+                                <td>{{$reminder->third_remind ? Carbon\Carbon::parse($reminder->third_remind)->format('d-m-Y') : "Not Assigned"}}</td>
                                 <td>{!!$reminder->is_active ? '<span class="bg-success px-2"><b>Active</b></span>' : '<span class="bg-danger px-1"><b>Inactive</b></span>'!!}</td>
                                 @if($reminder->has_reminded == 000)
                                     <td>Not yet</td>
@@ -52,6 +53,7 @@
                                 @elseif($reminder->has_reminded == 111)
                                     <td>Third Sent</td>
                                 @endif
+                                <td>{!!$reminder->action_buttons!!}</td>
                             </tr>
                         @endforeach
                         </tbody>

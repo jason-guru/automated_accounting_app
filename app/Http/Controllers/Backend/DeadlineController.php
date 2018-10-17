@@ -3,72 +3,102 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Backend\DeadlineRequest;
 use App\Http\Controllers\Controller;
-use App\Repositories\Backend\FrequencyRepository;
-use App\Repositories\Backend\ReminderRepository;
+use App\Repositories\Backend\DeadlineRepository;
 use App\Repositories\Backend\MessageFormatRepository;
-use GuzzleHttp\Client;
-use Carbon\Carbon;
-use App\Mail\Backend\ReminderMail;
-use Illuminate\Support\Facades\Mail;
 
 class DeadlineController extends Controller
 {
-    protected $sms_client;
-    protected $sms_api_key;
-    protected $frequency_repository;
-    protected $reminder_repository;
+    protected $deadline_repository;
     protected $message_format_repository;
 
-    public function __construct(FrequencyRepository $frequency_repository, ReminderRepository $reminder_repository, MessageFormatRepository $message_format_repository)
+    public function __construct(DeadlineRepository $deadline_repository, MessageFormatRepository $message_format_repository)
     {
-        $this->sms_api_key = config('services.bulletin_sms.secret');
-        $this->sms_client =  new Client();
-        $this->frequency_repository = $frequency_repository;
-        $this->reminder_repository = $reminder_repository;
+        $this->deadline_repository = $deadline_repository;
         $this->message_format_repository = $message_format_repository;
     }
-    public function format()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $format = $this->message_format_repository->where('is_active', 1)->get()->first();
-        if(!is_null($format)){
-            return view('backend.deadlines.format', compact('format') );
-        }else{
-            return view('backend.deadlines.format');
-        }
+        $deadlines = $this->deadline_repository->where('is_active', 1)->get();
+        return view('backend.deadlines.index', compact('deadlines'));
     }
 
-    public function format_store_update(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $get_format = $this->message_format_repository->where('is_active', 1)->get()->first();
-        if(is_null($get_format)){
-            $this->message_format_repository->create($request->except('_token'));
-        }elseif(!is_null($get_format)){
-            $this->message_format_repository->updateById($get_format->id, $request->except('_token'));
-        }
-        return back()->withFlashSuccess('Format successfully updated');
+        $message_formats = $this->message_format_repository->where('is_active', 1)->get();
+        return view('backend.deadlines.create', compact('message_formats'));
     }
 
-    public function reminders()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(DeadlineRequest $request)
     {
-        $reminders = $this->reminder_repository->paginate(10);
-        return view('backend.deadlines.reminders', compact('reminders'));
+        $this->deadline_repository->create($request->except('_token'));
+        return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Created Successfully.');
     }
 
-    public function frequency()
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $frequencies = $this->frequency_repository->all();
-        return view('backend.deadlines.frequency', compact('frequencies'));
+        $deadline = $this->deadline_repository->where('is_active', 1)->getById($id);
+        return view('backend.deadlines.show', compact('deadline'));
     }
 
-    public function frequency_store(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        $frequency_id = $request->frequency_id;
-        $frequencies = $this->frequency_repository->all();
-        foreach($frequencies as $frequency):
-            $this->frequency_repository->updateById($frequency->id, ['is_active' => 0]);
-        endforeach;
-        $this->frequency_repository->updateById($frequency_id, ['is_active' => 1]);
-        return back()->withFlashSuccess('Frequency updated successfully');
+        $message_formats = $this->message_format_repository->where('is_active', 1)->get();
+        $deadline = $this->deadline_repository->where('is_active', 1)->getById($id);
+        return view('backend.deadlines.edit', compact('deadline', 'message_formats'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(DeadlineRequest $request, $id)
+    {
+        $this->message_format_repository->updateById($id, $request->except('_token'));
+        return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Edited Successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->deadline_repository->deleteById($id);
+        return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Deleted Successfully.');
     }
 }

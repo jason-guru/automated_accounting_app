@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessageFormatsTable extends Migration
+class CreateDeadlinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateMessageFormatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('message_formats', function (Blueprint $table) {
+        Schema::create('deadlines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('sms_format');
-            $table->text('email_format');
+            $table->integer('message_format_id');
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ class CreateMessageFormatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('message_formats');
+        Schema::dropIfExists('deadlines');
     }
 }

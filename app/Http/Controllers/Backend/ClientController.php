@@ -10,12 +10,14 @@ use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\FrequencyRepository;
 use App\Repositories\Backend\ContactPersonRepository;
 use App\Repositories\Backend\BusinessInfoRepository;
-use App\Models\Country;
-use App\Models\CompanyType;
 use Carbon\Carbon;
 use Validator;
 use App\Models\VatScheme;
 use App\Models\VatSubmitType;
+use App\Models\Designation;
+use App\Models\Initial;
+use App\Models\Country;
+use App\Models\CompanyType;
 
 class ClientController extends Controller
 {
@@ -29,6 +31,8 @@ class ClientController extends Controller
     protected $business_info_repository;
     protected $vat_schemes;
     protected $vat_submit_types;
+    protected $designations;
+    protected $initials;
 
     public function __construct(ClientRepository $client_repository, ReminderRepository $reminder_repository, FrequencyRepository $frequency_repository, ContactPersonRepository $contact_person_repository, BusinessInfoRepository $business_info_repository)
     {
@@ -37,6 +41,8 @@ class ClientController extends Controller
         $this->company_types = CompanyType::all();
         $this->vat_schemes = VatScheme::all();
         $this->vat_submit_types = VatSubmitType::all();
+        $this->designations = Designation::all();
+        $this->initials = Initial::all();
         $this->reminder_repository = $reminder_repository;
         $this->frequency_repository = $frequency_repository;
         $this->contact_person_repository = $contact_person_repository;
@@ -61,8 +67,19 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        
+    {   
+        try{
+            $countries = $this->countries;
+            $company_types = $this->company_types;
+            $designations = $this->designations;
+            $initials = $this->initials;
+            $vat_schemes = $this->vat_schemes;
+            $vat_submit_types = $this->vat_submit_types;
+            return view('backend.clients.create', compact('countries', 'company_types', 'designations', 'initials', 'vat_schemes', 'vat_submit_types'));
+        }catch(\Exception $exception)
+        {
+            return $exception->getMessage();
+        }
     }
 
     /**
@@ -73,6 +90,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['accounts_next_due' => Carbon::parse($request->accounts_next_due)->format('Y-m-d')]);
         $client = $this->client_repository->create($request->except('_token', 'designation_id', 'initial_id', 'first_name', 'middle_name', 'last_name', 'contact_email', 'contact_phone', 'contact_address_line_1', 'contact_address_line_2', 'contact_city', 'contact_postcode', 'contact_county', 'contact_country_id'));
 
         if(is_array($request->first_name)):
@@ -113,7 +131,7 @@ class ClientController extends Controller
             'vat_reg_number' => $request->vat_reg_number,
             'vat_reg_date' => !is_null($request->vat_reg_date) ? Carbon::parse($request->vat_reg_date)->format('Y-m-d') : null,
             'social_media' => $request->social_media,
-            'last_bookkeeping_done' => Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d'),
+            'last_bookkeeping_done' => !is_null($request->last_bookkeeping_done) ? Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d') : null,
             'utr' => $request->utr
         ]);
 

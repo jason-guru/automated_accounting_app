@@ -1,0 +1,48 @@
+@extends('backend.layouts.app')
+
+@section('title', app_name() . ' | ' . __('labels.backend.access.users.management'))
+
+@section('breadcrumb-links')
+    @include('backend.auth.user.includes.breadcrumb-links')
+@endsection
+
+@section('content')
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-7">
+                <h4 class="card-title mb-0">
+                    Edit Format
+                </h4>
+            </div><!--col-->
+        </div><!--row-->
+        <hr>
+        <form action="{{route('admin.message-formats.update', ['id' => $message_format->id])}}" method="post">
+            @csrf
+            @method('PUT')
+                <div class="form-group mt-4">
+                    <label for="" class=" col-form-label">Name: <span class="text-danger">*</span></label>
+                    <input type="text" name="name" id="" class="form-control" value="{{$message_format->name}}">
+                    <input type="hidden" name="id" value="{{$message_format->id}}">
+                </div>
+                <div class="form-group">
+                    <label for=""  class="col-form-label">SMS Body: <span class="text-danger">*</span></label>
+                    <textarea name="sms_format" id="" cols="30" rows="10" class="form-control">{{$message_format->sms_format}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for=""  class="col-form-label">Email Body: <span class="text-danger">*</span></label>
+                    <textarea name="email_format" id="" cols="30" rows="10" class="form-control">{{$message_format->email_format}}</textarea>
+                </div>
+                <div class="form-group"><button type="submit" class="btn btn-success pull-right">Update</button></div>
+        </form>
+    </div><!--card-body-->
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Instruction:</h5>
+                <p id="formatHelp" class="form-text text-muted">The <b>first %s</b> in the sms & mail body is used to denote the <b>client's company name</b>. And the <b>second %s</b> is used to denote the next <b>accounts due date</b>. <br> <i>Example:</i> Hello %s, this is an account filing reminder. Your account's next due date is on %s. <br><i>Ouput:</i> Hello XYZ Corp, this is a account filing reminder. Your account's next due date is on 31-05-2020.</p>
+            </div>
+        </div>
+    </div>
+    </div><!--card-->
+@endsection

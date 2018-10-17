@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\Backend\FrequencyRepository;
+use App\Repositories\Backend\ReminderRepository;
+use App\Repositories\Backend\MessageFormatRepository;
+use GuzzleHttp\Client;
+use Carbon\Carbon;
+use App\Mail\Backend\ReminderMail;
+use Illuminate\Support\Facades\Mail;
+
+class DeadlineController extends Controller
+{
+    protected $sms_client;
+    protected $sms_api_key;
+    protected $frequency_repository;
+    protected $reminder_repository;
+    protected $message_format_repository;
+
+    public function __construct(FrequencyRepository $frequency_repository, ReminderRepository $reminder_repository, MessageFormatRepository $message_format_repository)
+    {
+        $this->sms_api_key = config('services.bulletin_sms.secret');
+        $this->sms_client =  new Client();
+        $this->frequency_repository = $frequency_repository;
+        $this->reminder_repository = $reminder_repository;
+        $this->message_format_repository = $message_format_repository;
+    }
+    public function format()
+    {
+        $format = $this->message_format_repository->where('is_active', 1)->get()->first();
+        if(!is_null($format)){
+            return view('backend.deadlines.format', compact('format') );
+        }else{
+            return view('backend.deadlines.format');
+        }
+    }
+
+    public function format_store_update(Request $request)
+    {
+        $get_format = $this->message_format_repository->where('is_active', 1)->get()->first();
+        if(is_null($get_format)){
+            $this->message_format_repository->create($request->except('_token'));
+        }elseif(!is_null($get_format)){
+            $this->message_format_repository->updateById($get_format->id, $request->except('_token'));
+        }
+        return back()->withFlashSuccess('Format successfully updated');
+    }
+
+    public function frequency()
+    {
+        $frequencies = $this->frequency_repository->all();
+        return view('backend.deadlines.frequency', compact('frequencies'));
+    }
+
+    public function frequency_store(Request $request)
+    {
+        $frequency_id = $request->frequency_id;
+        $frequencies = $this->frequency_repository->all();
+        foreach($frequencies as $frequency):
+            $this->frequency_repository->updateById($frequency->id, ['is_active' => 0]);
+        endforeach;
+        $this->frequency_repository->updateById($frequency_id, ['is_active' => 1]);
+        return back()->withFlashSuccess('Frequency updated successfully');
+    }
+}

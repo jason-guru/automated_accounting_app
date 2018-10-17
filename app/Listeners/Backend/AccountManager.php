@@ -63,7 +63,7 @@ class AccountManager
                 //update the record
                 $this->client_repository->updateById($client->id, ['accounts_next_due' => $client_data['accounts_next_due']]);
                 $active_frequency = $this->frequency_repository->where('is_active', 1)->get()->first();
-                $get_reminder_id = $this->reminder_repository->where('client_id', $client->id)->get()->first()->id;
+                $get_reminder_id = $this->reminder_repository->where('client_id', $client->id)->where('manual_mode', 0)->get()->first()->id;
 
                 $this->reminder_repository->set_reminders($client->id, $client_data['accounts_next_due'], $active_frequency, $get_reminder_id);
             endif;

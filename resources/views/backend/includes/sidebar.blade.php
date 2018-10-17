@@ -29,25 +29,37 @@
                 </a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.reminders') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
-                            Reminders
+                        <a href="{{ route('admin.deadlines.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
+                            Manage Deadlines
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/reminders*'), 'open') }}">
+                <a href="#" class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon icon-clock"></i> Reminders
+                </a>
+                <ul class="nav-dropdown-items">
                     <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.frequency') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
-                            Frequency
+                        <a href="{{ route('admin.reminders.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/reminders')) }}">
+                            Manage Reminders
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/message-formats*'), 'open') }}">
+                <a href="#" class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon icon-envelope"></i>Formats
+                </a>
+                <ul class="nav-dropdown-items">
                     <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.format') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
-                            Format Settings
+                        <a href="{{ route('admin.message-formats.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/message-formats')) }}">
+                            Manage Formats
                         </a>
                     </li>
                 </ul>
             </li>
             @endif
-
-            
 
             <li class="nav-title">
                 @lang('menus.backend.sidebar.system')

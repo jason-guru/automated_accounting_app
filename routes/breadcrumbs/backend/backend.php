@@ -8,6 +8,12 @@ Breadcrumbs::for('admin.clients.index', function ($trail) {
     $trail->parent('admin.dashboard');
     $trail->push(__('strings.backend.clients.title'), route('admin.clients.index'));
 });
+
+Breadcrumbs::for('admin.clients.create', function ($trail) {
+    $trail->parent('admin.clients.index');
+    $trail->push('Create Client', route('admin.clients.create'));
+});
+
 Breadcrumbs::for('admin.clients.show', function ($trail, $id) {
     $trail->parent('admin.clients.index');
     $trail->push('View Client', route('admin.clients.show', ['id' => $id]));
@@ -41,20 +47,57 @@ Breadcrumbs::for('admin.contact-person.show', function ($trail, $id) {
     $trail->push('Show Contact Person', route('admin.contact-person.show', ['id' => $id]));
 });
 
-Breadcrumbs::for('admin.deadlines.format', function ($trail) {
+Breadcrumbs::for('admin.deadlines.index', function ($trail) {
     $trail->parent('admin.dashboard');
-    $trail->push('Format Settings', route('admin.deadlines.format'));
+    $trail->push("Manage Deadlines", route('admin.deadlines.index'));
 });
 
-Breadcrumbs::for('admin.deadlines.reminders', function ($trail) {
+Breadcrumbs::for('admin.deadlines.create', function ($trail) {
+    $trail->parent('admin.deadlines.index');
+    $trail->push("Create Deadline", route('admin.deadlines.create'));
+});
+Breadcrumbs::for('admin.deadlines.edit', function ($trail, $id) {
+    $trail->parent('admin.deadlines.index');
+    $trail->push("Edit Deadline", route('admin.deadlines.edit', ['id' => $id]));
+});
+Breadcrumbs::for('admin.deadlines.show', function ($trail, $id) {
+    $trail->parent('admin.deadlines.index');
+    $trail->push("View Deadline", route('admin.deadlines.show', ['id' => $id]));
+});
+
+Breadcrumbs::for('admin.reminders.index', function ($trail) {
     $trail->parent('admin.dashboard');
-    $trail->push(__('strings.backend.deadlines.reminders.title'), route('admin.deadlines.reminders'));
+    $trail->push(__('strings.backend.deadlines.reminders.title'), route('admin.reminders.index'));
+});
+
+Breadcrumbs::for('admin.reminders.edit', function ($trail, $id) {
+    $trail->parent('admin.reminders.index');
+    $trail->push('Edit Reminder', route('admin.reminders.edit', ['id' => $id]));
 });
 
 Breadcrumbs::for('admin.deadlines.frequency', function ($trail) {
     $trail->parent('admin.dashboard');
     $trail->push(__('strings.backend.deadlines.frequency.title'), route('admin.deadlines.frequency'));
 });
+
+Breadcrumbs::for('admin.message-formats.index', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Message Formats', route('admin.message-formats.index'));
+});
+
+Breadcrumbs::for('admin.message-formats.create', function ($trail) {
+    $trail->parent('admin.message-formats.index');
+    $trail->push('Create New format', route('admin.message-formats.create'));
+});
+Breadcrumbs::for('admin.message-formats.edit', function ($trail, $id) {
+    $trail->parent('admin.message-formats.index');
+    $trail->push('Edit New format', route('admin.message-formats.edit', ['id' => $id]));
+});
+Breadcrumbs::for('admin.message-formats.show', function ($trail, $id) {
+    $trail->parent('admin.message-formats.index');
+    $trail->push('View Format', route('admin.message-formats.show', ['id' => $id]));
+});
+
 
 require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';

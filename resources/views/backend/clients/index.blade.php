@@ -38,7 +38,7 @@
                                         <tbody>
                                             @foreach ($clients as $client)
                                             <tr>
-                                                <td>{{$client->company_number}}</td>
+                                                <td>{{is_null($client->company_number)? "Not Assigned" : $client->company_number }}</td>
                                                 <td>{{$client->company_name}}</td>
                                                 <td>{{$client->company_type->name}}</td>
                                                 <td>{{$client->email}}</td>
