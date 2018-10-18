@@ -2621,7 +2621,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ReminderFormComponent.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2670,10 +2670,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['deadlines'],
+    props: ['deadlines', 'clients'],
     data: function data() {
         return {
             rows: []
@@ -2683,19 +2698,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var deadlinesCount = this.deadlines.length;
         var self = this;
         for (var i = 0; i < deadlinesCount; i++) {
-            self.rows[i] = [];
+            self.$set(self.rows, i, []);
         };
     },
     methods: {
         addDateRow: function addDateRow(key) {
             var elem = document.createElement('tr');
             this.rows[key].push({
-                date: ""
+                date: ''
             });
         },
-        removeElement: function removeElement(ind) {
-
-            this.rows.splice(ind, 1);
+        removeElement: function removeElement(index, index1) {
+            this.rows[index1].splice(this.index, 1);
         }
     }
 });
@@ -2747,7 +2761,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ac98c07\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderFormComponent.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
@@ -2755,7 +2769,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\ntr#reminder-date-tr td[data-v-debe755e]{\n    padding: 0 !important;\n    vertical-align: middle !important;\n    border-top: none !important;\n}\n", ""]);
+exports.push([module.i, "\ntr#reminder-date-tr td[data-v-4ac98c07]{\n    padding: 0 !important;\n    vertical-align: middle !important;\n    border-top: none !important;\n}\n", ""]);
 
 // exports
 
@@ -23247,85 +23261,129 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-debe755e\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4ac98c07\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ReminderFormComponent.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "table-responsive" }, [
-    _c("table", { staticClass: "table" }, [
+  return _c("span", [
+    _c("div", { staticClass: "form-group mt-4" }, [
       _vm._m(0),
       _vm._v(" "),
       _c(
-        "tbody",
-        _vm._l(_vm.deadlines, function(deadline, index1) {
-          return _c("tr", { key: index1 }, [
-            _c("td", [_vm._v(_vm._s(deadline.name))]),
-            _vm._v(" "),
-            _c("td", [
-              _c("input", {
-                attrs: { type: "hidden", name: "deadline_id" },
-                domProps: { value: deadline.id }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control col-md-5",
-                attrs: { type: "date", name: "remind_date[]" }
-              }),
-              _vm._v(" "),
-              _c("table", [
-                _c(
-                  "tbody",
-                  _vm._l(_vm.rows[index1], function(row, index) {
-                    return _c(
-                      "tr",
-                      { key: index, attrs: { id: "reminder-date-tr" } },
-                      [
-                        _vm._m(1, true),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "text-danger",
-                              staticStyle: { cursor: "pointer" },
-                              on: {
-                                click: function($event) {
-                                  _vm.removeElement(index)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-trash ml-2" })]
-                          )
-                        ])
-                      ]
-                    )
-                  })
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.addDateRow(index1)
-                    }
-                  }
-                },
-                [_vm._v("Add More")]
-              )
-            ])
+        "select",
+        { staticClass: "form-control", attrs: { name: "client_id", id: "" } },
+        _vm._l(_vm.clients, function(client, key) {
+          return _c("option", { key: key, domProps: { value: client.id } }, [
+            _vm._v(_vm._s(client.company_name))
           ])
         })
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "table-responsive" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.deadlines, function(deadline, index1) {
+            return _c("tr", { key: index1 }, [
+              _c("td", [_vm._v(_vm._s(deadline.name))]),
+              _vm._v(" "),
+              _c("td", [
+                _c("input", {
+                  attrs: { type: "hidden", name: "deadline_id" },
+                  domProps: { value: deadline.id }
+                }),
+                _vm._v(" "),
+                _vm._m(2, true),
+                _vm._v(" "),
+                _c("table", [
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.rows[index1], function(row, index) {
+                      return _c(
+                        "tr",
+                        {
+                          key: index,
+                          attrs: { id: "reminder-date-tr", innerIndex: index }
+                        },
+                        [
+                          _c("td", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: row.date,
+                                  expression: "row.date"
+                                }
+                              ],
+                              staticClass: "form-control mt-2",
+                              attrs: { type: "date", name: "remind_date[]" },
+                              domProps: { value: row.date },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(row, "date", $event.target.value)
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-danger",
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.removeElement(index, index1)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash ml-2" })]
+                            )
+                          ])
+                        ]
+                      )
+                    })
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.addDateRow(index1)
+                      }
+                    }
+                  },
+                  [_vm._v("Add More")]
+                )
+              ])
+            ])
+          })
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("input", {
+      attrs: { type: "hidden", name: "has_reminded", value: "0" }
+    }),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -23333,17 +23391,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("label", { staticClass: " col-form-label", attrs: { for: "" } }, [
+      _vm._v("Select Client: "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [
-          _vm._v("\r\n                    Deadline\r\n                ")
+          _vm._v("\r\n                        Deadline\r\n                    ")
         ]),
         _vm._v(" "),
         _c("th", [
-          _vm._v("\r\n                    Reminder Dates\r\n                ")
+          _vm._v(
+            "\r\n                        Reminder Dates\r\n                    "
+          )
         ]),
         _vm._v(" "),
-        _c("th", [_vm._v("\r\n                    Action\r\n                ")])
+        _c("th", [
+          _vm._v("\r\n                        Action\r\n                    ")
+        ])
       ])
     ])
   },
@@ -23351,11 +23422,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
+    return _c("div", { staticClass: "input-group mb-3" }, [
       _c("input", {
-        staticClass: "form-control mt-2",
+        staticClass: "form-control col-md-5",
         attrs: { type: "date", name: "remind_date[]" }
-      })
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group-append" }, [
+        _c(
+          "span",
+          { staticClass: "input-group-text", attrs: { id: "basic-addon2" } },
+          [_vm._v("Required")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success pull-right",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("Save")]
+      )
     ])
   }
 ]
@@ -23364,7 +23458,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-debe755e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4ac98c07", module.exports)
   }
 }
 
@@ -23424,23 +23518,23 @@ if(false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ac98c07\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderFormComponent.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue");
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ac98c07\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderFormComponent.vue");
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("1aa00eed", content, false, {});
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("ce236db4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReminderTableComponent.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReminderTableComponent.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ac98c07\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReminderFormComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ac98c07\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReminderFormComponent.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -34767,7 +34861,7 @@ window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('non-api-business-info', __webpack_require__("./resources/js/backend/components/NonApiBusinessInfoComponent.vue"));
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-table', __webpack_require__("./resources/js/backend/components/ReminderTableComponent.vue"));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-form', __webpack_require__("./resources/js/backend/components/ReminderFormComponent.vue"));
 
 var eventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
@@ -34910,25 +35004,25 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ "./resources/js/backend/components/ReminderFormComponent.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue")
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ac98c07\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderFormComponent.vue")
 }
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ReminderTableComponent.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ReminderFormComponent.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-debe755e\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ReminderTableComponent.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4ac98c07\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ReminderFormComponent.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-debe755e"
+var __vue_scopeId__ = "data-v-4ac98c07"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -34939,7 +35033,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\js\\backend\\components\\ReminderTableComponent.vue"
+Component.options.__file = "resources\\js\\backend\\components\\ReminderFormComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -34948,9 +35042,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-debe755e", Component.options)
+    hotAPI.createRecord("data-v-4ac98c07", Component.options)
   } else {
-    hotAPI.reload("data-v-debe755e", Component.options)
+    hotAPI.reload("data-v-4ac98c07", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

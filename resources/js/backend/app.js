@@ -7,7 +7,7 @@ window.Vue = Vue;
 
 Vue.component('business-info', require('./components/BusinessInfoComponent.vue'));
 Vue.component('non-api-business-info', require('./components/NonApiBusinessInfoComponent.vue'));
-Vue.component('reminder-table', require('./components/ReminderTableComponent.vue'));
+Vue.component('reminder-form', require('./components/ReminderFormComponent.vue'));
 
 export const eventBus = new Vue();
 

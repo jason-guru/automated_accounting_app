@@ -15,7 +15,7 @@ class CreateReminderDatesTable extends Migration
     {
         Schema::create('reminder_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('remind_date');
+            $table->date('remind_date')->nullable(true);
             $table->timestamps();
         });
     }
