@@ -36,6 +36,7 @@ dom.watch();
 window.$ = window.jQuery = $;
 window.swal = swal;
 window._ = _; // Lodash
+window.datepicker = require('@chenfengyuan/datepicker');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

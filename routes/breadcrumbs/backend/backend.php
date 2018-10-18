@@ -70,6 +70,11 @@ Breadcrumbs::for('admin.reminders.index', function ($trail) {
     $trail->push(__('strings.backend.deadlines.reminders.title'), route('admin.reminders.index'));
 });
 
+Breadcrumbs::for('admin.reminders.create', function ($trail) {
+    $trail->parent('admin.reminders.index');
+    $trail->push('Create Reminder', route('admin.reminders.create'));
+});
+
 Breadcrumbs::for('admin.reminders.edit', function ($trail, $id) {
     $trail->parent('admin.reminders.index');
     $trail->push('Edit Reminder', route('admin.reminders.edit', ['id' => $id]));

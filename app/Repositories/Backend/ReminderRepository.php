@@ -5,6 +5,7 @@ namespace App\Repositories\Backend;
 use App\Repositories\BaseRepository;
 use App\Models\Reminder;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class ReminderRepository.
@@ -51,4 +52,44 @@ class ReminderRepository extends BaseRepository
             parent::updateById($reminder_id, $prep_data);
         endif;
     }
+
+    public function get_reminders()
+    {
+        $reminders = $this->model->all();
+        $reminder_data= collect([]);
+        foreach($reminders as $reminder){
+            $client_id = $reminder->client_id;
+            $company_name = $reminder->company_name;
+            $total_reminders = $this->model->where('client_id', $client_id)->get()->count();
+            $total_reminded = $this->model->where('client_id', $client_id)->where('has_reminded')->get()->count();
+            $reminder_data[$client_id] =[
+                'client_id' => $client_id,
+                'company_name' => $company_name,
+                'total_reminders' => $total_reminders,
+                'total_reminded' => $total_reminded,
+                'actions' => $this->model->action_buttons
+            ];
+        }
+        return $this->manual_paginate($reminder_data)->setPath('reminders');
+    }
+
+    /**
+     * Create a length aware custom paginator instance.
+     *
+     * @param  Collection  $items
+     * @param  int  $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function manual_paginate($items, $perPage = 10)
+    {
+        //Get current page form url e.g. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        //Slice the collection to get the items to display in current page
+        $currentPageItems = $items->slice(($currentPage - 1) * $perPage, $perPage);
+
+        //Create our paginator and pass it to the view
+        return new LengthAwarePaginator($currentPageItems, count($items), $perPage);
+    }
+
 }

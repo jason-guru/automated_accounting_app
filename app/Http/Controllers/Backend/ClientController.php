@@ -136,8 +136,8 @@ class ClientController extends Controller
         ]);
 
         //set the reminder table data
-        $active_frequency = $this->frequency_repository->where('is_active', 1)->first();
-        $this->reminder_repository->set_reminders($client->id, $client->accounts_next_due, $active_frequency);
+        // $active_frequency = $this->frequency_repository->where('is_active', 1)->first();
+        // $this->reminder_repository->set_reminders($client->id, $client->accounts_next_due, $active_frequency);
         return redirect()->route('admin.clients.index')->withFlashSuccess('Client created successfully');
     }
 

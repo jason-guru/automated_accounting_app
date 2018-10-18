@@ -23,18 +23,6 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/deadlines*'), 'open') }}">
-                <a href="#" class="nav-link nav-dropdown-toggle">
-                    <i class="nav-icon icon-cursor"></i> Deadlines
-                </a>
-                <ul class="nav-dropdown-items">
-                    <li class="nav-items">
-                        <a href="{{ route('admin.deadlines.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
-                            Manage Deadlines
-                        </a>
-                    </li>
-                </ul>
-            </li>
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/reminders*'), 'open') }}">
                 <a href="#" class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon icon-clock"></i> Reminders
@@ -47,6 +35,22 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-title">
+                   Master Settings
+                </li>
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/deadlines*'), 'open') }}">
+                <a href="#" class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon icon-cursor"></i> Deadlines
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-items">
+                        <a href="{{ route('admin.deadlines.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/deadlines')) }}">
+                            Manage Deadlines
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/message-formats*'), 'open') }}">
                 <a href="#" class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon icon-envelope"></i>Formats

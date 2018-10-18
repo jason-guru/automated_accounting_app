@@ -9,7 +9,7 @@ class Reminder extends Model
 {
     use ReminderAttribute;
     protected $fillable = [
-        'client_id', 'frequency_id','first_remind', 'second_remind', 'third_remind', 'is_active', 'has_reminded'
+        'client_id', 'is_active', 'has_reminded', 'deadline_id', 'reminder_date_id'
     ];
 
     public function client()

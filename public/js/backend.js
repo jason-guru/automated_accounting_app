@@ -4,6 +4,7 @@ webpackJsonp([0],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__("./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /*!
@@ -2620,6 +2621,87 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['deadlines'],
+    data: function data() {
+        return {
+            rows: []
+        };
+    },
+    beforeMount: function beforeMount() {
+        var deadlinesCount = this.deadlines.length;
+        var self = this;
+        for (var i = 0; i < deadlinesCount; i++) {
+            self.rows[i] = [];
+        };
+    },
+    methods: {
+        addDateRow: function addDateRow(key) {
+            var elem = document.createElement('tr');
+            this.rows[key].push({
+                date: ""
+            });
+        },
+        removeElement: function removeElement(ind) {
+
+            this.rows.splice(ind, 1);
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2659,6 +2741,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntr#reminder-date-tr td[data-v-debe755e]{\n    padding: 0 !important;\n    vertical-align: middle !important;\n    border-top: none !important;\n}\n", ""]);
 
 // exports
 
@@ -23150,6 +23247,129 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-debe755e\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.deadlines, function(deadline, index1) {
+          return _c("tr", { key: index1 }, [
+            _c("td", [_vm._v(_vm._s(deadline.name))]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                attrs: { type: "hidden", name: "deadline_id" },
+                domProps: { value: deadline.id }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control col-md-5",
+                attrs: { type: "date", name: "remind_date[]" }
+              }),
+              _vm._v(" "),
+              _c("table", [
+                _c(
+                  "tbody",
+                  _vm._l(_vm.rows[index1], function(row, index) {
+                    return _c(
+                      "tr",
+                      { key: index, attrs: { id: "reminder-date-tr" } },
+                      [
+                        _vm._m(1, true),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "text-danger",
+                              staticStyle: { cursor: "pointer" },
+                              on: {
+                                click: function($event) {
+                                  _vm.removeElement(index)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-trash ml-2" })]
+                          )
+                        ])
+                      ]
+                    )
+                  })
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.addDateRow(index1)
+                    }
+                  }
+                },
+                [_vm._v("Add More")]
+              )
+            ])
+          ])
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [
+          _vm._v("\r\n                    Deadline\r\n                ")
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v("\r\n                    Reminder Dates\r\n                ")
+        ]),
+        _vm._v(" "),
+        _c("th", [_vm._v("\r\n                    Action\r\n                ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control mt-2",
+        attrs: { type: "date", name: "remind_date[]" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-debe755e", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0e6aa6cf\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/BusinessInfoComponent.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23194,6 +23414,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-18669942\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NonApiBusinessInfoComponent.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-18669942\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NonApiBusinessInfoComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("1aa00eed", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReminderTableComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReminderTableComponent.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -34435,11 +34682,8 @@ module.exports = Vue;
 /***/ }),
 
 /***/ "./resources/js/backend/after.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__chenfengyuan_datepicker__ = __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.esm.js");
 // Loaded after CoreUI app.js
 $('.switch-input').change(function () {
     var clientId = $(this).data('id');
@@ -34496,10 +34740,8 @@ $('#add-contact-person').click(function (e) {
     $('#contactModal').modal('toggle');
 });
 
-
-__webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css");
 $('[data-toggle="datepicker"]').datepicker({
-    format: 'dd-mm-yyyy',
+    format: 'dd-m-yyyy',
     autoHide: true
 });
 
@@ -34515,16 +34757,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coreui_coreui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__coreui_coreui__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chenfengyuan_datepicker__ = __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.esm.js");
 
 
+
+__webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css");
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
+
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('non-api-business-info', __webpack_require__("./resources/js/backend/components/NonApiBusinessInfoComponent.vue"));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-table', __webpack_require__("./resources/js/backend/components/ReminderTableComponent.vue"));
+
 var eventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
 var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
-    el: '#search-result',
+    el: '#back-app',
+    beforeMount: function beforeMount() {},
     methods: {
         companyTypeChanged: function companyTypeChanged(e) {
             eventBus.$emit('type', e.target.value);
@@ -34661,6 +34910,58 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/js/backend/components/ReminderTableComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-debe755e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ReminderTableComponent.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ReminderTableComponent.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-debe755e\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ReminderTableComponent.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-debe755e"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\js\\backend\\components\\ReminderTableComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-debe755e", Component.options)
+  } else {
+    hotAPI.reload("data-v-debe755e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -34719,6 +35020,7 @@ __WEBPACK_IMPORTED_MODULE_6__fortawesome_fontawesome_svg_core__["dom"].watch();
 window.$ = window.jQuery = __WEBPACK_IMPORTED_MODULE_3_jquery___default.a;
 window.swal = __WEBPACK_IMPORTED_MODULE_2_sweetalert2___default.a;
 window._ = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a; // Lodash
+window.datepicker = __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.esm.js");
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

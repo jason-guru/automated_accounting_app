@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRemindersTable extends Migration
+class CreateReminderDatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateRemindersTable extends Migration
      */
     public function up()
     {
-        Schema::create('reminders', function (Blueprint $table) {
+        Schema::create('reminder_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id');
-            $table->integer('deadline_id');
-            $table->integer('reminder_date_id');
-            $table->boolean('has_reminded');
-            $table->boolean('is_active')->default(true);
+            $table->date('remind_date');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateRemindersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reminders');
+        Schema::dropIfExists('reminder_dates');
     }
 }
