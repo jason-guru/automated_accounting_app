@@ -1,12 +1,46 @@
 <template>
 <span>
     <div class="form-group mt-4">
-        <label for="" class=" col-form-label">Select Client: <span class="text-danger">*</span></label>
+        <label for="" class="col-form-label">Select Client: <span class="text-danger">*</span></label>
         <select name="client_id" id="" class="form-control">
-            <option v-for="(client, key) in clients" :key="key" :value="client.id">{{client.company_name}}</option>
+            <option v-if="clients.length == 0" value="" disabled selected><span class="text-danger"> No Clients found. Please create a client first.</span></option>
+            <option v-else v-for="(client, key) in clients" :key="key" :value="client.id">{{client.company_name}}</option>
         </select>
     </div>
-    <div class="table-responsive">
+    <div class="form-group mb-1">
+        <label for="" class="col-form-label">Applicable deadlines:</label>
+        <small class="text-dark"><br>Toogle the switch here to remove any deadlines that is not needed, in this reminder.</small>
+    </div>
+    <span v-if="deadlines.length > 0">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Deadlines</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(deadline, indexSwitch) in deadlines" :key="indexSwitch">
+                        <td>
+                            {{deadline.name}}
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label class="switch switch-label switch-pill switch-success mr-2">
+                                <input class="switch-input" type="checkbox" @change="switchChanged(indexSwitch)" v-model="checked[indexSwitch]">
+                                    <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+        
+    </span>
+    <span v-else class="text-danger">No Dealines found. Please create a deadline first in Master Settings</span>
+    <div class="table-responsive mt-2">
         <table class="table">
             <thead>
                 <tr>
@@ -22,12 +56,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(deadline,index1) in deadlines" :key="index1">
+                <tr v-for="(deadline,index1) in deadlines" :key="index1" v-if="checked[index1]">
                     <td>{{deadline.name}}</td>
                     <td>
-                        <input type="hidden" name="deadline_id" :value="deadline.id">
+                        
                         <div class="input-group mb-3">
-                            <input type="date" name="remind_date[]" class="form-control col-md-5">
+                            <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
+                            <input type="date" :name="'reminders_data['+index1+'][]'" class="form-control col-md-5">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="basic-addon2">Required</span>
                             </div>
@@ -36,7 +71,8 @@
                             <tbody>
                                 <tr id="reminder-date-tr" v-for="(row, index) in rows[index1]" :key="index" :innerIndex="index">
                                     <td> 
-                                        <input type="date" name="remind_date[]" class="form-control mt-2" v-model="row.date">
+                                        <input type="date" :name="'reminders_data['+index1+'][]'" class="form-control mt-2" v-model="row.date">
+                                        <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
                                     </td>
                                     <td>
                                         <a v-on:click="removeElement(index, index1);" style="cursor: pointer" class="text-danger"><i class="fa fa-trash ml-2"></i></a>
@@ -64,13 +100,15 @@ export default {
     data: function(){
         return {
             rows: [],
+            checked: []
         }
     },
     beforeMount: function(){
         var deadlinesCount = this.deadlines.length;
         var self = this;
         for(var i = 0; i<deadlinesCount; i++){
-            self.$set(self.rows, i, [])
+            self.$set(self.rows, i, []);
+            self.$set(self.checked, i, true);
         };
     },
     methods: {
@@ -82,6 +120,15 @@ export default {
         },
         removeElement: function(index, index1){
             this.rows[index1].splice(this.index, 1);
+        },
+        switchChanged: function(indexSwitch){
+            console.log(this.checked[indexSwitch]);
+            if(this.checked[indexSwitch] == false){
+                
+            }else{
+                this.deadlines.splice(indexSwitch,0);
+            }
+            
         }
     },
 }

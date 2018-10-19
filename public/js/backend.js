@@ -2503,6 +2503,205 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/EnvEditor.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            loadButton: true,
+            alertsuccess: 0,
+            alertmessage: '',
+            views: [{ name: 'Overview', active: 1, slug: 'overview' }, { name: 'Add New', active: 0, slug: 'addnew' }, { name: 'Back up', active: 0, slug: 'backups' }, { name: 'Upload', active: 0, slug: 'upload' }],
+            newEntry: {
+                key: "",
+                value: ""
+            },
+            details: {},
+            currentBackup: {
+                timestamp: ''
+            },
+            toEdit: {},
+            toDelete: {},
+            deleteModal: {
+                title: '',
+                content: ''
+            },
+
+            entries: []
+        };
+    },
+
+    props: ['url'],
+
+    methods: {
+        loadEnv: function loadEnv() {
+            var _this = this;
+
+            this.loadButton = false;
+            axios.get('/' + this.url + '/getdetails').then(function (response) {
+                _this.entries = response.data;
+            });
+        },
+        setActiveView: function setActiveView(viewName) {
+            $.each(this.views, function (key, value) {
+                if (value.name == viewName) {
+                    value.active = 1;
+                } else {
+                    value.active = 0;
+                }
+            });
+        },
+        addNew: function addNew() {
+            var _this2 = this;
+
+            if (this.settings('enable_demo')) {
+                swal('Not allowed in Demo mode');
+                return;
+            }
+            var newkey = this.newEntry.key;
+            var newvalue = this.newEntry.value;
+            axios.post('/' + this.url + '/add', {
+                key: newkey,
+                value: newvalue
+            }).then(function (response) {
+                _this2.entries.push({
+                    key: newkey,
+                    value: newvalue
+                });
+                var msg = "Entry added successfully";
+                _this2.showAlert("success", msg);
+                _this2.alertsuccess = 1;
+                $("#newkey").val("");
+                _this2.newEntry.key = "";
+                _this2.newEntry.value = "";
+                $("#newvalue").val("");
+                $('#newkey').focus();
+            });
+        },
+        editEntry: function editEntry(entry) {
+            if (this.settings('enable_demo')) {
+                swal('Not allowed in Demo mode');
+                return;
+            }
+            this.toEdit = {};
+            this.toEdit = entry;
+            $('#editModal').modal('show');
+        },
+        updateEntry: function updateEntry() {
+            var _this3 = this;
+
+            if (this.settings('enable_demo')) {
+                swal('Not allowed in Demo mode');
+                return;
+            }
+            console.log();
+            axios.post('/' + this.url + '/update', {
+                key: this.toEdit.key,
+                value: this.toEdit.value
+            }).then(function () {
+                var msg = "Entry edited successfully";
+                _this3.showAlert("success", msg);
+                $('#editModal').modal('hide');
+            }).catch(function (err) {
+                console.log(err);
+            });
+
+            /*
+            
+            var vm = this;
+            $.ajax({
+                url: "/{{ $url }}/update",
+                type: "post",
+                data: {
+                    _token: this.token,
+                    key: vm.toEdit.key,
+                    value: vm.toEdit.value
+                },
+                success: function(){
+                    var msg = "{{ trans('dotenv-editor::views.entry_edited') }}";
+                    vm.showAlert("success", msg);
+                    $('#editModal').modal('hide');
+                }
+            })*/
+        },
+        makeBackup: function makeBackup() {
+            var _this4 = this;
+
+            axios.get('/' + this.url + '/createbackup').then(function () {
+                _this4.showAlert('success', "Backup created successfully");
+            });
+        },
+        showBackupDetails: function showBackupDetails(timestamp, formattedtimestamp) {
+            var _this5 = this;
+
+            this.currentBackup.timestamp = timestamp;
+            axios.get('/' + this.url + '/getdetails/' + timestamp).then(function (items) {
+                _this5.details = items;
+                $('#showDetails').modal('show');
+            });
+        },
+        restoreBackup: function restoreBackup(timestamp) {
+            var _this6 = this;
+
+            if (this.settings('enable_demo')) {
+                swal('Not allowed in Demo mode');
+                return;
+            }
+            axios.get('/' + this.url + '/restore/' + timestamp).then(function (items) {
+                _this6.loadEnv();
+                $('#showDetails').modal('hide');
+                _this6.setActiveView('overview');
+                _this6.showAlert('success', 'Backup restored successfully');
+            });
+        },
+        deleteEntry: function deleteEntry() {
+            var _this7 = this;
+
+            if (this.settings('enable_demo')) {
+                swal('Not allowed in Demo mode');
+                return;
+            }
+            var entry = this.toDelete;
+            axios.post('/' + this.url + '/delete', {
+                _token: this.token,
+                key: entry.key
+            }).then(function () {
+                var msg = 'Entry deleted successfully';
+                _this7.showAlert("success", msg);
+            });
+            //this.entries.$remove(entry);
+            this.loadEnv();
+            this.toDelete = {};
+            $('#deleteModal').modal('hide');
+        },
+        showAlert: function showAlert(type, message) {
+            this.alertmessage = message;
+            this.alertsuccess = 1;
+        },
+        closeAlert: function closeAlert() {
+            this.alertsuccess = 0;
+        },
+        modal: function modal(entry) {
+            this.toDelete = entry;
+            this.deleteModal.title = "Delete Entry";
+            this.deleteModal.content = entry.key + "=" + entry.value;
+            $('#deleteModal').modal('show');
+        }
+    },
+
+    mounted: function mounted() {
+        //console.log('working')
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/NonApiBusinessInfoComponent.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2685,13 +2884,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['deadlines', 'clients'],
     data: function data() {
         return {
-            rows: []
+            rows: [],
+            checked: []
         };
     },
     beforeMount: function beforeMount() {
@@ -2699,6 +2935,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var self = this;
         for (var i = 0; i < deadlinesCount; i++) {
             self.$set(self.rows, i, []);
+            self.$set(self.checked, i, true);
         };
     },
     methods: {
@@ -2710,6 +2947,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         removeElement: function removeElement(index, index1) {
             this.rows[index1].splice(this.index, 1);
+        },
+        switchChanged: function switchChanged(indexSwitch) {
+            console.log(this.checked[indexSwitch]);
+            if (this.checked[indexSwitch] == false) {} else {
+                this.deadlines.splice(indexSwitch, 0);
+            }
         }
     }
 });
@@ -2740,6 +2983,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16e0c1fa\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/EnvEditor.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-backdrop {\n    position: relative;\n}\n.modal-dialog {\n    max-width: 500px;\n    margin: 70px auto;\n}\n.btn-sm, .btn-group-sm > .btn {\n    padding: 0.1rem 0.25rem;\n}\n", ""]);
 
 // exports
 
@@ -23275,105 +23533,257 @@ var render = function() {
       _c(
         "select",
         { staticClass: "form-control", attrs: { name: "client_id", id: "" } },
-        _vm._l(_vm.clients, function(client, key) {
-          return _c("option", { key: key, domProps: { value: client.id } }, [
-            _vm._v(_vm._s(client.company_name))
-          ])
-        })
+        [
+          _vm.clients.length == 0
+            ? _c(
+                "option",
+                { attrs: { value: "", disabled: "", selected: "" } },
+                [
+                  _c("span", { staticClass: "text-danger" }, [
+                    _vm._v(" No Clients found. Please create a client first.")
+                  ])
+                ]
+              )
+            : _vm._l(_vm.clients, function(client, key) {
+                return _c(
+                  "option",
+                  { key: key, domProps: { value: client.id } },
+                  [_vm._v(_vm._s(client.company_name))]
+                )
+              })
+        ],
+        2
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "table-responsive" }, [
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.deadlines, function(deadline, index1) {
-            return _c("tr", { key: index1 }, [
-              _c("td", [_vm._v(_vm._s(deadline.name))]),
+    _vm._m(1),
+    _vm._v(" "),
+    _vm.deadlines.length > 0
+      ? _c("span", [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(2),
               _vm._v(" "),
-              _c("td", [
-                _c("input", {
-                  attrs: { type: "hidden", name: "deadline_id" },
-                  domProps: { value: deadline.id }
-                }),
-                _vm._v(" "),
-                _vm._m(2, true),
-                _vm._v(" "),
-                _c("table", [
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.rows[index1], function(row, index) {
-                      return _c(
-                        "tr",
-                        {
-                          key: index,
-                          attrs: { id: "reminder-date-tr", innerIndex: index }
-                        },
-                        [
-                          _c("td", [
+              _c(
+                "tbody",
+                _vm._l(_vm.deadlines, function(deadline, indexSwitch) {
+                  return _c("tr", { key: indexSwitch }, [
+                    _c("td", [
+                      _vm._v(
+                        "\r\n                            " +
+                          _vm._s(deadline.name) +
+                          "\r\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "switch switch-label switch-pill switch-success mr-2"
+                          },
+                          [
                             _c("input", {
                               directives: [
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: row.date,
-                                  expression: "row.date"
+                                  value: _vm.checked[indexSwitch],
+                                  expression: "checked[indexSwitch]"
                                 }
                               ],
-                              staticClass: "form-control mt-2",
-                              attrs: { type: "date", name: "remind_date[]" },
-                              domProps: { value: row.date },
+                              staticClass: "switch-input",
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                checked: Array.isArray(_vm.checked[indexSwitch])
+                                  ? _vm._i(_vm.checked[indexSwitch], null) > -1
+                                  : _vm.checked[indexSwitch]
+                              },
                               on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                                change: [
+                                  function($event) {
+                                    var $$a = _vm.checked[indexSwitch],
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.checked,
+                                            indexSwitch,
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.checked,
+                                            indexSwitch,
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(_vm.checked, indexSwitch, $$c)
+                                    }
+                                  },
+                                  function($event) {
+                                    _vm.switchChanged(indexSwitch)
                                   }
-                                  _vm.$set(row, "date", $event.target.value)
-                                }
+                                ]
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", {
+                              staticClass: "switch-slider",
+                              attrs: {
+                                "data-checked": "on",
+                                "data-unchecked": "off"
                               }
                             })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "text-danger",
-                                staticStyle: { cursor: "pointer" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.removeElement(index, index1)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-trash ml-2" })]
-                            )
-                          ])
-                        ]
-                      )
-                    })
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.addDateRow(index1)
-                      }
-                    }
-                  },
-                  [_vm._v("Add More")]
-                )
-              ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                })
+              )
             ])
+          ])
+        ])
+      : _c("span", { staticClass: "text-danger" }, [
+          _vm._v(
+            "No Dealines found. Please create a deadline first in Master Settings"
+          )
+        ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "table-responsive mt-2" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.deadlines, function(deadline, index1) {
+            return _vm.checked[index1]
+              ? _c("tr", { key: index1 }, [
+                  _c("td", [_vm._v(_vm._s(deadline.name))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", { staticClass: "input-group mb-3" }, [
+                      _c("input", {
+                        attrs: {
+                          type: "hidden",
+                          name: "reminders_data[" + index1 + "][deadline_id]"
+                        },
+                        domProps: { value: deadline.id }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control col-md-5",
+                        attrs: {
+                          type: "date",
+                          name: "reminders_data[" + index1 + "][]"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(4, true)
+                    ]),
+                    _vm._v(" "),
+                    _c("table", [
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.rows[index1], function(row, index) {
+                          return _c(
+                            "tr",
+                            {
+                              key: index,
+                              attrs: {
+                                id: "reminder-date-tr",
+                                innerIndex: index
+                              }
+                            },
+                            [
+                              _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: row.date,
+                                      expression: "row.date"
+                                    }
+                                  ],
+                                  staticClass: "form-control mt-2",
+                                  attrs: {
+                                    type: "date",
+                                    name: "reminders_data[" + index1 + "][]"
+                                  },
+                                  domProps: { value: row.date },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(row, "date", $event.target.value)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  attrs: {
+                                    type: "hidden",
+                                    name:
+                                      "reminders_data[" +
+                                      index1 +
+                                      "][deadline_id]"
+                                  },
+                                  domProps: { value: deadline.id }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "text-danger",
+                                    staticStyle: { cursor: "pointer" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removeElement(index, index1)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-trash ml-2" })]
+                                )
+                              ])
+                            ]
+                          )
+                        })
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.addDateRow(index1)
+                          }
+                        }
+                      },
+                      [_vm._v("Add More")]
+                    )
+                  ])
+                ])
+              : _vm._e()
           })
         )
       ])
@@ -23383,7 +23793,7 @@ var render = function() {
       attrs: { type: "hidden", name: "has_reminded", value: "0" }
     }),
     _vm._v(" "),
-    _vm._m(3)
+    _vm._m(5)
   ])
 }
 var staticRenderFns = [
@@ -23391,9 +23801,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { staticClass: " col-form-label", attrs: { for: "" } }, [
+    return _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
       _vm._v("Select Client: "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group mb-1" }, [
+      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
+        _vm._v("Applicable deadlines:")
+      ]),
+      _vm._v(" "),
+      _c("small", { staticClass: "text-dark" }, [
+        _c("br"),
+        _vm._v(
+          "Toogle the switch here to remove any deadlines that is not needed, in this reminder."
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Deadlines")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
     ])
   },
   function() {
@@ -23422,19 +23861,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group mb-3" }, [
-      _c("input", {
-        staticClass: "form-control col-md-5",
-        attrs: { type: "date", name: "remind_date[]" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group-append" }, [
-        _c(
-          "span",
-          { staticClass: "input-group-text", attrs: { id: "basic-addon2" } },
-          [_vm._v("Required")]
-        )
-      ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "span",
+        { staticClass: "input-group-text", attrs: { id: "basic-addon2" } },
+        [_vm._v("Required")]
+      )
     ])
   },
   function() {
@@ -23481,6 +23913,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0e6aa6cf\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BusinessInfoComponent.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0e6aa6cf\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BusinessInfoComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16e0c1fa\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/EnvEditor.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16e0c1fa\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/EnvEditor.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("1996d5fd", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16e0c1fa\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EnvEditor.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16e0c1fa\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EnvEditor.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -34851,17 +35310,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coreui_coreui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__coreui_coreui__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chenfengyuan_datepicker__ = __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.esm.js");
-
 
 
 __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css");
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
 
+// settings
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.settings = function (key) {
+    return _.get(window.stg, key, key);
+};
+
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('non-api-business-info', __webpack_require__("./resources/js/backend/components/NonApiBusinessInfoComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-form', __webpack_require__("./resources/js/backend/components/ReminderFormComponent.vue"));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('env-editor', __webpack_require__("./resources/js/backend/components/EnvEditor.vue"));
 
 var eventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
@@ -34941,6 +35404,58 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-0e6aa6cf", Component.options)
   } else {
     hotAPI.reload("data-v-0e6aa6cf", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/backend/components/EnvEditor.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16e0c1fa\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/EnvEditor.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/EnvEditor.vue")
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\js\\backend\\components\\EnvEditor.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-16e0c1fa", Component.options)
+  } else {
+    hotAPI.reload("data-v-16e0c1fa", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

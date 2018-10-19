@@ -36,9 +36,9 @@ class Client extends Model
         return $this->hasOne(BusinessInfo::class);
     }
 
-    public function reminder()
+    public function reminders()
     {
-        return $this->hasOne(Reminder::class);
+        return $this->hasMany(Reminder::class);
     }
 
     protected static function boot()

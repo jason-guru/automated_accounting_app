@@ -16,6 +16,8 @@ class ReminderRequest extends FormRequest
         return true;
     }
 
+    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,9 +26,9 @@ class ReminderRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_remind' => 'required|date',
-            'second_remind' => 'nullable|date',
-            'third_remind' => 'nullable|date'
+            'client_id' => 'required|unique:reminders,client_id,'.$this->id,
+            'deadline_id.*' => 'required',
+            'remind_data.*' => 'required'
         ];
     }
 }

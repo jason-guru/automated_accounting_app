@@ -59,7 +59,7 @@ class ReminderRepository extends BaseRepository
         $reminder_data= collect([]);
         foreach($reminders as $reminder){
             $client_id = $reminder->client_id;
-            $company_name = $reminder->company_name;
+            $company_name = $reminder->client->company_name;
             $total_reminders = $this->model->where('client_id', $client_id)->get()->count();
             $total_reminded = $this->model->where('client_id', $client_id)->where('has_reminded')->get()->count();
             $reminder_data[$client_id] =[
@@ -67,7 +67,7 @@ class ReminderRepository extends BaseRepository
                 'company_name' => $company_name,
                 'total_reminders' => $total_reminders,
                 'total_reminded' => $total_reminded,
-                'actions' => $this->model->action_buttons
+                'actions' => $this->model->getActionButtons($client_id)
             ];
         }
         return $this->manual_paginate($reminder_data)->setPath('reminders');

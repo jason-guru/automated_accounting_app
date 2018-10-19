@@ -26,8 +26,13 @@ Route::get('contact-person/create/{id}', 'ContactPersonController@create_by_clie
 Route::resource('reminders', 'ReminderController');
 Route::resource('message-formats', 'MessageFormatController');
 Route::resource('deadlines', 'DeadlineController');
+Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
 Route::get('deadlines/test', function(){
     event(new AccountStatus());
+});
+
+Route::get('/config-cache', function(){
+	Artisan::call('config:cache');
 });

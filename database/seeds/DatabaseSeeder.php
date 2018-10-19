@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(VatSchemeTableSeeder::class);
         $this->call(VatSubmitTypeTableSeeder::class);
         $this->call(FrequencyTableSeeder::class);
+        $this->call(MessageFormatTableSeeder::class);
+        $this->call(DeadlineTableSeeder::class);
 
         Model::reguard();
     }

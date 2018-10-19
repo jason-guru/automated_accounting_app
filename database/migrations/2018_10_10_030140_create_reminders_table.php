@@ -17,8 +17,8 @@ class CreateRemindersTable extends Migration
             $table->increments('id');
             $table->integer('client_id');
             $table->integer('deadline_id');
-            $table->integer('reminder_date_id');
-            $table->boolean('has_reminded');
+            $table->date('remind_date');
+            $table->boolean('has_reminded')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -63,6 +63,11 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/app-settings*'), 'open') }}">
+                <a href="/admin/app-settings" class="nav-link {{ active_class        (Active::checkUriPattern('admin/app-settings')) }}" class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon icon-envelope"></i>App Settings
+                </a>
+            </li>
             @endif
 
             <li class="nav-title">

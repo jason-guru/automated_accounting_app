@@ -52,23 +52,53 @@ class ReminderController extends Controller
     }
 
     /**
+     * ***** Code explanation *****
+     * get the total reminder data, the reminder data consist of
+     * Example $reminders_data,
+     * $reminders_data = [
+     *      0 => [
+     *          'deadline_id' => 1,
+     *          0 => 2018-10-19,
+     *          1 => 2018-10-20
+     *      ],
+     *      1 => [
+     *          'deadline_id' => 2,
+     *          0 => 2018-10-21,
+     *          1 => 2018-10-22
+     *      ],
+     * ];
+     * 
+     * 
+     * So, by looping $reminders_data, we get the single deadline reminders. Then we remove the deadline_id via      array_shift and loop through the dates and store the information in the reminders table.
+     * 
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReminderRequest $request)
     {
-        $remind_dates = $request->remind_date;
-        foreach($remind_dates as $remind_date){
-            $get_remind_date = $this->reminder_date_repository->create(['remind_date' => $remind_date]);
-            $request->request->add(['reminder_date_id' => $get_remind_date->id]);
-            $this->reminder_repository->create($request->except('_token', 'remind_date'));
+        try{
+            
+            $reminders_data = $request->reminders_data;
+            $client_id = $request->client_id;
+            foreach($reminders_data as $reminder_data){
+                $deadline_id = $reminder_data['deadline_id'];
+                array_shift($reminder_data);
+                foreach($reminder_data as $date){
+                    $prep_reminder_data = [
+                        'client_id' => $client_id,
+                        'deadline_id' =>$deadline_id,
+                        'remind_date' => $date,
+                    ];
+                    $this->reminder_repository->create($prep_reminder_data);
+                }
+            }
+            return redirect()->route('admin.reminders.index')->withFlashSuccess('Reminder Created Successfully!');
+        }catch(\Exception $exception)
+        {
+            return $exception->getMessage();
         }
-        // $request->merge(['remind_date' => Carbon::parse($request->remind_date)->format('Y-m-d')]);
-        // $reminder_date = $this->reminder_date_repository->create($request->only('remind_date'));
-        // $request->request->add(['reminder_date_id' => $reminder_date->id]);
-        // $this->reminder_repository->create($request->except('_token', 'reminder_date'));
     }
 
     /**
@@ -79,7 +109,8 @@ class ReminderController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = $this->client_repository->getById($id);
+        return view('backend.reminders.show', compact('client'));
     }
 
     /**
@@ -90,15 +121,10 @@ class ReminderController extends Controller
      */
     public function edit($id)
     {
-        $get_reminder = $this->reminder_repository->getById($id);
-        $reminder = [
-            'id' => $get_reminder->id,
-            'first_remind' => !is_null($get_reminder->first_remind) ? Carbon::parse($get_reminder->first_remind)->format('d-m-Y') :"",
-            'second_remind' => !is_null($get_reminder->second_remind) ? Carbon::parse($get_reminder->second_remind)->format('d-m-Y') :"",
-            'third_remind' => !is_null($get_reminder->third_remind) ? Carbon::parse($get_reminder->third_remind)->format('d-m-Y') :"",
-        ];
-
-        return view('backend.reminders.edit', compact('reminder'));
+        $clients = $this->client_repository->where('is_active', 1)->get();
+        $deadlines = $this->deadline_repository->where('is_active', 1)->get();
+        $client = $this->client_repository->getById($id);
+        return view('backend.reminders.edit', compact('client', 'clients', 'deadlines'));
     }
 
     /**
@@ -108,14 +134,14 @@ class ReminderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ReminderRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $request->merge(['first_remind' => !is_null($request->first_remind) ? Carbon::parse($request->first_remind)->format('Y-m-d') : null ]);
-        $request->merge(['second_remind' => !is_null($request->second_remind) ? Carbon::parse($request->second_remind)->format('Y-m-d') : null ]);
-        $request->merge(['third_remind' => !is_null($request->third_remind) ? Carbon::parse($request->third_remind)->format('Y-m-d') : null ]);
-        
-        $this->reminder_repository->updateById($id, $request->except("_token"));
-        return redirect()->route('admin.reminders.index');
+        $reminders = $this->reminder_repository->where('client_id', $id)->get();
+        foreach($reminders as $key => $reminder){
+            $date = Carbon::parse($request->reminder_dates[$key])->format('Y-m-d');
+            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date]);
+        }
+        return redirect()->route('admin.reminders.index')->withFlashSuccess('Reminders updated successfully');
     }
 
     /**
@@ -126,6 +152,7 @@ class ReminderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->reminder_repository->where('client_id', $id)->delete();
+        return back()->withFlashSuccess('Reminder Deleted Successfully');
     }
 }

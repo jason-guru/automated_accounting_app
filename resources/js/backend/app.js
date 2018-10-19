@@ -1,13 +1,18 @@
 import '@coreui/coreui'
 import Vue from 'vue';
-import _ from '@chenfengyuan/datepicker';
 require('@chenfengyuan/datepicker/dist/datepicker.min.css');
 
 window.Vue = Vue;
 
+// settings
+Vue.prototype.settings = (key) => {
+    return _.get(window.stg, key, key);
+};
+
 Vue.component('business-info', require('./components/BusinessInfoComponent.vue'));
 Vue.component('non-api-business-info', require('./components/NonApiBusinessInfoComponent.vue'));
 Vue.component('reminder-form', require('./components/ReminderFormComponent.vue'));
+Vue.component('env-editor', require('./components/EnvEditor.vue'));
 
 export const eventBus = new Vue();
 

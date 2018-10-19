@@ -11,9 +11,9 @@ trait ReminderAttribute
      /**
      * @return string
      */
-    public function getShowButtonAttribute()
+    public function getShowButtonAttribute($id)
     {
-        return '<a href="'.route('admin.reminders.show', $this).'" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'" class="btn btn-info"><i class="fas fa-eye"></i></a>';
+        return '<a href="'.route('admin.reminders.show', $this).'" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'" class="btn btn-info"><i class="fas fa-eye"></i>'.$id.'</a>';
     }
 
     /**
@@ -40,10 +40,10 @@ trait ReminderAttribute
     /**
      * @return string
      */
-    public function getActionButtonsAttribute()
+    public function getActionButtonsAttribute($id)
     {
         return '<div class="btn-group btn-group-sm" role="group" aria-label="'.__('labels.backend.access.users.user_actions').'">
-                '.$this->show_button.'
+                '.$this->show_button($id).'
                 '.$this->edit_button.'
                 '.$this->delete_button.'
 			  

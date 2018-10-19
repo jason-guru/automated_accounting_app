@@ -75,6 +75,11 @@ Breadcrumbs::for('admin.reminders.create', function ($trail) {
     $trail->push('Create Reminder', route('admin.reminders.create'));
 });
 
+Breadcrumbs::for('admin.reminders.show', function ($trail, $id) {
+    $trail->parent('admin.reminders.index');
+    $trail->push('Create Reminder', route('admin.reminders.show', ['id' => $id]));
+});
+
 Breadcrumbs::for('admin.reminders.edit', function ($trail, $id) {
     $trail->parent('admin.reminders.index');
     $trail->push('Edit Reminder', route('admin.reminders.edit', ['id' => $id]));
@@ -101,6 +106,10 @@ Breadcrumbs::for('admin.message-formats.edit', function ($trail, $id) {
 Breadcrumbs::for('admin.message-formats.show', function ($trail, $id) {
     $trail->parent('admin.message-formats.index');
     $trail->push('View Format', route('admin.message-formats.show', ['id' => $id]));
+});
+Breadcrumbs::for('admin.sms-config.index', function ($trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('SMS Configuration', route('admin.sms-config.index'));
 });
 
 
