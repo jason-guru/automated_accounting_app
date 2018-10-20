@@ -9,7 +9,7 @@
                         <ul class="nav nav-tabs card-header-tabs pt-4">
                             <li class="nav-item"
                                 v-for="view in views"  :class="view.active ? 'border border-top-1 border-left-0 border-right-0 border-bottom-0' : ''" role="presentation">
-        						<a class="nav-link" :class="view.active ? 'active' : ''" :href="'#'+view.slug" data-toggle="tab" @click="setActiveView(view.name)" role="tab">
+        						<a class="nav-link" :class="view.active ? 'active' : ''" :href="'#'+view.slug" data-toggle="tab" @click="setActiveView(view.name)" role="tab" v-cloak>
         						    @{{ view.name }}
     						    </a>
         					</li>
@@ -19,7 +19,7 @@
                         {{-- Error-Container --}}
         				<div>
         					{{-- VueJS-Errors --}}
-        					<div class="alert alert-success" role="alert" v-show="alertsuccess">
+        					<div class="alert alert-success" role="alert" v-show="alertsuccess" v-cloak>
         						<button type="button" class="close" @click="closeAlert" aria-label="Close">
         							<span aria-hidden="true">&times;</span>
         						</button>
