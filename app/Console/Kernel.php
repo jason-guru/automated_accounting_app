@@ -30,9 +30,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function(){
-            //event(new AccountManager());
             event(new ReminderEvent());
-        })->dailyAt('10:40')->timezone('Europe/London');
+        })->everyMinute();
     }
 
     /**
