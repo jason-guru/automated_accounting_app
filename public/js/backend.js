@@ -35235,8 +35235,9 @@ module.exports = Vue;
 /***/ }),
 
 /***/ "./resources/js/backend/after.js":
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__) {
 
+"use strict";
 // Loaded after CoreUI app.js
 $('.switch-input').change(function () {
     var Id = $(this).data('id');
