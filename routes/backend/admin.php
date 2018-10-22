@@ -30,9 +30,10 @@ Route::resource('deadlines', 'DeadlineController');
 Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
-Route::get('deadline/test', function(){
+Route::get('reminders/send/now', function(){
     event(new ReminderEvent());
-});
+    return back()->withFlashSuccess('Reminders sent successfully');
+})->name('reminders.send.now');
 
 Route::get('/config-cache', function(){
 	Artisan::call('config:cache');
