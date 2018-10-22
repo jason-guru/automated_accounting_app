@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function(){
             event(new AccountManager());
             event(new ReminderEvent());
-        })->everyMinute();
+        })->dailyAt('10:40')->timezone('Europe/London');
     }
 
     /**
