@@ -79,7 +79,6 @@ class ReminderController extends Controller
     public function store(ReminderRequest $request)
     {
         try{
-            
             $reminders_data = $request->reminders_data;
             $client_id = $request->client_id;
             foreach($reminders_data as $reminder_data){
