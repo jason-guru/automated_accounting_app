@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
-use App\Events\Backend\AccountStatus;
+use App\Events\Backend\ReminderEvent;
 
 /*
  * All route names are prefixed with 'admin.'.
@@ -13,7 +13,6 @@ Route::resource('clients', 'ClientController');
 Route::get('client/search', 'ClientSearchController@show_search')->name('client.search');
 Route::post('client/search/result', 'ClientSearchController@show_search_result')->name('client.search.result');
 Route::get('client/search/contact-person', 'ClientSearchController@prep_contact_person_view')->name('client.search.contact_person');
-Route::resource('clients', 'ClientController');
 
 Route::get('deadlines/format', 'DeadlineController@format')->name('deadlines.format');
 Route::post('deadlines/format/store-update', 'DeadlineController@format_store_update')->name('dealines.format.store_update');
@@ -29,8 +28,8 @@ Route::resource('deadlines', 'DeadlineController');
 Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
-Route::get('deadlines/test', function(){
-    event(new AccountStatus());
+Route::get('deadline/test', function(){
+    event(new ReminderEvent());
 });
 
 Route::get('/config-cache', function(){

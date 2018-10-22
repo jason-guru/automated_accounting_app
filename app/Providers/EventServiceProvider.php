@@ -16,7 +16,6 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\Backend\ReminderEvent' => [
-            'App\Listeners\Backend\SendReminderNotification',
             'App\Listeners\Backend\SendDynamicReminderNotifications'
         ],
         'App\Events\Backend\AccountStatus' => [

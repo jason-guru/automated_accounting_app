@@ -55,13 +55,13 @@ class ReminderRepository extends BaseRepository
 
     public function get_reminders()
     {
-        $reminders = $this->model->all();
+        $reminders = $this->model->where('is_active', 1)->get();
         $reminder_data= collect([]);
         foreach($reminders as $reminder){
             $client_id = $reminder->client_id;
             $company_name = $reminder->client->company_name;
             $total_reminders = $this->model->where('client_id', $client_id)->get()->count();
-            $total_reminded = $this->model->where('client_id', $client_id)->where('has_reminded')->get()->count();
+            $total_reminded = $this->model->where('client_id', $client_id)->where('has_reminded', 1)->get()->count();
             $reminder_data[$client_id] =[
                 'client_id' => $client_id,
                 'company_name' => $company_name,

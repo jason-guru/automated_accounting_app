@@ -53,7 +53,7 @@ class SendDynamicReminderNotifications
             $today = Carbon::now()->toDateString();
             foreach($reminders as $reminder){
                 $reminder_date = $reminder->remind_date;
-                if($today <= $reminder_date){
+                if($today >= $reminder_date){
                     $client_phone = $reminder->client->phone;
                     $client_email = $reminder->client->email;
                     $email_body = [
@@ -68,7 +68,8 @@ class SendDynamicReminderNotifications
                         'client_next_account' => Carbon::parse($reminder->client->account_next_due)->format('d-m-Y')
                     ];
 
-                    $this->send_reminder($reminder->id, $client_phone, $client_email, $email_body, $sms_body, $reminder_state);
+                    $this->send_reminder($reminder->id, $client_phone, $client_email, $email_body, $sms_body);
+                    return "Success";
                 }
             }
         }catch(\Exception $exception)
@@ -77,7 +78,7 @@ class SendDynamicReminderNotifications
         }
     }
 
-    private function send_reminder($reminder_id, $client_phone, $client_email, $email_body, $sms_body, $reminder_state)
+    private function send_reminder($reminder_id, $client_phone, $client_email, $email_body, $sms_body)
     {
         //SMS and mail reminder to the client
         $has_sent_sms = $this->sms_manager($client_phone, $sms_body);

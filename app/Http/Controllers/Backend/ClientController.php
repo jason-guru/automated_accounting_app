@@ -182,7 +182,9 @@ class ClientController extends Controller
         $client = $this->client_repository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
         $this->business_info_repository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
         if($request->remind_update){
-            $this->reminder_repository->updateById($client->reminder->id, ['is_active' => $request->remind]);
+            foreach($client->reminders as $reminder){
+                $this->reminder_repository->updateById($reminder->id, ['is_active' => $request->remind]);
+            };
             return response()->json([
                 'success' => true
             ]);
