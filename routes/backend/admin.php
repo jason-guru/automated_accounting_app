@@ -19,6 +19,8 @@ Route::post('deadlines/format/store-update', 'DeadlineController@format_store_up
 //Route::get('deadlines/reminders', 'DeadlineController@reminders')->name('deadlines.reminders');
 Route::get('deadlines/frequency', 'DeadlineController@frequency')->name('deadlines.frequency');
 Route::post('deadlines/frequency/store', 'DeadlineController@frequency_store')->name('deadlines.frequency.store');
+Route::put('deadlines/switch/update/{id}', 'DeadlineController@switch_update')->name('deadlines.switch.update');
+
 Route::resource('contact-person', 'ContactPersonController');
 Route::get('contact-person/create/{id}', 'ContactPersonController@create_by_client')->name('contact-person.create_by_client');
 

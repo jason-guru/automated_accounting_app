@@ -91,6 +91,30 @@ class DeadlineController extends Controller
     }
 
     /**
+     * Switch input update
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function switch_update(Request $request, $id){
+        if($request->message_type == 'sms'){
+            $this->deadline_repository->updateById($id,['send_sms' => $request->switch_value]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Send SMS state changed'
+            ]);
+        }elseif($request->message_type == 'email'){
+            $this->deadline_repository->updateById($id,['send_email' => $request->switch_value]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Send Email state changed'
+            ]);
+        }
+        
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

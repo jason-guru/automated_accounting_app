@@ -9,7 +9,7 @@ class Deadline extends Model
 {
     use DeadlineAttribute;
     protected $fillable = [
-        'name', 'is_active', 'message_format_id'
+        'name', 'is_active', 'message_format_id', 'send_sms', 'send_email'
     ];
 
     public function message_format()

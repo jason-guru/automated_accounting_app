@@ -179,19 +179,24 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = $this->client_repository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
-        $this->business_info_repository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
-        if($request->remind_update){
-            foreach($client->reminders as $reminder){
-                $this->reminder_repository->updateById($reminder->id, ['is_active' => $request->remind]);
-            };
-            return response()->json([
-                'success' => true
-            ]);
-        }else{
-            return redirect()->route('admin.clients.index')->withFlashSuccess('Client updated Successfully');
+        try{
+            if($request->switch_value_update){
+                $client = $this->client_repository->updateById($id,['remind' => $request->switch_value]);
+                foreach($client->reminders as $reminder){
+                    $this->reminder_repository->updateById($reminder->id, ['is_active' => $request->switch_value]);
+                };
+                return response()->json([
+                    'success' => true
+                ]);
+            }else{
+                $client = $this->client_repository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+                $this->business_info_repository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+                return redirect()->route('admin.clients.index')->withFlashSuccess('Client updated Successfully');
+            }
+        }catch(\Exception $exception)
+        {
+            return $exception->getMessage();
         }
-        
     }
 
     /**

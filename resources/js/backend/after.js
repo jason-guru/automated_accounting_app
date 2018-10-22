@@ -1,20 +1,54 @@
 // Loaded after CoreUI app.js
 $('.switch-input').change(function(){
-    var clientId = $(this).data('id');
-    var url = $(this).data('url');
-    if(clientId){
-        var remindValue;
-        if(this.checked){
-            remindValue = 1;
-            updateRemindState(url, remindValue);
-        }else{
-            remindValue = 0;
-            updateRemindState(url, remindValue);
+    var Id = $(this).data('id');
+    var url;
+    
+    if($(this).attr('name') === 'remind[]'){
+        if(Id){
+            url = $(this).data('url');
+            var remindValue;
+            var messageType = null;
+            if(this.checked){
+                remindValue = 1;
+                updateState(url, remindValue, messageType);
+            }else{
+                remindValue = 0;
+                updateState(url, remindValue, messageType);
+            }
         }
     }
+    if($(this).attr('name') === 'send_sms[]'){
+        if(Id){
+            url = $(this).data('url');
+            var sendSMS;
+            var messageType = 'sms';
+            if(this.checked){
+                sendSMS = 1;
+                updateState(url, sendSMS, messageType);
+            }else{
+                sendSMS = 0;
+                updateState(url, sendSMS, messageType);
+            }
+        }
+    }
+    if($(this).attr('name') === 'send_email[]'){
+        if(Id){
+            url = $(this).data('url');
+            var sendEmail;
+            var messageType = 'email';
+            if(this.checked){
+                sendEmail = 1;
+                updateState(url, sendEmail, messageType);
+            }else{
+                sendEmail = 0;
+                updateState(url, sendEmail, messageType);
+            }
+        }
+    }
+
 });
 
-function updateRemindState(url, remindValue){
+function updateState(url, value, type){
     var method = "PUT";
     $.ajax({
         url: url,
@@ -23,8 +57,9 @@ function updateRemindState(url, remindValue){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: {
-            'remind': remindValue,
-            'remind_update': true
+            'switch_value': value,
+            'switch_value_update': true,
+            'message_type' : type
         },
         dataType: "json",
         success: function(response){
