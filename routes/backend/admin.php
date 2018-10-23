@@ -33,7 +33,12 @@ Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
 Route::get('reminders/send/now', function(){
-    Mail::to('jason@cobigent.com')->send(new ReminderMail("test test"));
+    $email_body = [
+        'format' => "test test",
+        'client_company_name' => "Oxmonk",
+        'client_next_account' => Carbon::parse(0)->format('d-m-Y')
+    ];
+    Mail::to('jason@cobigent.com')->send(new ReminderMail($email_body));
     //return back()->withFlashSuccess('Reminders sent successfully');
 })->name('reminders.send.now');
 
