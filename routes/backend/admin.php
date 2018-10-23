@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\Backend\DashboardController;
 use App\Events\Backend\ReminderEvent;
-use App\Mail\Backend\ReminderMail;
-use Illuminate\Support\Facades\Mail;
 
 /*
  * All route names are prefixed with 'admin.'.
@@ -33,13 +31,8 @@ Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
 Route::get('reminders/send/now', function(){
-    $email_body = [
-        'format' => "test test",
-        'client_company_name' => "Oxmonk",
-        'client_next_account' => "10-12-2019"
-    ];
-    Mail::to('jason@cobigent.com')->send(new ReminderMail($email_body));
-    //return back()->withFlashSuccess('Reminders sent successfully');
+    event(new ReminderEvent());
+    return back()->withFlashSuccess('Reminders sent successfully');
 })->name('reminders.send.now');
 
 Route::get('/config-cache', function(){
