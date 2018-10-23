@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.view'))
+@section('title', 'Reminders | Show Reminder')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')

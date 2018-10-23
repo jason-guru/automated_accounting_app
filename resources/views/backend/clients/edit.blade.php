@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.create'))
+@section('title', 'Clients | Edit Client')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -38,7 +38,20 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="">Account Due Date <span class="text-danger">*</span></label>
+                            <input data-toggle="datepicker" name="accounts_next_due" id="" class="form-control" value="{{Carbon\Carbon::parse($client->accounts_next_due)->format('d-m-Y')}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="accounts_overdue">Accounts Overdue <span class="text-danger">*</span></label>
+                            <select name="accounts_overdue" id="accounts_overdue" class="form-control" required>
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="1" {{$client->accounts_overdue == 1 ? "selected" : ""}}>Yes</option>
+                                <option value="0" {{$client->accounts_overdue == 0 ? "selected" : ""}}>No</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="company-name">Company Name</label>

@@ -55,6 +55,7 @@
     "@chenfengyuan/datepicker": "^1.0.0",
     "jquery-easy-loading": "^1.3.0",
     "moment": "^2.22.2",
+    "vue-spinner": "^1.0.3",
     "vuejs-datepicker": "^1.5.3"
   }
 }

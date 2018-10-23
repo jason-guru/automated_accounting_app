@@ -9,8 +9,6 @@
                     <i class="nav-icon icon-speedometer"></i> @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
-            @if($logged_in_user->isAdmin())
-            {{-- The clients section --}}
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/clients*'), 'open') }} {{ active_class(Active::checkUriPattern('admin/client*'), 'open') }}">
                 <a href="#" class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon icon-people"></i> @lang('menus.backend.sidebar.clients')
@@ -36,8 +34,9 @@
                 </ul>
             </li>
             <li class="nav-title">
-                   Master Settings
-                </li>
+                Master Settings
+            </li>
+            {{-- The clients section --}}
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/deadlines*'), 'open') }}">
                 <a href="#" class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon icon-cursor"></i> Deadlines
@@ -63,6 +62,7 @@
                     </li>
                 </ul>
             </li>
+            @if($logged_in_user->isAdmin())
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/app-settings*'), 'open') }}">
                 <a href="/admin/app-settings" class="nav-link {{ active_class        (Active::checkUriPattern('admin/app-settings')) }}" class="nav-link nav-dropdown-toggle">
                     <i class="nav-icon icon-wrench"></i>App Settings

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.create'))
+@section('title', 'Clients | Edit Contact Person')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')

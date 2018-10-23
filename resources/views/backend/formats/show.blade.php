@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.view'))
+@section('title',  'Formats | View SMS and email formats')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -12,8 +12,8 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Client Management
-                    <small class="text-muted">View Client</small>
+                    Format management
+                    <small class="text-muted">View SMS and email format</small>
                 </h4>
             </div><!--col-->
         </div><!--row-->
@@ -22,12 +22,12 @@
             <div class="col">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#contact-person" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-user"></i> Details</a>
+                        <a class="nav-link active" data-toggle="tab" href="#details" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-envelope"></i> Details</a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active show" id="contact-person" role="tabpanel" aria-expanded="true">
+                    <div class="tab-pane active show" id="details" role="tabpanel" aria-expanded="true">
                         @include('backend.formats.show.tabs.details')
                     </div><!--tab-->
                 </div><!--tab-content-->

@@ -21,6 +21,7 @@
     {{ style(mix('css/backend.css')) }}
 
     @stack('after-styles')
+<script src="{{asset('js/pace.js')}}"></script>
 </head>
 
 <body class="{{ config('backend.body_classes') }}">

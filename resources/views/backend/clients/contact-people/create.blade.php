@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.create'))
+@section('title', 'Clients | Create Contact Person')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -10,7 +10,7 @@
 <div class="card">
     <div class="card-header">
         <h4 class="card-title mb-0">
-            Add Contact Person
+            Create Contact Person
         </h4>
     </div>
     <div class="card-body">

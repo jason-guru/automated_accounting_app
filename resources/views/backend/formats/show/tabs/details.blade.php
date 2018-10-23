@@ -1,17 +1,17 @@
 <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr>
-                        <th>Name</th>
+                        <th>Name of format</th>
                         <td>{{$message_format->name}}</td>
                     </tr>
                     <tr>
-                        <th>Website</th>
+                        <th>SMS Format</th>
                         <td>{{$message_format->sms_format}}</td>
                     </tr>
                     <tr>
-                        <th>Email</th>
+                        <th>Email Format</th>
                         <td>{{$message_format->email_format}}</td>
                     </tr>
                 </table>

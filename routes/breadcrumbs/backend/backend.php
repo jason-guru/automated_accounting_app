@@ -40,7 +40,7 @@ Breadcrumbs::for('admin.contact-person.create_by_client', function ($trail, $id)
 
 Breadcrumbs::for('admin.contact-person.edit', function ($trail, $id) {
     $trail->parent('admin.clients.index');
-    $trail->push('Add Contact Person', route('admin.contact-person.edit', ['id' => $id]));
+    $trail->push('Edit Contact Person', route('admin.contact-person.edit', ['id' => $id]));
 });
 Breadcrumbs::for('admin.contact-person.show', function ($trail, $id) {
     $trail->parent('admin.clients.index');

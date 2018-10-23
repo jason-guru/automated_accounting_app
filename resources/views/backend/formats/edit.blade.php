@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', app_name() . ' | ' . __('labels.backend.access.users.management'))
+@section('title','Formats | Edit Format')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.view'))
+@section('title',  'Deadlines | View Deadline')
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -22,7 +22,7 @@
             <div class="col">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#contact-person" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-user"></i> Details</a>
+                        <a class="nav-link active" data-toggle="tab" href="#contact-person" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-clock"></i> Details</a>
                     </li>
                 </ul>
 
