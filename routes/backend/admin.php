@@ -37,7 +37,7 @@ Route::get('reminders/send/now', function(){
     $email_body = [
         'format' => "test test",
         'client_company_name' => "Oxmonk",
-        'client_next_account' => Carbon::parse(0)->format('d-m-Y')
+        'client_next_account' => "10-12-2019"
     ];
     Mail::to('jason@cobigent.com')->send(new ReminderMail($email_body));
     //return back()->withFlashSuccess('Reminders sent successfully');
