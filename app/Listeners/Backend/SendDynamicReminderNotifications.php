@@ -92,7 +92,6 @@ class SendDynamicReminderNotifications
         }
         if($send_email){
             $mail_failures = $this->email_manager($client_email, $email_body);
-            return $mail_failures;
         }
         //If mail is sent and has no mail failure
         if($has_sent_sms == true || $has_sent_sms == null && count($mail_failures) == 0 || $mail_failures == null){

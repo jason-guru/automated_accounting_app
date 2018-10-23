@@ -31,9 +31,8 @@ Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
 Route::get('reminders/send/now', function(){
-    $reminder = event(new ReminderEvent());
-    dd($reminder);
-    return back()->withFlashSuccess('Reminders sent successfully');
+    Mail::to('jason@cobigent.com')->send(new ReminderMail("test test"));
+    //return back()->withFlashSuccess('Reminders sent successfully');
 })->name('reminders.send.now');
 
 Route::get('/config-cache', function(){
