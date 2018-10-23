@@ -43,7 +43,7 @@ Route::get('test/mail', function(){
     $email_body = [
         'format' => "Hi %s, this is %s.",
         'client_company_name' => "Test Company",
-        'client_next_account' => Carbon::parse('30-10-2020')->format('d-m-Y')
+        'client_next_account' => '30-10-2020'
     ];
     mail('jason@cobigent.com','Subject of the e-mail',sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), 'From: nathan@bakermorris.co.uk');
 });
