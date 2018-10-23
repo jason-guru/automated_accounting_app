@@ -40,5 +40,5 @@ Route::get('/config-cache', function(){
 });
 
 Route::get('test/mail', function(){
-    mail('jason@cobigent.com','Subject of the e-mail','This is the body of the e-mail!');
+    mail('jason@cobigent.com','Subject of the e-mail','This is the body of the e-mail!', 'From: nathan@bakermorris.co.uk');
 });
