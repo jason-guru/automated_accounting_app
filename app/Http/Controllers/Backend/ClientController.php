@@ -88,7 +88,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
         $request->merge(['accounts_next_due' => Carbon::parse($request->accounts_next_due)->format('Y-m-d')]);
         $client = $this->client_repository->create($request->except('_token', 'designation_id', 'initial_id', 'first_name', 'middle_name', 'last_name', 'contact_email', 'contact_phone', 'contact_address_line_1', 'contact_address_line_2', 'contact_city', 'contact_postcode', 'contact_county', 'contact_country_id'));
@@ -177,7 +177,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClientRequest $request, $id)
     {
         try{
             if($request->switch_value_update){
@@ -189,6 +189,14 @@ class ClientController extends Controller
                     'success' => true
                 ]);
             }else{
+
+                $request->merge(['accounts_next_due' => Carbon::parse($request->accounts_next_due)->format('Y-m-d')]);
+                $request->merge(['business_start_date' => !is_null($request->business_start_date) ? Carbon::parse($request->business_start_date)->format('Y-m-d'): null]);
+                $request->merge(['book_start_date' => !is_null($request->book_start_date) ? Carbon::parse($request->book_start_date)->format('Y-m-d'): null]);
+                $request->merge(['year_end_date' => !is_null($request->year_end_date) ? Carbon::parse($request->year_end_date)->format('Y-m-d'): null]);
+                $request->merge(['vat_reg_date' => !is_null($request->vat_reg_date) ? Carbon::parse($request->vat_reg_date)->format('Y-m-d'): null]);
+                $request->merge(['last_bookkeeping_done' => !is_null($request->last_bookkeeping_done) ? Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d'): null]);
+
                 $client = $this->client_repository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
                 $this->business_info_repository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
                 return redirect()->route('admin.clients.index')->withFlashSuccess('Client updated Successfully');
