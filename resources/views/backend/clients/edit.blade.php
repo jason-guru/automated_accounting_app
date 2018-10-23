@@ -208,6 +208,6 @@
     </div>
 </div>
 <script>
-    var companyNumber =  {{ $client->company_number }};
+    var companyNumber =  {{ !is_null($client->company_number) ? $client->company_number : null }};
 </script>
 @endsection

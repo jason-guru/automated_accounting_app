@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequest;
+use App\Http\Requests\Backend\ClientRequest;
 use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\FrequencyRepository;
