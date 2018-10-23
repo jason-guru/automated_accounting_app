@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Backend\DashboardController;
 use App\Events\Backend\ReminderEvent;
+use App\Mail\Backend\ReminderMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
  * All route names are prefixed with 'admin.'.
