@@ -38,3 +38,7 @@ Route::get('reminders/send/now', function(){
 Route::get('/config-cache', function(){
 	Artisan::call('config:cache');
 });
+
+Route::get('test/mail', function(){
+    mail('jason@cobigent.com','Subject of the e-mail','This is the body of the e-mail!');
+});
