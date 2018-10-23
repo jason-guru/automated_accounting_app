@@ -207,7 +207,7 @@
         </form>
     </div>
 </div>
-<script>
+{{-- <script>
     var companyNumber =  {{ !is_null($client->company_number) ? $client->company_number : null }};
-</script>
+</script> --}}
 @endsection
