@@ -87,15 +87,26 @@ class SendDynamicReminderNotifications
         $send_email = $reminder->deadline->send_email;
         $has_sent_sms = null;
         $mail_failures = null;
-        if($send_sms){
-            $has_sent_sms = $this->sms_manager($client_phone, $sms_body);
-        }
-        if($send_email){
-            $mail_failures = $this->email_manager($client_email, $email_body);
-        }
+        // if($send_sms){
+        //     $has_sent_sms = $this->sms_manager($client_phone, $sms_body);
+        // }
+        // if($send_email){
+        //     Mail::to($client_email)->send(new ReminderMail($email_body));
+        //     return Mail::failures();
+        // }
         //If mail is sent and has no mail failure
-        if($has_sent_sms == true || $has_sent_sms == null && count($mail_failures) == 0 || $mail_failures == null){
-            $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
+        if($send_sms && !$send_email){
+            if($has_sent_sms){
+                $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
+            }
+        }elseif(!$send_sms && $send_email){
+            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']))){
+                $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
+            }
+        }elseif($send_sms && $send_email){
+            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account'])) && $has_sent_sms){
+                $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
+            }
         }
     }
 
@@ -117,7 +128,6 @@ class SendDynamicReminderNotifications
     // Email
     private function email_manager($client_email, $email_body)
     {
-        Mail::to($client_email)->send(new ReminderMail($email_body));
-        return Mail::failures();
+        
     }
 }

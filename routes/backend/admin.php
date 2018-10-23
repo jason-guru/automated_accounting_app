@@ -32,7 +32,7 @@ Route::get('app-settings', 'AppSettingsController');
 // Test routes
 Route::get('reminders/send/now', function(){
     event(new ReminderEvent());
-    return back()->withFlashSuccess('Reminders sent successfully');
+    return back();
 })->name('reminders.send.now');
 
 Route::get('/config-cache', function(){
@@ -40,5 +40,10 @@ Route::get('/config-cache', function(){
 });
 
 Route::get('test/mail', function(){
-    mail('jason@cobigent.com','Subject of the e-mail','This is the body of the e-mail!', 'From: nathan@bakermorris.co.uk');
+    $email_body = [
+        'format' => "Hi %s, this is %s.",
+        'client_company_name' => "Test Company",
+        'client_next_account' => Carbon::parse('30-10-2020')->format('d-m-Y')
+    ];
+    mail('jason@cobigent.com','Subject of the e-mail',sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), 'From: nathan@bakermorris.co.uk');
 });
