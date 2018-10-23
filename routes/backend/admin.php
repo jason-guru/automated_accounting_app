@@ -31,7 +31,8 @@ Route::get('app-settings', 'AppSettingsController');
 
 // Test routes
 Route::get('reminders/send/now', function(){
-    event(new ReminderEvent());
+    $reminder = event(new ReminderEvent());
+    dd($reminder);
     return back()->withFlashSuccess('Reminders sent successfully');
 })->name('reminders.send.now');
 
