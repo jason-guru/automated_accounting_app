@@ -97,6 +97,7 @@ class SendDynamicReminderNotifications
         // }
         //If mail is sent and has no mail failure
         if($send_sms && !$send_email){
+            $has_sent_sms = $this->sms_manager($client_phone, $sms_body);
             if($has_sent_sms){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
@@ -105,6 +106,7 @@ class SendDynamicReminderNotifications
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }elseif($send_sms && $send_email){
+            $has_sent_sms = $this->sms_manager($client_phone, $sms_body);
             if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), "From:".Config::get('mail.from.address')) && $has_sent_sms){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
