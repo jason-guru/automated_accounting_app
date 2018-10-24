@@ -16,4 +16,9 @@ class ReferenceNumber extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function reminder()
+    {
+        return $this->hasOne(Reminder::class);
+    }
 }

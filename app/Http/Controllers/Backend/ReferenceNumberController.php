@@ -96,6 +96,7 @@ class ReferenceNumberController extends Controller
     public function update(ReferenceNumberRequest $request, ReferenceNumber $referenceNumber)
     {
         $reference_number = $this->reference_number_repository->updateById($referenceNumber->id, $request->except('_token'));
+        $this->reminder_repository->updateById($referenceNumber->reminder->id, ['reference_number_id' => $request->reference_number_id]);
         return redirect()->route('admin.reference-numbers.index')->withFlashSuccess('Updated Successfully');
     }
 
