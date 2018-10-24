@@ -10,7 +10,6 @@ use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\MessageFormatRepository;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
-use Config;
 use App\Mail\Backend\ReminderMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -58,19 +57,26 @@ class SendDynamicReminderNotifications
                     if($today >= $reminder_date){
                         $client_phone = $reminder->client->phone;
                         $client_email = $reminder->client->email;
+                        $director_data = $reminder->client->contact_people->where('designation_id', 1)->first();
                         $email_body = [
                             'format' => $reminder->deadline->message_format->email_format,
-                            'client_company_name' => $reminder->client->company_name,
-                            'client_next_account' => Carbon::parse($reminder->client->account_next_due)->format('d-m-Y')
+                        ];
+                        $email_data = [
+                            '%mail_to' => !is_null($director_data) ? $director_data->first_name : $reminder->client->company_name,
+                            '%reference_number' => $reminder->reference_number->reference_number,
+                            '%amount' => $reminder->reference_number->amount
                         ];
 
                         $sms_body = [
                             'format' => $reminder->deadline->message_format->sms_format,
-                            'client_company_name' => $reminder->client->company_name,
-                            'client_next_account' => Carbon::parse($reminder->client->account_next_due)->format('d-m-Y')
+                        ];
+                        $sms_data = [
+                            '%mail_to' => !is_null($director_data) ? $director_data->first_name : $reminder->client->company_name,
+                            '%reference_number' => $reminder->reference_number->reference_number,
+                            '%amount' => $reminder->reference_number->amount
                         ];
 
-                        $this->send_reminder($reminder->id, $client_phone, $client_email, $email_body, $sms_body);
+                        $this->send_reminder($reminder->id, $client_phone, $client_email, $email_body, $sms_body, $sms_data, $email_data);
                         return "Success";
                     }
                 }
@@ -81,7 +87,7 @@ class SendDynamicReminderNotifications
         }
     }
 
-    private function send_reminder($reminder_id, $client_phone, $client_email, $email_body, $sms_body)
+    private function send_reminder($reminder_id, $client_phone, $client_email, $email_body, $sms_body, $sms_data, $email_data)
     {
         $reminder = $this->reminder_repository->getById($reminder_id);
         $send_sms = $reminder->deadline->send_sms;
@@ -97,27 +103,27 @@ class SendDynamicReminderNotifications
         // }
         //If mail is sent and has no mail failure
         if($send_sms && !$send_email){
-            $has_sent_sms = $this->sms_manager($client_phone, $sms_body);
+            $has_sent_sms = $this->sms_manager($client_phone, $sms_body, $sms_data);
             if($has_sent_sms){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }elseif(!$send_sms && $send_email){
-            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), "From:".Config::get('mail.from.address'))){
+            if(mail($client_email, 'Filing Reminder',  strtr($email_body['format'], $email_data), "From:".Config::get('mail.from.address'))){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }elseif($send_sms && $send_email){
-            $has_sent_sms = $this->sms_manager($client_phone, $sms_body);
-            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), "From:".Config::get('mail.from.address')) && $has_sent_sms){
+            $has_sent_sms = $this->sms_manager($client_phone, $sms_body, $sms_data);
+            if(mail($client_email, 'Filing Reminder',  strtr($email_body['format'], $email_data), "From:".Config::get('mail.from.address')) && $has_sent_sms){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }
     }
 
     // SMS
-    private function sms_manager($to, $sms_body)
+    private function sms_manager($to, $sms_body, $sms_data)
     {
         $response = $this->sms_client->request('GET', 'https://www.bulletinmessenger.net/api/3/sms/out', [
-            'query' => ['to' => $to,'body' => sprintf($sms_body['format'], $sms_body['client_company_name'], $sms_body['client_next_account'])],
+            'query' => ['to' => $to,'body' => strtr($sms_body['format'], $sms_data)],
             'headers' => ['Authorization' => "Bearer {$this->sms_api_key}"]
         ]);
         if($response->getStatusCode() == 200){
@@ -126,11 +132,5 @@ class SendDynamicReminderNotifications
             return false;
         }
         //return true;
-    }
-
-    // Email
-    private function email_manager($client_email, $email_body)
-    {
-        
     }
 }

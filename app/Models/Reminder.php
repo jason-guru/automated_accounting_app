@@ -21,6 +21,11 @@ class Reminder extends Model
         return $this->belongsTo(Deadline::class);
     }
 
+    public function reference_number()
+    {
+        return $this->belongsTo(ReferenceNumber::class);
+    }
+
      /**
      * @return string
      */

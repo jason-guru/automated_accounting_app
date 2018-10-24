@@ -33,6 +33,7 @@
                     </li>
                 </ul>
             </li>
+            
             <li class="nav-title">
                 Master Settings
             </li>
@@ -58,6 +59,18 @@
                     <li class="nav-items">
                         <a href="{{ route('admin.message-formats.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/message-formats')) }}">
                             Manage Formats
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/reference-numbers*'), 'open') }}">
+                <a href="#" class="nav-link nav-dropdown-toggle">
+                    <i class="nav-icon icon-doc"></i> Reference
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-items">
+                        <a href="{{ route('admin.reference-numbers.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/reference-numbers')) }}">
+                            Manage Reference
                         </a>
                     </li>
                 </ul>

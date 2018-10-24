@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReminderRequest extends FormRequest
+class ReferenceNumberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,10 +19,9 @@ class ReminderRequest extends FormRequest
     public function messages()
     {
         return [
-            'reference_number_id.required' => 'A reference is required'  
+            'client_id.required' => "Please select a client's company name"
         ];
     }
-    
 
     /**
      * Get the validation rules that apply to the request.
@@ -32,10 +31,8 @@ class ReminderRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id' => 'required|unique:reminders,client_id,'.$this->id,
-            'deadline_id.*' => 'required',
-            'remind_data.*' => 'required',
-            'reference_number_id' => 'required'
+            'name' => 'required',
+            'client_id' => 'required'
         ];
     }
 }

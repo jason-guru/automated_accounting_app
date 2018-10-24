@@ -41,6 +41,11 @@ class Client extends Model
         return $this->hasMany(Reminder::class);
     }
 
+    public function reference_numbers()
+    {
+        return $this->hasMany(ReferenceNumber::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

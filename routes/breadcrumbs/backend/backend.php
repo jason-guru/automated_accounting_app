@@ -101,12 +101,13 @@ Breadcrumbs::for('admin.message-formats.create', function ($trail) {
 });
 Breadcrumbs::for('admin.message-formats.edit', function ($trail, $id) {
     $trail->parent('admin.message-formats.index');
-    $trail->push('Edit New format', route('admin.message-formats.edit', ['id' => $id]));
+    $trail->push('Edit format', route('admin.message-formats.edit', ['id' => $id]));
 });
 Breadcrumbs::for('admin.message-formats.show', function ($trail, $id) {
     $trail->parent('admin.message-formats.index');
     $trail->push('View Format', route('admin.message-formats.show', ['id' => $id]));
 });
+
 Breadcrumbs::for('admin.sms-config.index', function ($trail) {
     $trail->parent('admin.dashboard');
     $trail->push('SMS Configuration', route('admin.sms-config.index'));
@@ -115,3 +116,4 @@ Breadcrumbs::for('admin.sms-config.index', function ($trail) {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';
+require __DIR__.'/reference-number.php';

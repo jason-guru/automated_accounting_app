@@ -2,9 +2,18 @@
 <span>
     <div class="form-group mt-4">
         <label for="" class="col-form-label">Select Client: <span class="text-danger">*</span></label>
-        <select name="client_id" id="" class="form-control">
+        <select name="client_id" id="" class="form-control" v-model="selectedClient" @change="getReferenceNumber()">
+            <option value="" disabled selected>Please select a client</option>
             <option v-if="clients.length == 0" value="" disabled selected><span class="text-danger"> No Clients found. Please create a client first.</span></option>
             <option v-else v-for="(client, key) in clients" :key="key" :value="client.id">{{client.company_name}}</option>
+        </select>
+    </div>
+    <div class="form-group mt-4">
+        <label for="" class="col-form-label">Select Reference: <span class="text-danger">*</span></label>
+        <select name="reference_number_id" id="" class="form-control">
+            <option value="" disabled selected>Please select a reference name:</option>
+            <option v-if="referenceNumbers.length == 0" value="" disabled selected><span class="text-danger"> No Reference found. Please create a Reference first.</span></option>
+            <option v-else v-for="(referenceNumber, key) in referenceNumbers" :key="key" :value="referenceNumber.id">{{referenceNumber.name}}</option>
         </select>
     </div>
     <div class="form-group mb-1">
@@ -100,7 +109,9 @@ export default {
     data: function(){
         return {
             rows: [],
-            checked: []
+            checked: [],
+            referenceNumbers: {},
+            selectedClient: "",
         }
     },
     beforeMount: function(){
@@ -128,7 +139,9 @@ export default {
             }else{
                 this.deadlines.splice(indexSwitch,0);
             }
-            
+        },
+        getReferenceNumber: function(){
+            this.referenceNumbers = this.clients[this.selectedClient].reference_numbers;
         }
     },
 }

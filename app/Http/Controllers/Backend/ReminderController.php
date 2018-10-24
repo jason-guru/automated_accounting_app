@@ -11,6 +11,7 @@ use App\Http\Requests\Backend\ReminderRequest;
 use App\Repositories\Backend\ReminderDateRepository;
 use Carbon\Carbon;
 
+
 class ReminderController extends Controller
 {
     protected $reminder_repository;
@@ -44,7 +45,7 @@ class ReminderController extends Controller
     public function create()
     {
         //collection of all clients
-        $clients = $this->client_repository->where('is_active', 1)->get();
+        $clients = $this->client_repository->where('is_active', 1)->with('reference_numbers')->get();
         
         $deadlines = $this->deadline_repository->where('is_active', 1)->get();
         
@@ -89,6 +90,7 @@ class ReminderController extends Controller
                         'client_id' => $client_id,
                         'deadline_id' =>$deadline_id,
                         'remind_date' => $date,
+                        'reference_number_id' => $request->reference_number_id
                     ];
                     $this->reminder_repository->create($prep_reminder_data);
                 }
