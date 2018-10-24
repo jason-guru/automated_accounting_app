@@ -96,7 +96,6 @@ class ReferenceNumberController extends Controller
     public function update(ReferenceNumberRequest $request, ReferenceNumber $referenceNumber)
     {
         $reference_number = $this->reference_number_repository->updateById($referenceNumber->id, $request->except('_token'));
-        $this->reminder_repository->updateById($referenceNumber->reminder->id, ['reference_number_id' => $request->reference_number_id]);
         return redirect()->route('admin.reference-numbers.index')->withFlashSuccess('Updated Successfully');
     }
 
@@ -112,7 +111,7 @@ class ReferenceNumberController extends Controller
             $has_stored_in_reminder = $this->reminder_repository->where('reference_number_id', $referenceNumber->id)->get();
             if($has_stored_in_reminder->count() == 0){
                 $path = public_path().'/storage/'.$referenceNumber->attachment_path;
-                //unlink($path);
+                unlink($path);
                 $reference_number = $this->reference_number_repository->deleteById($referenceNumber->id);
                 return redirect()->route('admin.reference-numbers.index')->withFlashSuccess('Deleted Successfully');
             }else{
