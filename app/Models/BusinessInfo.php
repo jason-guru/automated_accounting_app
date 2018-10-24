@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use SoftDeletes;
+use Carbon\Carbon;
 
 class BusinessInfo extends Model
 {
@@ -25,5 +26,9 @@ class BusinessInfo extends Model
     public function vat_submit_type()
     {
         return $this->belongsTo(VatSubmitType::class);
+    }
+
+    public function get_date($date){
+        return !is_null($date) ? Carbon::parse($date)->format('d-m-Y') : null;
     }
 }

@@ -139,16 +139,18 @@
                     <div class="col-md-6">
                         <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
                             <label for="">Business Start Date</label>
-                            <input name="bussiness_start_date" id="" class="form-control" data-toggle="datepicker" value="{{Carbon\Carbon::parse($business_info->bussiness_start_date)->format('d-m-Y')}}">
+                        <input name="business_start_date" id="" class="form-control" data-toggle="datepicker" value="{{$business_info->get_date($business_info->business_start_date)}}">
                         </div>
                         <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
                             <label for="">Book Start Date</label>
-                            <input data-toggle="datepicker" name="book_start_date" id="" class="form-control" value="{{Carbon\Carbon::parse($business_info->book_start_date)->format('d-m-Y')}}">
+                            <input data-toggle="datepicker" name="book_start_date" id="" class="form-control" value="{{$business_info->get_date($business_info->book_start_date)}}">
                         </div>
+                        
                         <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
                             <label for="">Year End Date</label>
-                            <input data-toggle="datepicker" name="year_end_date" id="" class="form-control" value="{{Carbon\Carbon::parse($business_info->year_end_date)->format('d-m-Y')}}">
+                            <input data-toggle="datepicker" name="year_end_date" id="" class="form-control" value="{{$business_info->get_date($business_info->year_end_date)}}">
                         </div>
+
                         <div class="form-group {{$business_info->company_type_id == 6 || $business_info->company_type_id == 2 || $business_info->company_type_id == 3 || $business_info->company_type_id == 4 || $business_info->company_type_id == 7 ? "d-none" : ""}}">
                         <label for="">Company Reg No.</label>
                             <input type="text" name="company_reg_number" id="" value="{{$business_info->company_reg_number}}" class="form-control">
@@ -178,7 +180,7 @@
                         </div>
                         <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
                             <label for="">VAT Registration Date</label>
-                            <input data-toggle="datepicker" name="vat_reg_date" id="" class="form-control" value="{{Carbon\Carbon::parse($business_info->vat_reg_date)->format('d-m-Y')}}">
+                            <input data-toggle="datepicker" name="vat_reg_date" id="" class="form-control" value="{{$business_info->get_date($business_info->vat_reg_date)}}">
                         </div>
                         <div class="form-group">
                             <label for="">Social Media</label>
@@ -186,7 +188,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Last Bookkeeping Done</label>
-                        <input data-toggle="datepicker" name="last_bookkeeping_done" id="" class="form-control" value="{{Carbon\Carbon::parse($business_info->last_bookkeeping_done)->format('d-m-Y')}}">
+                        <input data-toggle="datepicker" name="last_bookkeeping_done" id="" class="form-control" value="{{$business_info->get_date($business_info->last_bookkeeping_done)}}">
                         </div>
                         <div class="form-group {{$business_info->company_type_id == 6 ? "d-none" : ""}}">
                             <label for="">Vat Scheme</label> 
