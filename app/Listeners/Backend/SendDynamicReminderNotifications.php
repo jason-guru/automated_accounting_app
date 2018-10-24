@@ -10,6 +10,7 @@ use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\MessageFormatRepository;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use Config;
 use App\Mail\Backend\ReminderMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -100,11 +101,11 @@ class SendDynamicReminderNotifications
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }elseif(!$send_sms && $send_email){
-            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']))){
+            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), "From:".Config::get('mail.from.address'))){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }elseif($send_sms && $send_email){
-            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account'])) && $has_sent_sms){
+            if(mail($client_email, 'Filing Reminder',  sprintf($email_body['format'], $email_body['client_company_name'], $email_body['client_next_account']), "From:".Config::get('mail.from.address')) && $has_sent_sms){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
         }
