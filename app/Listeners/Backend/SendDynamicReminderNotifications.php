@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Carbon\Carbon;
 use App\Mail\Backend\ReminderMail;
 use Illuminate\Support\Facades\Mail;
+use Config;
 
 class SendDynamicReminderNotifications
 {
@@ -26,7 +27,7 @@ class SendDynamicReminderNotifications
      */
     public function __construct(ReminderRepository $reminder_repository, MessageFormatRepository $message_format_repository)
     {
-        $this->sms_api_key = config('services.bulletin_sms.secret');
+        $this->sms_api_key = Config::get('services.bulletin_sms.secret');
         $this->sms_client =  new Client();
         $this->reminder_repository = $reminder_repository;
         $this->message_format_repository = $message_format_repository;
