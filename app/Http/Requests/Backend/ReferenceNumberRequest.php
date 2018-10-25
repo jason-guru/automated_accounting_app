@@ -33,7 +33,8 @@ class ReferenceNumberRequest extends FormRequest
         return [
             'name' => 'required',
             'client_id' => 'required',
-            'invoice' => 'max:2048|mimes:jpeg,bmp,png,docx,pdf'
+            'invoice' => 'max:2048|mimes:jpeg,bmp,png,docx,pdf',
+            'amount' => 'numeric'
         ];
     }
 }

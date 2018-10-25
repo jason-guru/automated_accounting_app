@@ -21,7 +21,7 @@
             @csrf
                 <div class="form-group mt-4">
                     <label for="" class=" col-form-label">Name: <span class="text-danger">*</span></label>
-                    <input type="text" name="name" id="" class="form-control">
+                    <input type="text" name="name" id="" class="form-control"  placeholder="Enter a Format name">
                 </div>
                 <div class="form-group">
                     <label for=""  class="col-form-label">SMS Body: <span class="text-danger">*</span></label>

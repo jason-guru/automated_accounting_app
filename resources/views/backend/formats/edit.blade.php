@@ -22,7 +22,7 @@
             @method('PUT')
                 <div class="form-group mt-4">
                     <label for="" class=" col-form-label">Name: <span class="text-danger">*</span></label>
-                    <input type="text" name="name" id="" class="form-control" value="{{$message_format->name}}">
+                    <input type="text" name="name" id="" class="form-control" value="{{$message_format->name}}"  placeholder="Enter a Format name">
                     <input type="hidden" name="id" value="{{$message_format->id}}">
                 </div>
                 <div class="form-group">

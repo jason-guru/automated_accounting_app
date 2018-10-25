@@ -31,7 +31,7 @@ Route::get('contact-person/create/{id}', 'ContactPersonController@create_by_clie
 //Reminder Routes
 Route::get('reminders/send/now', function(){
     event(new ReminderEvent());
-    //return back();
+    return back();
 })->name('reminders.send.now');
 
 //Environment Routes
