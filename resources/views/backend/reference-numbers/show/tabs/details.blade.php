@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <th>Attachment</th>
-                        <td><img width="200" src="{{asset('storage/'.$reference_number->attachment_path)}}" alt=""></td>
+                        <td><a href="{{asset('storage/'.$reference_number->attachment_path)}}">Click here to download</a></td>
                     </tr>
                 </table>
             </div><!--table-responsive-->

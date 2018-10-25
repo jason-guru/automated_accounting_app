@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,7 +32,8 @@ class ReferenceNumberRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'client_id' => 'required'
+            'client_id' => 'required',
+            'invoice' => 'max:2048|mimes:jpeg,bmp,png,docx,pdf'
         ];
     }
 }

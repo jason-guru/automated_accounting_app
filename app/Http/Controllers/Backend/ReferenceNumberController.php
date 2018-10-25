@@ -6,7 +6,7 @@ use Storage;
 use App\Models\ReferenceNumber;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ReferenceNumberRequest;
+use App\Http\Requests\Backend\ReferenceNumberRequest;
 use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\ReferenceNumberRepository;
 use App\Repositories\Backend\ReminderRepository;
@@ -95,6 +95,12 @@ class ReferenceNumberController extends Controller
      */
     public function update(ReferenceNumberRequest $request, ReferenceNumber $referenceNumber)
     {
+        if($request->file('invoice')){
+            $old_path = public_path().'/storage/'.$referenceNumber->attachment_path;
+            unlink($old_path);
+            $path = $request->file('invoice')->store('/invoices', 'public');
+            $request->merge(['attachment_path' => $path]);
+        }
         $reference_number = $this->reference_number_repository->updateById($referenceNumber->id, $request->except('_token'));
         return redirect()->route('admin.reference-numbers.index')->withFlashSuccess('Updated Successfully');
     }

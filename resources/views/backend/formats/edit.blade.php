@@ -40,7 +40,14 @@
         <div class="row">
             <div class="col-md-12">
                 <h5>Instruction:</h5>
-                <p id="formatHelp" class="form-text text-muted">The <b>first %s</b> in the sms & mail body is used to denote the <b>client's company name</b>. And the <b>second %s</b> is used to denote the next <b>accounts due date</b>. <br> <i>Example:</i> Hello %s, this is an account filing reminder. Your account's next due date is on %s. <br><i>Ouput:</i> Hello XYZ Corp, this is a account filing reminder. Your account's next due date is on 31-05-2020.</p>
+                <p id="formatHelp" class="form-text text-muted"><b>Keyword Association</b>
+                    <ul>
+                        <li><b>%mail_to</b> = Director's name or company name if director name not present</li>
+                        <li><b>%reference_number</b> = Gets the client's set reference number</li>
+                        <li><b>%amount</b> = Gets the client's set amount</li>
+                    </ul>
+                    
+                </p>
             </div>
         </div>
     </div>

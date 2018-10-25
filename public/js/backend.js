@@ -2966,7 +2966,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         getReferenceNumber: function getReferenceNumber() {
-            this.referenceNumbers = this.clients[this.selectedClient].reference_numbers;
+            var _this = this;
+
+            this.clients.forEach(function (client) {
+                if (client.id === _this.selectedClient) {
+                    _this.referenceNumbers = client.reference_numbers;
+                }
+            });
         }
     }
 });

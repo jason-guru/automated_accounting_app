@@ -141,7 +141,11 @@ export default {
             }
         },
         getReferenceNumber: function(){
-            this.referenceNumbers = this.clients[this.selectedClient].reference_numbers;
+            this.clients.forEach(client => {
+                if(client.id === this.selectedClient){
+                    this.referenceNumbers = client.reference_numbers;
+                }
+            });
         }
     },
 }
