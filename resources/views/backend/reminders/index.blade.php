@@ -29,7 +29,7 @@
                             <th>Client ID</th>
                             <th>Company Name</th>
                             <th>Total Reminders</th>
-                            <th>Total Reminded</th>
+                            <th>Reminders Sent</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
