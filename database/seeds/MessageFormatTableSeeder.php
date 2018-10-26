@@ -12,9 +12,18 @@ class MessageFormatTableSeeder extends Seeder
      */
     public function run()
     {
-        $sms_body = 'Hello %s, this is a filing reminder for your accounts, which is due on %s. Thanks';
-        $email_body = 'Hello %s, 
-                       this is a filing reminder for your accounts, which is due on %s. Thanks';
+        $sms_body = 'Hi %mail_to,
+        With regards to your tax payment, please use the following info to make the payment:
+        Reference: %reference_number
+        Amount: %amount
+        Thanks and kind regards,
+        Nathan';
+        $email_body = 'Hi %mail_to,
+        With regards to your tax payment, please use the following info to make the payment:
+        Reference: %reference_number
+        Amount: %amount
+        Thanks and kind regards,
+        Nathan';
         DB::table('message_formats')->insert(['name'=> "Sample Message Format",'sms_format' => $sms_body, 'email_format' => $email_body]);
     }
 }

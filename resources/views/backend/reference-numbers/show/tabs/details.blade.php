@@ -20,7 +20,11 @@
                     </tr>
                     <tr>
                         <th>Attachment</th>
-                        <td><a href="{{asset('storage/'.$reference_number->attachment_path)}}">Click here to download</a></td>
+                        <td><a href="{{!is_null($reference_number->attachment_path) ? asset('storage/'.$reference_number->attachment_path): '#'}}">Click here to download</a>
+                        @if(is_null($reference_number->attachment_path))
+                        <small class="form-text text-muted">No file attached</small>
+                        @endif
+                    </td>
                     </tr>
                 </table>
             </div><!--table-responsive-->

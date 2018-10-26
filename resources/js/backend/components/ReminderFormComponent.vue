@@ -9,7 +9,7 @@
         </select>
     </div>
     <div class="form-group mt-4">
-        <label for="" class="col-form-label">Select Reference: <span class="text-danger">*</span></label>
+        <label for="" class="col-form-label">Select Reference: </label>
         <select name="reference_number_id" id="" class="form-control">
             <option value="" disabled selected>Please select a reference name:</option>
             <option v-if="referenceNumbers.length == 0" value="" disabled selected><span class="text-danger"> No Reference found. Please create a Reference first.</span></option>

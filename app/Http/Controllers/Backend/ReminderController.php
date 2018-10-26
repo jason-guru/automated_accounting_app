@@ -90,7 +90,7 @@ class ReminderController extends Controller
                         'client_id' => $client_id,
                         'deadline_id' =>$deadline_id,
                         'remind_date' => $date,
-                        'reference_number_id' => $request->reference_number_id
+                        'reference_number_id' => !is_null($request->reference_number_id) ? $request->reference_number_id : null
                     ];
                     $this->reminder_repository->create($prep_reminder_data);
                 }

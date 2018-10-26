@@ -35,7 +35,6 @@ class ReminderRequest extends FormRequest
             'client_id' => 'required|unique:reminders,client_id,'.$this->id,
             'deadline_id.*' => 'required',
             'remind_data.*' => 'required',
-            'reference_number_id' => 'required'
         ];
     }
 }

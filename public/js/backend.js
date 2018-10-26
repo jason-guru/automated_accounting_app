@@ -23612,7 +23612,9 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group mt-4" }, [
-      _vm._m(1),
+      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
+        _vm._v("Select Reference: ")
+      ]),
       _vm._v(" "),
       _c(
         "select",
@@ -23649,13 +23651,13 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(1),
     _vm._v(" "),
     _vm.deadlines.length > 0
       ? _c("span", [
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -23756,7 +23758,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "table-responsive mt-2" }, [
       _c("table", { staticClass: "table" }, [
-        _vm._m(4),
+        _vm._m(3),
         _vm._v(" "),
         _c(
           "tbody",
@@ -23783,7 +23785,7 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _vm._m(5, true)
+                      _vm._m(4, true)
                     ]),
                     _vm._v(" "),
                     _c("table", [
@@ -23886,7 +23888,7 @@ var render = function() {
       attrs: { type: "hidden", name: "has_reminded", value: "0" }
     }),
     _vm._v(" "),
-    _vm._m(6)
+    _vm._m(5)
   ])
 }
 var staticRenderFns = [
@@ -23896,15 +23898,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
       _vm._v("Select Client: "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-      _vm._v("Select Reference: "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },

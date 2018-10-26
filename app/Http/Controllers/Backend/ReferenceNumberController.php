@@ -54,7 +54,11 @@ class ReferenceNumberController extends Controller
      */
     public function store(ReferenceNumberRequest $request)
     {
-        $path = $request->file('invoice')->store('/invoices', 'public');
+        if($request->file('invoice')){
+            $path = $request->file('invoice')->store('/invoices', 'public');
+        }else{
+            $path = null;
+        }
         $request->merge(['attachment_path' => $path]);
         $reference_numbers = $this->reference_number_repository->create($request->except('_token'));
         return redirect()->route('admin.reference-numbers.index')->withFlashSuccess('Created Successfully');

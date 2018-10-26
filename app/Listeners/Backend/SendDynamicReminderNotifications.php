@@ -64,8 +64,8 @@ class SendDynamicReminderNotifications
                         ];
                         $email_data = [
                             '%mail_to' => !is_null($director_data) ? $director_data->first_name : $reminder->client->company_name,
-                            '%reference_number' => $reminder->reference_number->reference_number,
-                            '%amount' => $reminder->reference_number->amount
+                            '%reference_number' => count($reminder->reference_number) > 0 ? $reminder->reference_number->reference_number : "",
+                            '%amount' => count($reminder->reference_number) > 0 ? $reminder->reference_number->amount :""
                         ];
 
                         $sms_body = [
@@ -73,8 +73,8 @@ class SendDynamicReminderNotifications
                         ];
                         $sms_data = [
                             '%mail_to' => !is_null($director_data) ? $director_data->first_name : $reminder->client->company_name,
-                            '%reference_number' => $reminder->reference_number->reference_number,
-                            '%amount' => $reminder->reference_number->amount
+                            '%reference_number' => count($reminder->reference_number) > 0 ? $reminder->reference_number->reference_number : "",
+                            '%amount' => count($reminder->reference_number) > 0 ? $reminder->reference_number->amount :""
                         ];
 
                         $this->send_reminder($reminder->id, $client_phone, $client_email, $email_body, $sms_body, $sms_data, $email_data);
