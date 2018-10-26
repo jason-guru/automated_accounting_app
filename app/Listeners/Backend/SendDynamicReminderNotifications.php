@@ -52,10 +52,12 @@ class SendDynamicReminderNotifications
         try{
             $reminders = $this->reminder_repository->where('is_active', 1)->where('has_reminded', 0)->get();
             $today = Carbon::now()->toDateString();
+            $now = Carbon::now()->toTimeString();
             if($reminders->count() > 0){
                 foreach($reminders as $reminder){
                     $reminder_date = $reminder->remind_date;
-                    if($today >= $reminder_date){
+                    $schedule_time = $reminder->schedule_time;
+                    if($today >= $reminder_date && $now >= $schedule_time){
                         $client_phone = $reminder->client->phone;
                         $client_email = $reminder->client->email;
                         $director_data = $reminder->client->contact_people->where('designation_id', 1)->first();

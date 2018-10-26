@@ -57,7 +57,7 @@
                         Deadline
                     </th>
                     <th>
-                        Reminder Dates
+                        Reminder Dates and Time
                     </th>
                     <th>
                         Action
@@ -71,7 +71,8 @@
                         
                         <div class="input-group mb-3">
                             <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
-                            <input type="date" :name="'reminders_data['+index1+'][]'" class="form-control col-md-5">
+                            <input type="date" :name="'reminders_data['+index1+'][0][date]'" class="form-control col-md-5">
+                            <input type="time" class="form-control" :name="'reminders_data['+index1+'][0][time]'" value="11:00">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="basic-addon2">Required</span>
                             </div>
@@ -80,11 +81,14 @@
                             <tbody>
                                 <tr id="reminder-date-tr" v-for="(row, index) in rows[index1]" :key="index" :innerIndex="index">
                                     <td> 
-                                        <input type="date" :name="'reminders_data['+index1+'][]'" class="form-control mt-2" v-model="row.date">
+                                        <input type="date" :name="'reminders_data['+index1+']['+(index+1)+'][date]'" class="form-control mt-2" v-model="row.date">
                                         <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
                                     </td>
                                     <td>
-                                        <a v-on:click="removeElement(index, index1);" style="cursor: pointer" class="text-danger"><i class="fa fa-trash ml-2"></i></a>
+                                        <input type="time" class="form-control ml-2 mt-2" :name="'reminders_data['+index1+']['+(index+1)+'][time]'" v-model="row.time">
+                                    </td>
+                                    <td>
+                                        <a v-on:click="removeElement(index, index1);" style="cursor: pointer" class="text-danger"><i class="fa fa-trash ml-4"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -126,7 +130,8 @@ export default {
         addDateRow: function(key){
             var elem = document.createElement('tr');
             this.rows[key].push({
-                date: ''
+                date: '',
+                time: '11:00'
             });
         },
         removeElement: function(index, index1){

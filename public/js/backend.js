@@ -2929,6 +2929,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2953,7 +2957,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addDateRow: function addDateRow(key) {
             var elem = document.createElement('tr');
             this.rows[key].push({
-                date: ''
+                date: '',
+                time: '11:00'
             });
         },
         removeElement: function removeElement(index, index1) {
@@ -23781,7 +23786,16 @@ var render = function() {
                         staticClass: "form-control col-md-5",
                         attrs: {
                           type: "date",
-                          name: "reminders_data[" + index1 + "][]"
+                          name: "reminders_data[" + index1 + "][0][date]"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "time",
+                          name: "reminders_data[" + index1 + "][0][time]",
+                          value: "11:00"
                         }
                       }),
                       _vm._v(" "),
@@ -23815,7 +23829,12 @@ var render = function() {
                                   staticClass: "form-control mt-2",
                                   attrs: {
                                     type: "date",
-                                    name: "reminders_data[" + index1 + "][]"
+                                    name:
+                                      "reminders_data[" +
+                                      index1 +
+                                      "][" +
+                                      (index + 1) +
+                                      "][date]"
                                   },
                                   domProps: { value: row.date },
                                   on: {
@@ -23841,6 +23860,38 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: row.time,
+                                      expression: "row.time"
+                                    }
+                                  ],
+                                  staticClass: "form-control ml-2 mt-2",
+                                  attrs: {
+                                    type: "time",
+                                    name:
+                                      "reminders_data[" +
+                                      index1 +
+                                      "][" +
+                                      (index + 1) +
+                                      "][time]"
+                                  },
+                                  domProps: { value: row.time },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(row, "time", $event.target.value)
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
                                 _c(
                                   "a",
                                   {
@@ -23852,7 +23903,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_c("i", { staticClass: "fa fa-trash ml-2" })]
+                                  [_c("i", { staticClass: "fa fa-trash ml-4" })]
                                 )
                               ])
                             ]
@@ -23942,7 +23993,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "\r\n                        Reminder Dates\r\n                    "
+            "\r\n                        Reminder Dates and Time\r\n                    "
           )
         ]),
         _vm._v(" "),

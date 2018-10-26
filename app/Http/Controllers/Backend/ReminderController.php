@@ -85,11 +85,12 @@ class ReminderController extends Controller
             foreach($reminders_data as $reminder_data){
                 $deadline_id = $reminder_data['deadline_id'];
                 array_shift($reminder_data);
-                foreach($reminder_data as $date){
+                foreach($reminder_data as $key => $data){
                     $prep_reminder_data = [
                         'client_id' => $client_id,
                         'deadline_id' =>$deadline_id,
-                        'remind_date' => $date,
+                        'remind_date' => $data['date'],
+                        'schedule_time' => $data['time'],
                         'reference_number_id' => !is_null($request->reference_number_id) ? $request->reference_number_id : null
                     ];
                     $this->reminder_repository->create($prep_reminder_data);
@@ -140,7 +141,8 @@ class ReminderController extends Controller
         $reminders = $this->reminder_repository->where('client_id', $id)->get();
         foreach($reminders as $key => $reminder){
             $date = Carbon::parse($request->reminder_dates[$key])->format('Y-m-d');
-            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date]);
+            $time = $request->reminder_time[$key];
+            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time]);
         }
         return redirect()->route('admin.reminders.index')->withFlashSuccess('Reminders updated successfully');
     }

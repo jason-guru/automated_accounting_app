@@ -36,6 +36,7 @@
                                 <th>
                                     Reminder Dates
                                 </th>
+                                <th>Schedule Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +47,9 @@
                                     </td>
                                     <td>
                                         <input data-toggle="datepicker" name="reminder_dates[]" id="" class="form-control" value="{{ Carbon\Carbon::parse($reminder->remind_date)->format('d-M-Y')}}">
+                                    </td>
+                                    <td>
+                                        <input type="time" name="reminder_time[]" id="" class="form-control" value="{{$reminder->schedule_time}}">
                                     </td>
                                 </tr>
                             @endforeach
