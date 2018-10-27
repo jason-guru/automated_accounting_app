@@ -9,6 +9,7 @@ use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\DeadlineRepository;
 use App\Http\Requests\Backend\ReminderRequest;
 use App\Repositories\Backend\ReminderDateRepository;
+use App\Models\Recurring;
 use Carbon\Carbon;
 
 
@@ -18,6 +19,7 @@ class ReminderController extends Controller
     protected $client_repository;
     protected $deadline_repository;
     protected $reminder_date_repository;
+    protected $recurrings;
 
     public function __construct(ReminderRepository $reminder_repository, ClientRepository $client_repository, DeadlineRepository $deadline_repository, ReminderDateRepository $reminder_date_repository)
     {
@@ -25,6 +27,8 @@ class ReminderController extends Controller
         $this->client_repository = $client_repository;
         $this->deadline_repository = $deadline_repository;
         $this->reminder_date_repository = $reminder_date_repository;
+        $this->recurrings = Recurring::where('is_active', 1)->get();
+
     }
     /**
      * Display a listing of the resource.
@@ -48,8 +52,8 @@ class ReminderController extends Controller
         $clients = $this->client_repository->where('is_active', 1)->with('reference_numbers')->get();
         
         $deadlines = $this->deadline_repository->where('is_active', 1)->get();
-        
-        return view('backend.reminders.create', compact('clients', 'deadlines'));
+        $recurrings = $this->recurrings;
+        return view('backend.reminders.create', compact('clients', 'deadlines', 'recurrings'));
     }
 
     /**
@@ -91,6 +95,7 @@ class ReminderController extends Controller
                         'deadline_id' =>$deadline_id,
                         'remind_date' => $data['date'],
                         'schedule_time' => $data['time'],
+                        'recurring_id' => $data['recurring_id'],
                         'reference_number_id' => !is_null($request->reference_number_id) ? $request->reference_number_id : null
                     ];
                     $this->reminder_repository->create($prep_reminder_data);
@@ -126,7 +131,8 @@ class ReminderController extends Controller
         $clients = $this->client_repository->where('is_active', 1)->get();
         $deadlines = $this->deadline_repository->where('is_active', 1)->get();
         $client = $this->client_repository->getById($id);
-        return view('backend.reminders.edit', compact('client', 'clients', 'deadlines'));
+        $recurrings = $this->recurrings;
+        return view('backend.reminders.edit', compact('client', 'clients', 'deadlines' ,'recurrings'));
     }
 
     /**
@@ -142,7 +148,8 @@ class ReminderController extends Controller
         foreach($reminders as $key => $reminder){
             $date = Carbon::parse($request->reminder_dates[$key])->format('Y-m-d');
             $time = $request->reminder_time[$key];
-            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time]);
+            $recurrence_id = $request->recurring_id[$key];
+            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time, 'recurring_id' => $recurrence_id ]);
         }
         return redirect()->route('admin.reminders.index')->withFlashSuccess('Reminders updated successfully');
     }

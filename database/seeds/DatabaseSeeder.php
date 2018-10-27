@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FrequencyTableSeeder::class);
         $this->call(MessageFormatTableSeeder::class);
         $this->call(DeadlineTableSeeder::class);
+        $this->call(RecurringTableSeeder::class);
 
         Model::reguard();
     }

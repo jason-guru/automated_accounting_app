@@ -19,7 +19,7 @@
         <hr>
         <form action="{{route('admin.reminders.store')}}" method="post">
             @csrf
-            <reminder-form :deadlines='{{$deadlines}}' :clients='{{$clients}}'></reminder-form>
+            <reminder-form :deadlines='{{$deadlines}}' :clients='{{$clients}}' :recurrings='{{$recurrings}}'></reminder-form>
         </form>
     </div><!--card-body-->
     </div><!--card-->

@@ -80,6 +80,25 @@ class SendDynamicReminderNotifications
                         ];
 
                         $this->send_reminder($reminder->id, $client_phone, $client_email, $email_body, $sms_body, $sms_data, $email_data);
+                        //update the reinder date if recurring is set
+                        if(!is_null($reminder->recurring_id)){
+                            $updated_date = $reminder_date;
+                            if($reminder->recurring_id == 1){
+                                $updated_date = Carbon::parse($reminder_date)->addDay()->format('Y-m-d');
+                            }elseif($reminder->recurring_id == 2){
+                                $updated_date = Carbon::parse($reminder_date)->addWeek()->format('Y-m-d');
+                            }elseif($reminder->recurring_id == 3){
+                                $updated_date = Carbon::parse($reminder_date)->addMonth()->format('Y-m-d');
+                            }elseif($reminder->recurring_id == 4){
+                                $updated_date = Carbon::parse($reminder_date)->addMonths(6)->format('Y-m-d');
+                            }elseif($reminder->recurring_id == 5){
+                                $updated_date = Carbon::parse($reminder_date)->addYear()->format('Y-m-d');
+                            }
+                            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $updated_date]);
+                        }
+                        $counter = $this->reminder_repository->getById($reminder->id)->counter;
+                        $counter++;
+                        $this->reminder_repository->updateById($reminder->id, ['counter' => $counter]);
                         return "Success";
                     }
                 }

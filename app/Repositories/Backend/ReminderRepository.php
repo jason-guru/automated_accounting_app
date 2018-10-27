@@ -61,7 +61,7 @@ class ReminderRepository extends BaseRepository
             $client_id = $reminder->client_id;
             $company_name = $reminder->client->company_name;
             $total_reminders = $this->model->where('client_id', $client_id)->get()->count();
-            $total_reminded = $this->model->where('client_id', $client_id)->where('has_reminded', 1)->get()->count();
+            $total_reminded = $this->model->where('client_id', $client_id)->pluck('counter')->sum();
             $reminder_data[$client_id] =[
                 'client_id' => $client_id,
                 'company_name' => $company_name,

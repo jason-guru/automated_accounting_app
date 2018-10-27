@@ -37,6 +37,7 @@
                                     Reminder Dates
                                 </th>
                                 <th>Schedule Time</th>
+                                <th>Reccurrence</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,14 @@
                                     </td>
                                     <td>
                                         <input type="time" name="reminder_time[]" id="" class="form-control" value="{{$reminder->schedule_time}}">
+                                    </td>
+                                    <td>
+                                        <select name="recurring_id[]" id="" class="form-control">
+                                            <option value="">Select Reccurrence</option>
+                                            @foreach ($recurrings as $recurring)
+                                                <option value="{{$recurring->id}}" {{$reminder->recurring_id == $recurring->id ? "selected" : ""}}>{{$recurring->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                 </tr>
                             @endforeach

@@ -68,15 +68,23 @@
                 <tr v-for="(deadline,index1) in deadlines" :key="index1" v-if="checked[index1]">
                     <td>{{deadline.name}}</td>
                     <td>
-                        
-                        <div class="input-group mb-3">
-                            <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
-                            <input type="date" :name="'reminders_data['+index1+'][0][date]'" class="form-control col-md-5">
-                            <input type="time" class="form-control" :name="'reminders_data['+index1+'][0][time]'" value="11:00">
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon2">Required</span>
+                        <div class="row">
+                            <div class="input-group mb-3 col-md-8">
+                                <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
+                                <input type="date" :name="'reminders_data['+index1+'][0][date]'" class="form-control col-md-5">
+                                <input type="time" class="form-control" :name="'reminders_data['+index1+'][0][time]'" value="11:00">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2">Required</span>
+                                </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <select :name="'reminders_data['+index1+'][0][recurring_id]'" id="" class="form-control">
+                                <option value="" selected>Select recurrence</option>
+                                <option :value="recur.id" v-for="(recur, recurKey) in recurrings" :key="recurKey">
+                                    {{recur.name}}</option>
+                                </select>
                             </div>
+                        </div>
                         <table>
                             <tbody>
                                 <tr id="reminder-date-tr" v-for="(row, index) in rows[index1]" :key="index" :innerIndex="index">
@@ -86,6 +94,13 @@
                                     </td>
                                     <td>
                                         <input type="time" class="form-control ml-2 mt-2" :name="'reminders_data['+index1+']['+(index+1)+'][time]'" v-model="row.time">
+                                    </td>
+                                    <td>
+                                        <select :name="'reminders_data['+index1+']['+(index+1)+'][time]'" id="" class="form-control ml-2 mt-2" v-model="row.recurringId">
+                                            <option value="" selected>Select recurrence</option>
+                                            <option :value="recur.id" v-for="(recur, recurKey) in recurrings" :key="recurKey">
+                                                {{recur.name}}</option>
+                                        </select>
                                     </td>
                                     <td>
                                         <a v-on:click="removeElement(index, index1);" style="cursor: pointer" class="text-danger"><i class="fa fa-trash ml-4"></i></a>
@@ -109,7 +124,7 @@
 <script>
 
 export default {
-    props: ['deadlines', 'clients'],
+    props: ['deadlines', 'clients', 'recurrings'],
     data: function(){
         return {
             rows: [],
@@ -131,7 +146,8 @@ export default {
             var elem = document.createElement('tr');
             this.rows[key].push({
                 date: '',
-                time: '11:00'
+                time: '11:00',
+                recurringId: ''
             });
         },
         removeElement: function(index, index1){
