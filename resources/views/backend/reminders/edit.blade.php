@@ -39,9 +39,9 @@
                                     Deadline
                                 </th>
                                 <th>
-                                    Reminder Dates
+                                    Reminder Dates<span class="text-danger">*</span>
                                 </th>
-                                <th>Schedule Time</th>
+                                <th>Schedule Time<span class="text-danger">*</span></th>
                                 <th>Reccurrence</th>
                                 <th>Reference</th>
                                 <th>Send SMS</th>
@@ -56,10 +56,10 @@
                                         {{$reminder->deadline->name}}
                                     </td>
                                     <td>
-                                        <input data-toggle="datepicker" name="reminder_dates[]" id="" class="form-control" value="{{ Carbon\Carbon::parse($reminder->remind_date)->format('d-M-Y')}}">
+                                        <input data-toggle="datepicker" name="reminder_dates[]" id="" class="form-control" value="{{ Carbon\Carbon::parse($reminder->remind_date)->format('d-M-Y')}}" required>
                                     </td>
                                     <td>
-                                        <input type="time" name="reminder_time[]" id="" class="form-control" value="{{$reminder->schedule_time}}">
+                                        <input type="time" name="reminder_time[]" id="" class="form-control" value="{{$reminder->schedule_time}}" required>
                                     </td>
                                     <td>
                                         <select name="recurring_id[]" id="" class="form-control">
@@ -120,7 +120,7 @@
             <form action="{{route('admin.reminder.create.from.edit')}}" method="post">
                 @csrf
                 <div class="modal-body">
-                    <label for="">Deadline</label>
+                    <label for="">Deadline</label><span class="text-danger">*</span>
                     <select name="deadline_id" id="" class="form-control">
                         <option value="">Select a Deadline</option>
                         @foreach ($deadlines as $deadline)
@@ -128,11 +128,11 @@
                         @endforeach
                     </select>
                     <div class="form-group">
-                        <label for="">Reminder Date:</label>
+                        <label for="">Reminder Date:</label><span class="text-danger">*</span>
                         <input class="form-control" type="date" name="remind_date">
                     </div>
                     <div class="form-group">
-                        <label for="">Schedule Time:</label>
+                        <label for="">Schedule Time:</label><span class="text-danger">*</span>
                         <input class="form-control" type="time" name="schedule_time">
                     </div>
                     <div class="form-group"><label for="">Recurring:</label>
