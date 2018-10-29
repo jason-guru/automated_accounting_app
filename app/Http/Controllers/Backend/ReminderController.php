@@ -178,15 +178,18 @@ class ReminderController extends Controller
         $reminders = $this->reminder_repository->where('client_id', $id)->get();
         foreach($reminders as $key => $reminder){
             //check if updated
+            if($reminder->has_reminded){
             $is_updated = $this->is_updated($reminder, $request, $key);
+            if($is_updated){
+                $this->reminder_repository->updateById($reminder->id, ['has_reminded' => false]);
+            }
+            }
             $date = Carbon::parse($request->reminder_dates[$key])->format('Y-m-d');
             $time = $request->reminder_time[$key];
             $recurrence_id = $request->recurring_id[$key];
             $reference_number_id = $request->reference_number_id[$key];
             $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time, 'recurring_id' => $recurrence_id, 'reference_number_id' => $reference_number_id ]);
-            if($is_updated){
-                $this->reminder_repository->updateById($reminder->id, ['has_reminded' => false]);
-            }
+            
         }
         return back()->withFlashSuccess('Reminders updated successfully');
     }
@@ -236,7 +239,7 @@ class ReminderController extends Controller
         
     }
 
-    public function is_updated($reminder, $request, $key)
+    private function is_updated($reminder, $request, $key)
     {
         $existing_reminder = $this->reminder_repository->getById($reminder->id);
         $existing_date = $existing_reminder->remind_date;
