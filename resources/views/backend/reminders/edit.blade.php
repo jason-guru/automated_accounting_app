@@ -91,7 +91,11 @@
                                             <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                                         </label>
                                     </td>
-                                    <td><a href="{{route('admin.reminder.delete.from.edit', ['id' => $reminder->id])}}" class="btn btn-danger"><i class="fa fa-trash"></i> Remove</a></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                             <a href="{{route('admin.reminder.delete.from.edit', ['id' => $reminder->id])}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
