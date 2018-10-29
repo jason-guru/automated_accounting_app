@@ -8,7 +8,7 @@ use App\Models\Traits\Attribute\ReminderAttribute;
 class Reminder extends Model
 {
     protected $fillable = [
-        'client_id', 'is_active', 'has_reminded', 'deadline_id', 'remind_date', 'reference_number_id', 'schedule_time', 'recurring_id', 'counter'
+        'client_id', 'is_active', 'has_reminded', 'deadline_id', 'remind_date', 'reference_number_id', 'schedule_time', 'recurring_id', 'counter', 'send_sms', 'send_email'
     ];
 
     public function client()

@@ -85,18 +85,29 @@ class ReminderController extends Controller
     {
         try{
             $reminders_data = $request->reminders_data;
-            dd($reminders_data);
             $client_id = $request->client_id;
             foreach($reminders_data as $reminder_data){
                 $deadline_id = $reminder_data['deadline_id'];
                 array_shift($reminder_data);
                 foreach($reminder_data as $key => $data){
+                    if(!array_key_exists('send_sms', $data)){
+                        $send_sms = false;
+                    }else{
+                        $send_sms = true;
+                    }
+                    if(!array_key_exists('send_email',$data)){
+                        $send_email = false;
+                    }else{
+                        $send_email = true;
+                    }
                     $prep_reminder_data = [
                         'client_id' => $client_id,
                         'deadline_id' =>$deadline_id,
                         'remind_date' => $data['date'],
                         'schedule_time' => $data['time'],
                         'recurring_id' => $data['recurring_id'],
+                        'send_sms' => $send_sms,
+                        'send_email' => $send_email,
                         'reference_number_id' => !is_null($request->reference_number_id) ? $request->reference_number_id : null
                     ];
                     $this->reminder_repository->create($prep_reminder_data);
@@ -165,5 +176,29 @@ class ReminderController extends Controller
     {
         $this->reminder_repository->where('client_id', $id)->delete();
         return back()->withFlashSuccess('Reminder Deleted Successfully');
+    }
+
+    /**
+     * Switch input update
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function switch_update(Request $request, $id){
+        if($request->message_type == 'sms'){
+            $this->reminder_repository->updateById($id,['send_sms' => $request->switch_value]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Send SMS state changed'
+            ]);
+        }elseif($request->message_type == 'email'){
+            $this->reminder_repository->updateById($id,['send_email' => $request->switch_value]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Send Email state changed'
+            ]);
+        }
+        
     }
 }

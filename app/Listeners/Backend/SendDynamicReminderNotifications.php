@@ -112,8 +112,8 @@ class SendDynamicReminderNotifications
     private function send_reminder($reminder_id, $client_phone, $client_email, $email_body, $sms_body, $sms_data, $email_data)
     {
         $reminder = $this->reminder_repository->getById($reminder_id);
-        $send_sms = $reminder->deadline->send_sms;
-        $send_email = $reminder->deadline->send_email;
+        $send_sms = $reminder->send_sms;
+        $send_email = $reminder->send_email;
         $has_sent_sms = null;
         $mail_failures = null;
         // if($send_sms){
@@ -138,6 +138,8 @@ class SendDynamicReminderNotifications
             if(mail($client_email, 'Filing Reminder',  strtr($email_body['format'], $email_data), "From:".Config::get('mail.from.address')) && $has_sent_sms){
                 $this->reminder_repository->updateById($reminder_id, ['has_reminded' => true]);
             }
+        }elseif(!$send_sms && !$send_email){
+            //do nothing
         }
     }
 

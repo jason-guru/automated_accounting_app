@@ -38,6 +38,8 @@
                                 </th>
                                 <th>Schedule Time</th>
                                 <th>Reccurrence</th>
+                                <th>Send SMS</th>
+                                <th>Send Email</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,6 +61,18 @@
                                                 <option value="{{$recurring->id}}" {{$reminder->recurring_id == $recurring->id ? "selected" : ""}}>{{$recurring->name}}</option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                        <label class="switch switch-label switch-pill switch-success mr-2" for="to-sms-{{$reminder->id}}">
+                                        <input class="switch-input" data-id="{{$reminder->id}}" type="checkbox" name="send_sms[]" id="to-sms-{{$reminder->id}}" value="{{$reminder->send_sms}}" {{$reminder->send_sms == 1 ? "checked" : ""}} data-url="{{route('admin.reminders.switch.update', ['id' => $reminder->id])}}">
+                                            <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label class="switch switch-label switch-pill switch-success mr-2" for="to-email-{{$reminder->id}}">
+                                        <input class="switch-input" data-id="{{$reminder->id}}" type="checkbox" name="send_email[]" id="to-email-{{$reminder->id}}" value="{{$reminder->send_email}}" {{$reminder->send_email == 1 ? "checked" : ""}} data-url="{{route('admin.reminders.switch.update', ['id' => $reminder->id])}}">
+                                            <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                                        </label>
                                     </td>
                                 </tr>
                             @endforeach
