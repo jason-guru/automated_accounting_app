@@ -161,7 +161,7 @@ class ReminderController extends Controller
             $date = Carbon::parse($request->reminder_dates[$key])->format('Y-m-d');
             $time = $request->reminder_time[$key];
             $recurrence_id = $request->recurring_id[$key];
-            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time, 'recurring_id' => $recurrence_id ]);
+            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time, 'recurring_id' => $recurrence_id, 'has_reminded' => false ]);
         }
         return redirect()->route('admin.reminders.index')->withFlashSuccess('Reminders updated successfully');
     }

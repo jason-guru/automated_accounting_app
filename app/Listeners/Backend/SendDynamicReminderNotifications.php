@@ -94,7 +94,7 @@ class SendDynamicReminderNotifications
                             }elseif($reminder->recurring_id == 5){
                                 $updated_date = Carbon::parse($reminder_date)->addYear()->format('Y-m-d');
                             }
-                            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $updated_date]);
+                            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $updated_date, 'has_reminded' => false]);
                         }
                         $counter = $this->reminder_repository->getById($reminder->id)->counter;
                         $counter++;
