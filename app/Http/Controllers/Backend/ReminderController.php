@@ -8,6 +8,7 @@ use App\Repositories\Backend\ReminderRepository;
 use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\DeadlineRepository;
 use App\Http\Requests\Backend\ReminderRequest;
+use App\Http\Requests\Backend\CreateFromEditRequest;
 use App\Repositories\Backend\ReminderDateRepository;
 use App\Models\Recurring;
 use Carbon\Carbon;
@@ -54,6 +55,24 @@ class ReminderController extends Controller
         $deadlines = $this->deadline_repository->where('is_active', 1)->get();
         $recurrings = $this->recurrings;
         return view('backend.reminders.create', compact('clients', 'deadlines', 'recurrings'));
+    }
+
+    public function create_from_edit(CreateFromEditRequest $request)
+    {
+        if(!array_key_exists('send_sms', $request->all())){
+            $send_sms = false;
+        }else{
+            $send_sms = true;
+        }
+        if(!array_key_exists('send_email',$request->all())){
+            $send_email = false;
+        }else{
+            $send_email = true;
+        }
+        $request->merge(['send_sms' => $send_sms]);
+        $request->merge(['send_email' => $send_email]);
+        $this->reminder_repository->create($request->except('_token'));
+        return back()->withFlashSuccess('Reminder Added Successfully');
     }
 
     /**
@@ -161,7 +180,8 @@ class ReminderController extends Controller
             $date = Carbon::parse($request->reminder_dates[$key])->format('Y-m-d');
             $time = $request->reminder_time[$key];
             $recurrence_id = $request->recurring_id[$key];
-            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time, 'recurring_id' => $recurrence_id, 'has_reminded' => false ]);
+            $reference_number_id = $request->reference_number_id[$key];
+            $this->reminder_repository->updateById($reminder->id, ['remind_date' => $date, 'schedule_time' => $time, 'recurring_id' => $recurrence_id, 'has_reminded' => false, 'reference_number_id' => $reference_number_id ]);
         }
         return redirect()->route('admin.reminders.index')->withFlashSuccess('Reminders updated successfully');
     }
@@ -175,6 +195,15 @@ class ReminderController extends Controller
     public function destroy($id)
     {
         $this->reminder_repository->where('client_id', $id)->delete();
+        return back()->withFlashSuccess('Reminders Deleted Successfully');
+    }
+
+    /**
+     * Remove a set reminder from reminder page
+     * 
+     */
+    public function destroy_from_edit($id){
+        $this->reminder_repository->deleteById($id);
         return back()->withFlashSuccess('Reminder Deleted Successfully');
     }
 

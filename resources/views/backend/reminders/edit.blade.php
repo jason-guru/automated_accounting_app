@@ -15,6 +15,11 @@
                     Edit Reminder
                 </h4>
             </div><!--col-->
+            <div class="col-sm-5">
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
         </div><!--row-->
         <hr>
         <form action="{{route('admin.reminders.update', ['id'=> $client->id])}}" method="post">
@@ -38,8 +43,10 @@
                                 </th>
                                 <th>Schedule Time</th>
                                 <th>Reccurrence</th>
+                                <th>Reference</th>
                                 <th>Send SMS</th>
                                 <th>Send Email</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,6 +70,16 @@
                                         </select>
                                     </td>
                                     <td>
+                                        <div class="form-group">
+                                            <select name="reference_number_id[]" id="" class="form-control">
+                                                <option value="">None</option>
+                                                @foreach ($client->reference_numbers as $reference_number)
+                                                    <option value="{{$reference_number->id}}" {{$reminder->reference_number_id == $reference_number->id ? "selected" : ""}}>{{$reference_number->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
                                         <label class="switch switch-label switch-pill switch-success mr-2" for="to-sms-{{$reminder->id}}">
                                         <input class="switch-input" data-id="{{$reminder->id}}" type="checkbox" name="send_sms[]" id="to-sms-{{$reminder->id}}" value="{{$reminder->send_sms}}" {{$reminder->send_sms == 1 ? "checked" : ""}} data-url="{{route('admin.reminders.switch.update', ['id' => $reminder->id])}}">
                                             <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
@@ -74,6 +91,7 @@
                                             <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                                         </label>
                                     </td>
+                                    <td><a href="{{route('admin.reminder.delete.from.edit', ['id' => $reminder->id])}}" class="btn btn-danger"><i class="fa fa-trash"></i> Remove</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -84,4 +102,86 @@
         </form>
     </div><!--card-body-->
     </div><!--card-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Reminder to {{$client->company_name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form action="{{route('admin.reminder.create.from.edit')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <label for="">Deadline</label>
+                    <select name="deadline_id" id="" class="form-control">
+                        <option value="">Select a Deadline</option>
+                        @foreach ($deadlines as $deadline)
+                            <option value="{{$deadline->id}}">{{$deadline->name}}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-group">
+                        <label for="">Reminder Date:</label>
+                        <input class="form-control" type="date" name="remind_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Schedule Time:</label>
+                        <input class="form-control" type="time" name="schedule_time">
+                    </div>
+                    <div class="form-group"><label for="">Recurring:</label>
+                        <select name="recurring_id" id="" class="form-control">
+                            <option value="">None</option>
+                            @foreach ($recurrings as $recurring)
+                                <option value="{{$recurring->id}}">{{$recurring->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group"><label for="">Refrence:</label>
+                        <select name="reference_number_id" id="" class="form-control">
+                            <option value="">None</option>
+                            @foreach ($client->reference_numbers as $reference_number)
+                                <option value="{{$reference_number->id}}">{{$reference_number->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Send SMS</th>
+                                    <th>Send Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label class="switch switch-label switch-pill switch-success mr-2" for="to-sms">
+                                            <input class="switch-input" type="checkbox" name="send_sms" id="to-sms" checked>
+                                                <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label class="switch switch-label switch-pill switch-success mr-2" for="to-email">
+                                            <input class="switch-input" type="checkbox" name="send_email" id="to-email" checked>
+                                                <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <input type="hidden" name="has_reminded" value="0">
+                    <input type="hidden" name="client_id" value="{{$client->id}}">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
 @endsection

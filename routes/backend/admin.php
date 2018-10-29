@@ -25,6 +25,8 @@ Route::get('client/search/contact-person', 'ClientSearchController@prep_contact_
 
 //Deadline Routes
 Route::put('reminders/switch/update/{id}', 'ReminderController@switch_update')->name('reminders.switch.update');
+Route::get('reminder/delete/edit/{id}', 'ReminderController@destroy_from_edit' )->name('reminder.delete.from.edit');
+Route::post('reminder/create/edit', 'ReminderController@create_from_edit' )->name('reminder.create.from.edit');
 
 //Contact Routes
 Route::get('contact-person/create/{id}', 'ContactPersonController@create_by_client')->name('contact-person.create_by_client');
