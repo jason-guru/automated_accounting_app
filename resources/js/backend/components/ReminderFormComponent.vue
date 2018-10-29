@@ -50,70 +50,93 @@
     </span>
     <span v-else class="text-danger">No Dealines found. Please create a deadline first in Master Settings</span>
     <div class="table-responsive mt-2">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Deadline
-                    </th>
-                    <th>
-                        Reminder Dates and Time
-                    </th>
-                    <th>
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(deadline,index1) in deadlines" :key="index1" v-if="checked[index1]">
-                    <td>{{deadline.name}}</td>
-                    <td>
-                        <div class="row">
-                            <div class="input-group mb-3 col-md-8">
+        <table class="table table-bordered">
+            <!-- Deadline loop -->
+            <tr v-for="(deadline,index1) in deadlines" :key="index1" v-if="checked[index1]" class="w-100">
+                <table class="table bg-light">
+                    <tr>
+                        <th>Deadline</th>
+                        <th>Date &amp; Time</th>
+                        <th>Recurrence</th>
+                        <th>SMS</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <td :rowspan="length[index1]">
+                            {{deadline.name}}
+                        </td>
+                        <td>
+                            <div class="input-group">
                                 <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
                                 <input type="date" :name="'reminders_data['+index1+'][0][date]'" class="form-control col-md-5">
                                 <input type="time" class="form-control" :name="'reminders_data['+index1+'][0][time]'" value="11:00">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">Required</span>
+                                    <span class="input-group-text bg-danger" id="basic-addon2">Required</span>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                        </td>
+                        <td>
+                            <div class="form-group">
                                 <select :name="'reminders_data['+index1+'][0][recurring_id]'" id="" class="form-control">
                                 <option value="" selected>Select recurrence</option>
                                 <option :value="recur.id" v-for="(recur, recurKey) in recurrings" :key="recurKey">
                                     {{recur.name}}</option>
                                 </select>
                             </div>
-                        </div>
-                        <table>
-                            <tbody>
-                                <tr id="reminder-date-tr" v-for="(row, index) in rows[index1]" :key="index" :innerIndex="index">
-                                    <td> 
-                                        <input type="date" :name="'reminders_data['+index1+']['+(index+1)+'][date]'" class="form-control mt-2" v-model="row.date">
-                                        <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
-                                    </td>
-                                    <td>
-                                        <input type="time" class="form-control ml-2 mt-2" :name="'reminders_data['+index1+']['+(index+1)+'][time]'" v-model="row.time">
-                                    </td>
-                                    <td>
-                                        <select :name="'reminders_data['+index1+']['+(index+1)+'][time]'" id="" class="form-control ml-2 mt-2" v-model="row.recurringId">
-                                            <option value="" selected>Select recurrence</option>
-                                            <option :value="recur.id" v-for="(recur, recurKey) in recurrings" :key="recurKey">
-                                                {{recur.name}}</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a v-on:click="removeElement(index, index1);" style="cursor: pointer" class="text-danger"><i class="fa fa-trash ml-4"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" type="button" @click="addDateRow(index1)">Add More</button>
-                    </td>
-                </tr>
-            </tbody>
+                        </td>
+                        <td>
+                            <label class="switch switch-label switch-pill switch-success mr-2" for="to-sms-0" >
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+'][0][send_sms]'" id="to-sms-0" checked>
+                                    <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="switch switch-label switch-pill switch-success mr-2" for="to-email-0">
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+'][0][send_email]'" id="to-email-0" checked>
+                                    <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" type="button" @click="addDateRow(index1)">Add More</button>
+                        </td>
+                    </tr>
+                    <!-- add more loop -->
+                    <tr id="reminder-date-tr" v-for="(row, index) in rows[index1]" :key="index" :innerIndex="index">
+                        <td> 
+                            <div class="input-group px-3">
+                                <input type="date" :name="'reminders_data['+index1+']['+(index+1)+'][date]'" class="form-control" v-model="row.date">
+                                <input type="hidden" :name="'reminders_data['+index1+'][deadline_id]'" :value="deadline.id">
+                                <input type="time" class="form-control" :name="'reminders_data['+index1+']['+(index+1)+'][time]'" v-model="row.time">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group mt-3 px-2">
+                                <select :name="'reminders_data['+index1+']['+(index+1)+'][recurring_id]'" id="" class="form-control " v-model="row.recurringId">
+                                    <option value="" selected>Select recurrence</option>
+                                    <option :value="recur.id" v-for="(recur, recurKey) in recurrings" :key="recurKey">
+                                        {{recur.name}}</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <label class="switch switch-label switch-pill switch-success ml-2 mt-2" :for="'to-sms-'+(index+1)" >
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+']['+(index+1)+'][send_sms]'" :id="'to-sms-'+(index+1)" checked>
+                                    <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="switch switch-label switch-pill switch-success ml-2 mt-2" :for="'to-email'+(index+1)">
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+']['+(index+1)+'][send_email]'" :id="'to-email'+(index+1)" checked>
+                                    <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <a v-on:click="removeElement(index, index1);" style="cursor: pointer" class="text-danger"><i class="fa fa-trash ml-4"></i> Remove</a>
+                        </td>
+                    </tr>
+                </table>
+            </tr>
         </table>
     </div>
     <input type="hidden" name="has_reminded" value="0">
@@ -131,6 +154,11 @@ export default {
             checked: [],
             referenceNumbers: {},
             selectedClient: "",
+            sendSMS: "checked",
+            sendEmail: "checked",
+            sendSmsValue: 1,
+            sendEmailValue: 1,
+            length: []
         }
     },
     beforeMount: function(){
@@ -139,6 +167,7 @@ export default {
         for(var i = 0; i<deadlinesCount; i++){
             self.$set(self.rows, i, []);
             self.$set(self.checked, i, true);
+            self.$set(self.length, i, 1);
         };
     },
     methods: {
@@ -149,6 +178,7 @@ export default {
                 time: '11:00',
                 recurringId: ''
             });
+            this.length[key] = this.rows[key].length+1;
         },
         removeElement: function(index, index1){
             this.rows[index1].splice(this.index, 1);

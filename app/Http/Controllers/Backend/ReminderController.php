@@ -85,6 +85,7 @@ class ReminderController extends Controller
     {
         try{
             $reminders_data = $request->reminders_data;
+            dd($reminders_data);
             $client_id = $request->client_id;
             foreach($reminders_data as $reminder_data){
                 $deadline_id = $reminder_data['deadline_id'];

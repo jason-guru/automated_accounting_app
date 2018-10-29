@@ -2948,6 +2948,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2957,7 +2980,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             rows: [],
             checked: [],
             referenceNumbers: {},
-            selectedClient: ""
+            selectedClient: "",
+            sendSMS: "checked",
+            sendEmail: "checked",
+            sendSmsValue: 1,
+            sendEmailValue: 1,
+            length: []
         };
     },
     beforeMount: function beforeMount() {
@@ -2966,6 +2994,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         for (var i = 0; i < deadlinesCount; i++) {
             self.$set(self.rows, i, []);
             self.$set(self.checked, i, true);
+            self.$set(self.length, i, 1);
         };
     },
     methods: {
@@ -2976,6 +3005,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 time: '11:00',
                 recurringId: ''
             });
+            this.length[key] = this.rows[key].length + 1;
         },
         removeElement: function removeElement(index, index1) {
             this.rows[index1].splice(this.index, 1);
@@ -23778,294 +23808,440 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-responsive mt-2" }, [
-      _c("table", { staticClass: "table" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.deadlines, function(deadline, index1) {
-            return _vm.checked[index1]
-              ? _c("tr", { key: index1 }, [
-                  _c("td", [_vm._v(_vm._s(deadline.name))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "input-group mb-3 col-md-8" }, [
-                        _c("input", {
-                          attrs: {
-                            type: "hidden",
-                            name: "reminders_data[" + index1 + "][deadline_id]"
-                          },
-                          domProps: { value: deadline.id }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control col-md-5",
-                          attrs: {
-                            type: "date",
-                            name: "reminders_data[" + index1 + "][0][date]"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "time",
-                            name: "reminders_data[" + index1 + "][0][time]",
-                            value: "11:00"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm._m(4, true)
+      _c(
+        "table",
+        { staticClass: "table table-bordered" },
+        _vm._l(_vm.deadlines, function(deadline, index1) {
+          return _vm.checked[index1]
+            ? _c("tr", { key: index1, staticClass: "w-100" }, [
+                _c(
+                  "table",
+                  { staticClass: "table bg-light" },
+                  [
+                    _vm._m(3, true),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td", { attrs: { rowspan: _vm.length[index1] } }, [
+                        _vm._v(
+                          "\r\n                            " +
+                            _vm._s(deadline.name) +
+                            "\r\n                        "
+                        )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group col-md-4" }, [
-                        _c(
-                          "select",
-                          {
+                      _c("td", [
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            attrs: {
+                              type: "hidden",
+                              name:
+                                "reminders_data[" + index1 + "][deadline_id]"
+                            },
+                            domProps: { value: deadline.id }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control col-md-5",
+                            attrs: {
+                              type: "date",
+                              name: "reminders_data[" + index1 + "][0][date]"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
                             staticClass: "form-control",
                             attrs: {
-                              name:
-                                "reminders_data[" +
-                                index1 +
-                                "][0][recurring_id]",
-                              id: ""
+                              type: "time",
+                              name: "reminders_data[" + index1 + "][0][time]",
+                              value: "11:00"
                             }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(4, true)
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "select",
+                            {
+                              staticClass: "form-control",
+                              attrs: {
+                                name:
+                                  "reminders_data[" +
+                                  index1 +
+                                  "][0][recurring_id]",
+                                id: ""
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { value: "", selected: "" } },
+                                [_vm._v("Select recurrence")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.recurrings, function(recur, recurKey) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: recurKey,
+                                    domProps: { value: recur.id }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\r\n                                    " +
+                                        _vm._s(recur.name)
+                                    )
+                                  ]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "switch switch-label switch-pill switch-success mr-2",
+                            attrs: { for: "to-sms-0" }
                           },
                           [
-                            _c(
-                              "option",
-                              { attrs: { value: "", selected: "" } },
-                              [_vm._v("Select recurrence")]
-                            ),
+                            _c("input", {
+                              staticClass: "switch-input",
+                              attrs: {
+                                type: "checkbox",
+                                name:
+                                  "reminders_data[" + index1 + "][0][send_sms]",
+                                id: "to-sms-0",
+                                checked: ""
+                              }
+                            }),
                             _vm._v(" "),
-                            _vm._l(_vm.recurrings, function(recur, recurKey) {
-                              return _c(
-                                "option",
-                                {
-                                  key: recurKey,
-                                  domProps: { value: recur.id }
-                                },
-                                [
-                                  _vm._v(
-                                    "\r\n                                    " +
-                                      _vm._s(recur.name)
-                                  )
-                                ]
-                              )
+                            _c("span", {
+                              staticClass: "switch-slider",
+                              attrs: {
+                                "data-checked": "on",
+                                "data-unchecked": "off"
+                              }
                             })
-                          ],
-                          2
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "switch switch-label switch-pill switch-success mr-2",
+                            attrs: { for: "to-email-0" }
+                          },
+                          [
+                            _c("input", {
+                              staticClass: "switch-input",
+                              attrs: {
+                                type: "checkbox",
+                                name:
+                                  "reminders_data[" +
+                                  index1 +
+                                  "][0][send_email]",
+                                id: "to-email-0",
+                                checked: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", {
+                              staticClass: "switch-slider",
+                              attrs: {
+                                "data-checked": "on",
+                                "data-unchecked": "off"
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.addDateRow(index1)
+                              }
+                            }
+                          },
+                          [_vm._v("Add More")]
                         )
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("table", [
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.rows[index1], function(row, index) {
-                          return _c(
-                            "tr",
-                            {
-                              key: index,
-                              attrs: {
-                                id: "reminder-date-tr",
-                                innerIndex: index
-                              }
-                            },
-                            [
-                              _c("td", [
-                                _c("input", {
+                    _vm._l(_vm.rows[index1], function(row, index) {
+                      return _c(
+                        "tr",
+                        {
+                          key: index,
+                          attrs: { id: "reminder-date-tr", innerIndex: index }
+                        },
+                        [
+                          _c("td", [
+                            _c("div", { staticClass: "input-group px-3" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: row.date,
+                                    expression: "row.date"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "date",
+                                  name:
+                                    "reminders_data[" +
+                                    index1 +
+                                    "][" +
+                                    (index + 1) +
+                                    "][date]"
+                                },
+                                domProps: { value: row.date },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(row, "date", $event.target.value)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  type: "hidden",
+                                  name:
+                                    "reminders_data[" +
+                                    index1 +
+                                    "][deadline_id]"
+                                },
+                                domProps: { value: deadline.id }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: row.time,
+                                    expression: "row.time"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "time",
+                                  name:
+                                    "reminders_data[" +
+                                    index1 +
+                                    "][" +
+                                    (index + 1) +
+                                    "][time]"
+                                },
+                                domProps: { value: row.time },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(row, "time", $event.target.value)
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "form-group mt-3 px-2" }, [
+                              _c(
+                                "select",
+                                {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: row.date,
-                                      expression: "row.date"
+                                      value: row.recurringId,
+                                      expression: "row.recurringId"
                                     }
                                   ],
-                                  staticClass: "form-control mt-2",
+                                  staticClass: "form-control ",
                                   attrs: {
-                                    type: "date",
                                     name:
                                       "reminders_data[" +
                                       index1 +
                                       "][" +
                                       (index + 1) +
-                                      "][date]"
+                                      "][recurring_id]",
+                                    id: ""
                                   },
-                                  domProps: { value: row.date },
                                   on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(row, "date", $event.target.value)
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        row,
+                                        "recurringId",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
                                     }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "", selected: "" } },
+                                    [_vm._v("Select recurrence")]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.recurrings, function(
+                                    recur,
+                                    recurKey
+                                  ) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: recurKey,
+                                        domProps: { value: recur.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\r\n                                        " +
+                                            _vm._s(recur.name)
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "label",
+                              {
+                                staticClass:
+                                  "switch switch-label switch-pill switch-success ml-2 mt-2",
+                                attrs: { for: "to-sms-" + (index + 1) }
+                              },
+                              [
+                                _c("input", {
+                                  staticClass: "switch-input",
+                                  attrs: {
+                                    type: "checkbox",
+                                    name:
+                                      "reminders_data[" +
+                                      index1 +
+                                      "][" +
+                                      (index + 1) +
+                                      "][send_sms]",
+                                    id: "to-sms-" + (index + 1),
+                                    checked: ""
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c("input", {
+                                _c("span", {
+                                  staticClass: "switch-slider",
                                   attrs: {
-                                    type: "hidden",
-                                    name:
-                                      "reminders_data[" +
-                                      index1 +
-                                      "][deadline_id]"
-                                  },
-                                  domProps: { value: deadline.id }
+                                    "data-checked": "on",
+                                    "data-unchecked": "off"
+                                  }
                                 })
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "label",
+                              {
+                                staticClass:
+                                  "switch switch-label switch-pill switch-success ml-2 mt-2",
+                                attrs: { for: "to-email" + (index + 1) }
+                              },
+                              [
                                 _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: row.time,
-                                      expression: "row.time"
-                                    }
-                                  ],
-                                  staticClass: "form-control ml-2 mt-2",
+                                  staticClass: "switch-input",
                                   attrs: {
-                                    type: "time",
+                                    type: "checkbox",
                                     name:
                                       "reminders_data[" +
                                       index1 +
                                       "][" +
                                       (index + 1) +
-                                      "][time]"
-                                  },
-                                  domProps: { value: row.time },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(row, "time", $event.target.value)
-                                    }
+                                      "][send_email]",
+                                    id: "to-email" + (index + 1),
+                                    checked: ""
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {
+                                  staticClass: "switch-slider",
+                                  attrs: {
+                                    "data-checked": "on",
+                                    "data-unchecked": "off"
                                   }
                                 })
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: row.recurringId,
-                                        expression: "row.recurringId"
-                                      }
-                                    ],
-                                    staticClass: "form-control ml-2 mt-2",
-                                    attrs: {
-                                      name:
-                                        "reminders_data[" +
-                                        index1 +
-                                        "][" +
-                                        (index + 1) +
-                                        "][time]",
-                                      id: ""
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          row,
-                                          "recurringId",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "", selected: "" } },
-                                      [_vm._v("Select recurrence")]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.recurrings, function(
-                                      recur,
-                                      recurKey
-                                    ) {
-                                      return _c(
-                                        "option",
-                                        {
-                                          key: recurKey,
-                                          domProps: { value: recur.id }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\r\n                                                " +
-                                              _vm._s(recur.name)
-                                          )
-                                        ]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "text-danger",
-                                    staticStyle: { cursor: "pointer" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.removeElement(index, index1)
-                                      }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "fa fa-trash ml-4" })]
-                                )
-                              ])
-                            ]
-                          )
-                        })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-danger",
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.removeElement(index, index1)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fa fa-trash ml-4" }),
+                                _vm._v(" Remove")
+                              ]
+                            )
+                          ])
+                        ]
                       )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.addDateRow(index1)
-                          }
-                        }
-                      },
-                      [_vm._v("Add More")]
-                    )
-                  ])
-                ])
-              : _vm._e()
-          })
-        )
-      ])
+                    })
+                  ],
+                  2
+                )
+              ])
+            : _vm._e()
+        })
+      )
     ]),
     _vm._v(" "),
     _c("input", {
@@ -24118,22 +24294,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [
-          _vm._v("\r\n                        Deadline\r\n                    ")
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            "\r\n                        Reminder Dates and Time\r\n                    "
-          )
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v("\r\n                        Action\r\n                    ")
-        ])
-      ])
+    return _c("tr", [
+      _c("th", [_vm._v("Deadline")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Date & Time")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Recurrence")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("SMS")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Actions")])
     ])
   },
   function() {
@@ -24143,7 +24315,10 @@ var staticRenderFns = [
     return _c("div", { staticClass: "input-group-append" }, [
       _c(
         "span",
-        { staticClass: "input-group-text", attrs: { id: "basic-addon2" } },
+        {
+          staticClass: "input-group-text bg-danger",
+          attrs: { id: "basic-addon2" }
+        },
         [_vm._v("Required")]
       )
     ])
