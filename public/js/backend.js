@@ -23909,7 +23909,7 @@ var render = function() {
                           {
                             staticClass:
                               "switch switch-label switch-pill switch-success mr-2",
-                            attrs: { for: "to-sms-0" }
+                            attrs: { for: "to-sms-" + index1 + "-0" }
                           },
                           [
                             _c("input", {
@@ -23918,7 +23918,7 @@ var render = function() {
                                 type: "checkbox",
                                 name:
                                   "reminders_data[" + index1 + "][0][send_sms]",
-                                id: "to-sms-0",
+                                id: "to-sms-" + index1 + "-0",
                                 checked: ""
                               }
                             }),
@@ -23940,7 +23940,7 @@ var render = function() {
                           {
                             staticClass:
                               "switch switch-label switch-pill switch-success mr-2",
-                            attrs: { for: "to-email-0" }
+                            attrs: { for: "to-email-" + index1 + "-0" }
                           },
                           [
                             _c("input", {
@@ -23951,7 +23951,7 @@ var render = function() {
                                   "reminders_data[" +
                                   index1 +
                                   "][0][send_email]",
-                                id: "to-email-0",
+                                id: "to-email-" + index1 + "-0",
                                 checked: ""
                               }
                             }),
@@ -24150,7 +24150,7 @@ var render = function() {
                               {
                                 staticClass:
                                   "switch switch-label switch-pill switch-success ml-2 mt-2",
-                                attrs: { for: "to-sms-" + (index + 1) }
+                                attrs: { for: "to-sms-" + index1 + (index + 1) }
                               },
                               [
                                 _c("input", {
@@ -24163,7 +24163,7 @@ var render = function() {
                                       "][" +
                                       (index + 1) +
                                       "][send_sms]",
-                                    id: "to-sms-" + (index + 1),
+                                    id: "to-sms-" + index1 + (index + 1),
                                     checked: ""
                                   }
                                 }),
@@ -24185,7 +24185,9 @@ var render = function() {
                               {
                                 staticClass:
                                   "switch switch-label switch-pill switch-success ml-2 mt-2",
-                                attrs: { for: "to-email" + (index + 1) }
+                                attrs: {
+                                  for: "to-email" + index1 + (index + 1)
+                                }
                               },
                               [
                                 _c("input", {
@@ -24198,7 +24200,7 @@ var render = function() {
                                       "][" +
                                       (index + 1) +
                                       "][send_email]",
-                                    id: "to-email" + (index + 1),
+                                    id: "to-email" + index1 + (index + 1),
                                     checked: ""
                                   }
                                 }),

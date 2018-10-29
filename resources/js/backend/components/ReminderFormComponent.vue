@@ -86,14 +86,14 @@
                             </div>
                         </td>
                         <td>
-                            <label class="switch switch-label switch-pill switch-success mr-2" for="to-sms-0" >
-                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+'][0][send_sms]'" id="to-sms-0" checked>
+                            <label class="switch switch-label switch-pill switch-success mr-2" :for="'to-sms-'+(index1)+'-0'" >
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+'][0][send_sms]'" :id="'to-sms-'+(index1)+'-0'" checked>
                                     <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                             </label>
                         </td>
                         <td>
-                            <label class="switch switch-label switch-pill switch-success mr-2" for="to-email-0">
-                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+'][0][send_email]'" id="to-email-0" checked>
+                            <label class="switch switch-label switch-pill switch-success mr-2" :for="'to-email-'+(index1)+'-0'">
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+'][0][send_email]'" :id="'to-email-'+(index1)+'-0'" checked>
                                     <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                             </label>
                         </td>
@@ -120,14 +120,14 @@
                             </div>
                         </td>
                         <td>
-                            <label class="switch switch-label switch-pill switch-success ml-2 mt-2" :for="'to-sms-'+(index+1)" >
-                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+']['+(index+1)+'][send_sms]'" :id="'to-sms-'+(index+1)" checked>
+                            <label class="switch switch-label switch-pill switch-success ml-2 mt-2" :for="'to-sms-'+(index1)+(index+1)" >
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+']['+(index+1)+'][send_sms]'" :id="'to-sms-'+(index1)+(index+1)" checked>
                                     <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                             </label>
                         </td>
                         <td>
-                            <label class="switch switch-label switch-pill switch-success ml-2 mt-2" :for="'to-email'+(index+1)">
-                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+']['+(index+1)+'][send_email]'" :id="'to-email'+(index+1)" checked>
+                            <label class="switch switch-label switch-pill switch-success ml-2 mt-2" :for="'to-email'+(index1)+(index+1)">
+                                <input class="switch-input" type="checkbox" :name="'reminders_data['+index1+']['+(index+1)+'][send_email]'" :id="'to-email'+(index1)+(index+1)" checked>
                                     <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                             </label>
                         </td>
