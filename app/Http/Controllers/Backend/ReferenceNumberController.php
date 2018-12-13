@@ -54,6 +54,9 @@ class ReferenceNumberController extends Controller
      */
     public function store(ReferenceNumberRequest $request)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         if($request->file('invoice')){
             $path = $request->file('invoice')->store('/invoices', 'public');
         }else{
@@ -99,6 +102,9 @@ class ReferenceNumberController extends Controller
      */
     public function update(ReferenceNumberRequest $request, ReferenceNumber $referenceNumber)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         if($request->file('invoice')){
             $old_path = public_path().'/storage/'.$referenceNumber->attachment_path;
             unlink($old_path);
@@ -117,6 +123,9 @@ class ReferenceNumberController extends Controller
      */
     public function destroy(ReferenceNumber $referenceNumber)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         try{
             $has_stored_in_reminder = $this->reminder_repository->where('reference_number_id', $referenceNumber->id)->get();
             if($has_stored_in_reminder->count() == 0){

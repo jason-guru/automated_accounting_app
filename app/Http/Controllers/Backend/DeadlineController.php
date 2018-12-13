@@ -48,6 +48,9 @@ class DeadlineController extends Controller
      */
     public function store(DeadlineRequest $request)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->deadline_repository->create($request->except('_token'));
         return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Created Successfully.');
     }
@@ -86,6 +89,9 @@ class DeadlineController extends Controller
      */
     public function update(DeadlineRequest $request, $id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->message_format_repository->updateById($id, $request->except('_token'));
         return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Edited Successfully.');
     }
@@ -99,6 +105,9 @@ class DeadlineController extends Controller
      */
     public function destroy($id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->deadline_repository->deleteById($id);
         return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Deleted Successfully.');
     }

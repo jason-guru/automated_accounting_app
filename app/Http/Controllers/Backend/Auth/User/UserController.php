@@ -52,6 +52,9 @@ class UserController extends Controller
      */
     public function create(ManageUserRequest $request, RoleRepository $roleRepository, PermissionRepository $permissionRepository)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         return view('backend.auth.user.create')
             ->withRoles($roleRepository->with('permissions')->get(['id', 'name']))
             ->withPermissions($permissionRepository->get(['id', 'name']));
@@ -120,6 +123,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->update($user, $request->only(
             'first_name',
             'last_name',
@@ -140,6 +146,9 @@ class UserController extends Controller
      */
     public function destroy(ManageUserRequest $request, User $user)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->deleteById($user->id);
 
         event(new UserDeleted($user));

@@ -57,6 +57,9 @@ class UserConfirmationController extends Controller
      */
     public function confirm(ManageUserRequest $request, User $user)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->confirm($user);
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.confirmed'));
@@ -71,6 +74,9 @@ class UserConfirmationController extends Controller
      */
     public function unconfirm(ManageUserRequest $request, User $user)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->unconfirm($user);
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.unconfirmed'));

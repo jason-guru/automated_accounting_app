@@ -24,6 +24,9 @@ class UserSocialController extends Controller
      */
     public function unlink(ManageUserRequest $request, SocialRepository $socialRepository, User $user, SocialAccount $social)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $socialRepository->delete($user, $social);
 
         return redirect()->back()->withFlashSuccess(__('alerts.backend.users.social_deleted'));

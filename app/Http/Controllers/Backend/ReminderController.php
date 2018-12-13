@@ -102,6 +102,9 @@ class ReminderController extends Controller
      */
     public function store(ReminderRequest $request)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         try{
             $reminders_data = $request->reminders_data;
             $client_id = $request->client_id;
@@ -175,6 +178,9 @@ class ReminderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $reminders = $this->reminder_repository->where('client_id', $id)->get();
         foreach($reminders as $key => $reminder){
             //check if updated
@@ -202,6 +208,9 @@ class ReminderController extends Controller
      */
     public function destroy($id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->reminder_repository->where('client_id', $id)->delete();
         return back()->withFlashSuccess('Reminders Deleted Successfully');
     }
@@ -211,6 +220,9 @@ class ReminderController extends Controller
      * 
      */
     public function destroy_from_edit($id){
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->reminder_repository->deleteById($id);
         return back()->withFlashSuccess('Reminder Deleted Successfully');
     }

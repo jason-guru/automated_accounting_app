@@ -90,6 +90,9 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $request->merge(['accounts_next_due' => Carbon::parse($request->accounts_next_due)->format('Y-m-d')]);
         $client = $this->client_repository->create($request->except('_token', 'designation_id', 'initial_id', 'first_name', 'middle_name', 'last_name', 'contact_email', 'contact_phone', 'contact_address_line_1', 'contact_address_line_2', 'contact_city', 'contact_postcode', 'contact_county', 'contact_country_id'));
 
@@ -179,6 +182,9 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, $id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         try{
             if($request->switch_value_update){
                 $client = $this->client_repository->updateById($id,['remind' => $request->switch_value]);
@@ -215,6 +221,9 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->client_repository->deleteById($id);
         return back()->withFlashSuccess('Client successfully deleted');
     }

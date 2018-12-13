@@ -33,6 +33,9 @@ Route::get('contact-person/create/{id}', 'ContactPersonController@create_by_clie
 
 //Reminder Routes
 Route::get('reminders/send/now', function(){
+    if(config('settings.enable_demo')){
+        return back()->withFlashDanger('Not allowed in Demo mode');
+    }
     event(new ReminderEvent());
     return back();
 })->name('reminders.send.now');

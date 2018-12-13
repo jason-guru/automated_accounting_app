@@ -68,6 +68,9 @@ class ContactPersonController extends Controller
      */
     public function store(ContactPersonRequest $request)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->contact_person_repository->create($request->except('_token'));
         return redirect()->route('admin.clients.show', ['id' => $request->client_id])->withFlashSuccess('Contact Person Added Successfully');
     }
@@ -108,6 +111,9 @@ class ContactPersonController extends Controller
      */
     public function update(ContactPersonRequest $request, $id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->contact_person_repository->updateById($id, $request->except('_token'));
         return redirect()->route('admin.clients.show', ['id' => $request->client_id])->withFlashSuccess('Contact Person Updated Successfully');
     }
@@ -120,6 +126,9 @@ class ContactPersonController extends Controller
      */
     public function destroy($id)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $client_id = $this->contact_person_repository->getById($id)->client_id;
         $this->contact_person_repository->deleteById($id);
         return redirect()->route('admin.clients.show', ['id' => $client_id])->withFlashSuccess('Contact Person Deleted Successfully');

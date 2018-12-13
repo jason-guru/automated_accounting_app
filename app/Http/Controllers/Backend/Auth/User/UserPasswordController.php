@@ -47,6 +47,9 @@ class UserPasswordController extends Controller
      */
     public function update(UpdateUserPasswordRequest $request, User $user)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->updatePassword($user, $request->only('password'));
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.updated_password'));

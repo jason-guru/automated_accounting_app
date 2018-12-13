@@ -57,6 +57,9 @@ class UserStatusController extends Controller
      */
     public function mark(ManageUserRequest $request, User $user, $status)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->mark($user, $status);
 
         return redirect()->route(
@@ -76,6 +79,9 @@ class UserStatusController extends Controller
      */
     public function delete(ManageUserRequest $request, User $deletedUser)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->forceDelete($deletedUser);
 
         return redirect()->route('admin.auth.user.deleted')->withFlashSuccess(__('alerts.backend.users.deleted_permanently'));
@@ -90,6 +96,9 @@ class UserStatusController extends Controller
      */
     public function restore(ManageUserRequest $request, User $deletedUser)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $this->userRepository->restore($deletedUser);
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.restored'));

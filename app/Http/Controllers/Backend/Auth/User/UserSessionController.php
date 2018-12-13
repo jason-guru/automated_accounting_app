@@ -22,6 +22,9 @@ class UserSessionController extends Controller
      */
     public function clearSession(ManageUserRequest $request, SessionRepository $sessionRepository, User $user)
     {
+        if(config('settings.enable_demo')){
+            return back()->withFlashDanger('Not allowed in Demo mode');
+        }
         $sessionRepository->clearSession($user);
 
         return redirect()->back()->withFlashSuccess(__('alerts.backend.users.session_cleared'));
