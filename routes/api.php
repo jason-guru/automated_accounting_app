@@ -16,3 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['namespace' => 'Backend\Api'], function () {
+    Route::get('/deadline/aa-cs', 'DeadlineController@aaCs');
+    Route::get('/deadline/vat', 'DeadlineController@vat');
+    Route::get('/deadline/paye-cis', 'DeadlineController@payeCis');
+});
+

@@ -36,12 +36,19 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="">Account Due Date <span class="text-danger">*</span></label>
+                            <input class="form-control" name="accounts_next_due" value="{{array_key_exists('next_due', $client_data['accounts']) ? $client_data['accounts']['next_due'] : ''}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="accounts_overdue">Accounts Overdue <span class="text-danger">*</span></label>
+                            <input class="form-control" name="accounts_overdue" value="{{array_key_exists('overdue',$client_data['accounts']) ? $client_data['accounts']['overdue'] == false ? "False" : "True" : ''}}" readonly>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="company-name">Company Name</label>
                             <input name="company_name" id="company-name" type="text" class="form-control" value="{{array_key_exists('company_name', $client_data ) ? $client_data['company_name'] : ''}}" readonly>
-                            <input type="hidden" name="accounts_next_due" value="{{array_key_exists('next_due', $client_data['accounts']) ? $client_data['accounts']['next_due'] : ''}}">
                             <input type="hidden" name="accounts_overdue" value="{{array_key_exists('overdue',$client_data['accounts']) ? $client_data['accounts']['overdue'] == false ? 0 : 1 : ''}}">
                         </div>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#contactModal"><i class="fa fa-plus-circle"></i> Add Contact Person</a>
@@ -224,7 +231,8 @@
     </form>
     </div>
   </div>
+
 <script>
-    var companyNumber =  {{ $client_data['company_number'] }};
+    var companyNumber =  "{{ $client_data['company_number'] }}";
 </script>
 @endsection

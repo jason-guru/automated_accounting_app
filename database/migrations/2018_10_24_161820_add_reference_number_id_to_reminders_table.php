@@ -14,7 +14,7 @@ class AddReferenceNumberIdToRemindersTable extends Migration
     public function up()
     {
         Schema::table('reminders', function (Blueprint $table) {
-            $table->integer('reference_number_id');
+            $table->integer('reference_number_id')->nullable();
         });
     }
 

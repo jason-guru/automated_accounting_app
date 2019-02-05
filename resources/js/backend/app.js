@@ -13,6 +13,7 @@ Vue.component('business-info', require('./components/BusinessInfoComponent.vue')
 Vue.component('non-api-business-info', require('./components/NonApiBusinessInfoComponent.vue'));
 Vue.component('reminder-form', require('./components/ReminderFormComponent.vue'));
 Vue.component('env-editor', require('./components/EnvEditor.vue'));
+Vue.component('bar-chart-container', require('./components/charts/BarChartContainer.vue'));
 
 export const eventBus = new Vue();
 

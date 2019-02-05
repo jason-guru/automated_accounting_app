@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'enable_demo' => true,
+    'enable_demo' => false,
     
     'adsense_ad_client' => 'ca-pub-1722028856965661',
     'adsense_sidebar_responsive_slot' => '5558331441',
@@ -12,6 +12,4 @@ return [
     'payout_weeks' => 2,
     
     'enable_affiliate' => false,
-    
-
 ];
