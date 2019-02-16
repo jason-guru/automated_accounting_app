@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Client;
 use App\Repositories\BaseRepository;
 use App\Business\Api\CompanyHouse\CompanyProfile;
-use App\Repositories\Backend\Traits\Methods\aaCs;
+use App\Repositories\Backend\Traits\Methods\AaCs;
 use App\Repositories\Backend\Traits\Methods\ApiDueCalculator;
 
 /**
