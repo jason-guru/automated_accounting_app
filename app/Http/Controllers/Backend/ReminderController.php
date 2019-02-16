@@ -93,7 +93,7 @@ class ReminderController extends Controller
      * ];
      * 
      * 
-     * So, by looping $reminders_data, we get the single deadline reminders. Then we remove the deadline_id via      array_shift and loop through the dates and store the information in the reminders table.
+     * So, by looping $reminders_data, we get the single deadline reminders. Then we remove the deadline_id via array_shift and loop through the dates and store the information in the reminders table.
      * 
      * Store a newly created resource in storage.
      *

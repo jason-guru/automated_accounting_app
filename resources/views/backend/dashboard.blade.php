@@ -15,10 +15,10 @@
                         <bar-chart-container :url="'{{url('api/deadline/aa-cs')}}'" ></bar-chart-container>
                     </div>
                     <div class="col-md-4 col-sm-6 mb-3">
-                        <bar-chart-container :url="'{{url('api/deadline/vat')}}'" ></bar-chart-container>
+                        {{-- <bar-chart-container :url="'{{url('api/deadline/vat')}}'" ></bar-chart-container> --}}
                     </div>
                     <div class="col-md-4 col-sm-6 mb-3">
-                        <bar-chart-container :url="'{{url('api/deadline/paye-cis')}}'"></bar-chart-container>
+                        {{-- <bar-chart-container :url="'{{url('api/deadline/paye-cis')}}'"></bar-chart-container> --}}
                     </div>
                 </div>
                 </div><!--card-body-->

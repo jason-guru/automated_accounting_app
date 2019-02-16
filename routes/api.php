@@ -21,5 +21,8 @@ Route::group(['namespace' => 'Backend\Api'], function () {
     Route::get('/deadline/aa-cs', 'DeadlineController@aaCs');
     Route::get('/deadline/vat', 'DeadlineController@vat');
     Route::get('/deadline/paye-cis', 'DeadlineController@payeCis');
+    Route::post('/deadline/clients/fetch', 'DeadlineController@fetchClients');
+    Route::post('/deadline/clients/prepare', 'DeadlineController@prepareClients');
+    Route::post('/reminders', 'ReminderController@store');
 });
 

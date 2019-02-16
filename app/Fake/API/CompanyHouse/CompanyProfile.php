@@ -13,7 +13,7 @@ class CompanyProfile
     }
 
     
-    public function fetch($companyNumber, $from, $to, $csDue, $aaDue, $csOd = false, $aaOd = false)
+    public function fetch($companyNumber)
     {
         $data = [
             "links"=> [
@@ -29,8 +29,8 @@ class CompanyProfile
             "confirmation_statement" => [
                 "last_made_up_to" => $this->faker->date($format = 'Y-m-d', $max = 'now'),
                 "next_made_up_to" => $this->faker->date($format = 'Y-m-d', $max = 'now'),
-                "next_due" => $csDue,
-                "overdue" => $csOd
+                "next_due" => $this->faker->date($format = 'Y-m-d', $min = 'now'),
+                "overdue" => true
             ],
             "undeliverable_registered_office_address"=> false,
             "has_insolvency_history"=> false,
@@ -51,13 +51,13 @@ class CompanyProfile
                   "day"=> "31",
                   "month"=> "08"
                 ],
-                "overdue"=> $aaOd,
-                "next_due"=> $aaDue,
+                "overdue"=> true,
+                "next_due"=> $this->faker->date($format = 'Y-m-d', $min = 'now'),
                 "next_accounts"=> [
-                  "period_start_on"=> $from,
-                  "overdue"=> $aaOd,
-                  "due_on"=> $aaDue,
-                  "period_end_on"=> $to
+                  "period_start_on"=> $this->faker->date($format = 'Y-m-d', $max = 'now'),
+                  "overdue"=> true,
+                  "due_on"=> $this->faker->date($format = 'Y-m-d', $min = 'now'),
+                  "period_end_on"=> $this->faker->date($format = 'Y-m-d', $max = 'now')
                 ],
                 "next_made_up_to"=> "2019-08-31"
               ],

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Business\Api\CompanyHouse\CompanyProfile;
 use App\Fake\API\CompanyHouse\CompanyProfile as CompanyFakeProfile;
 
-class DueClientsTestTest extends TestCase
+class DueClientsTest extends TestCase
 {
     use RefreshDatabase;
      /**
@@ -30,68 +30,44 @@ class DueClientsTestTest extends TestCase
     }
 
     /** @test */
-    public function get_this_year_cs_due_clients_count_for_private_limited_only()
+    public function check_if_chart_data_is_correct()
     {
         //Create Clients
         factory(Client::class)->create(
-            ['company_number' => 10924993]
+            ['company_number' => 10202689]
+        );
+        factory(Client::class)->create(
+            ['company_number' => 11141106]
+        );
+        factory(Client::class)->create(
+            ['company_number' => 9608793]
         );
         factory(Client::class)->create(
             ['company_number' => 10924993]
         );
 
-        $csDueCounter = $this->clientRepository->getCsDueCounter($this->profile);
-        
-        $this->assertEquals($csDueCounter, 2);
+        $csAaChartData = $this->clientRepository->fetchAaCs($this->profile);
+        dd(json_decode($csAaChartData->getContent(),true));
+        //the first thing to check is cs due it should be 2
+        $this->assertContains([
+            'chartdata'
+        ],json_decode($csAaChartData->getContent(),true));
     }
-
-    /** @test */
-    public function get_this_year_cs_overdue_clients_count_for_private_limited_only()
-    {
-        //Create Clients
-        factory(Client::class)->create(
-            ['company_number' => 10924993]
-        );
-        factory(Client::class)->create(
-            ['company_number' => 10924993]
-        );
-
-        $csOverDueCounter = $this->clientRepository->getCsOverDueCounter($this->profile);
-        
-        $this->assertEquals($csOverDueCounter, 0);
-    }
-
-    /** @test */
-    public function get_this_year_aa_due_clients_count_for_private_limited_only()
-    {
-        //Create Clients
-        factory(Client::class)->create(
-            ['company_number' => 10924993]
-        );
-        factory(Client::class)->create(
-            ['company_number' => 10924993]
-        );
-
-        $aaDueCounter = $this->clientRepository->getAaDueCounter($this->profile);
-        
-        $this->assertEquals($aaDueCounter, 0);
-    }
-
-    /** @test */
-    public function get_this_year_aa_overdue_clients_count_for_private_limited_only()
-    {
-        //Create Clients
-        factory(Client::class)->create(
-            ['company_number' => 10924993]
-        );
-        factory(Client::class)->create(
-            ['company_number' => 10924993]
-        );
-
-        $aaOverDueCounter = $this->clientRepository->getAaOverDueCounter($this->profile);
-        
-        $this->assertEquals($aaOverDueCounter, 0);
-    }
-
     
+    /** @test*/
+    public function check_if_clients_are_returned_via_api_url(){
+        //Create Clients
+        factory(Client::class)->create(
+            ['company_number' => 10202689]
+        );
+        factory(Client::class)->create(
+            ['company_number' => 11141106]
+        );
+
+        $clients = Client::all()->pluck('id')->toArray();
+        $response = $this->post('/api/deadline/clients/fetch', $clients);
+        $responseData = json_decode($response->content(), true);
+        $prepResponse = $this->post('/api/deadline/clients/prepare', $responseData);
+        dd($prepResponse->content());
+    }
 }

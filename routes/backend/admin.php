@@ -18,6 +18,7 @@ Route::resources([
     'message-formats' => 'MessageFormatController'
 ]);
 
+
 //Client Routes 
 Route::get('client/search', 'ClientSearchController@show_search')->name('client.search');
 Route::post('client/search/result', 'ClientSearchController@show_search_result')->name('client.search.result');

@@ -11,6 +11,10 @@ class DeadlineTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('deadlines')->insert(['name'=> "Sample Deadline", 'message_format_id' => 1]);
+        DB::table('deadlines')->insert(['name'=> "Confirmation Statement", 'message_format_id' => 1, 'code' => 'CS']);
+        DB::table('deadlines')->insert(['name'=> "Annual Accounts", 'message_format_id' => 1, 'code' => 'AA']);
+        DB::table('deadlines')->insert(['name'=> "VAT", 'message_format_id' => 1, 'code' => 'VAT']);
+        DB::table('deadlines')->insert(['name'=> "Paye", 'message_format_id' => 1, 'code' => 'PAYE']);
+        DB::table('deadlines')->insert(['name'=> "CIS", 'message_format_id' => 1, 'code' => 'CIS']);
     }
 }

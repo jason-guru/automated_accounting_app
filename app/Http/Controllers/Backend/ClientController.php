@@ -221,6 +221,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+        
         if(config('settings.enable_demo')){
             return back()->withFlashDanger('Not allowed in Demo mode');
         }
