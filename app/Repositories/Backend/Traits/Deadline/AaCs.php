@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Backend\Traits\Methods;
+namespace App\Repositories\Backend\Traits\Deadline;
 
 use Carbon\Carbon;
 
@@ -12,25 +12,25 @@ trait AaCs
     private function getCsDueClients($profile)
     {
         $path = "body, confirmation_statement, next_due";
-        return $this->calculateDue($profile, $path);
+        return $this->calculatePrivateLimitedDue($profile, $path);
     }
 
     private function getCsOverDueClients($profile)
     {
         $path = "body, confirmation_statement, overdue";
-        return $this->calculateOverDue($profile, $path);
+        return $this->calculatePrivateLimitedOverDue($profile, $path);
     }
 
     private function getAaDueClients($profile)
     {
         $path = "body, accounts, next_accounts, due_on";
-        return $this->calculateDue($profile, $path);
+        return $this->calculatePrivateLimitedDue($profile, $path);
     }
 
     private function getAaOverDueClients($profile)
     {
         $path = "body, accounts, next_accounts, overdue";
-        return $this->calculateOverDue($profile, $path);
+        return $this->calculatePrivateLimitedOverDue($profile, $path);
     }
 
     public function fetchAaCs($profile)
@@ -47,12 +47,12 @@ trait AaCs
                     'datasets' => [
                         [
                             'label' => 'Due',
-                            'backgroundColor' => '#f87979',
+                            'backgroundColor' => config('settings.due_color'),
                             'data' => [count($aaDueClients), count($csDueClients)]
                         ],
                         [
                             'label' => 'Overdue',
-                            'backgroundColor' => 'red',
+                            'backgroundColor' => config('settings.overdue_color'),
                             'data' => [count($aaOverDueClients), count($csOverDueClients)]
                         ]
                     ],

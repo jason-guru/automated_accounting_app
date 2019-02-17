@@ -7,12 +7,17 @@ use Carbon\Carbon;
 /**
  * 
  */
-trait ApiDueCalculator
+trait PrivateLimitedDueCalculator
 {
-    private function calculateDue($profile, $path)
+    private function getPrivateLimitedClients()
+    {
+        return $this->where('company_type_id', 1)->get();
+    }
+    
+    private function calculatePrivateLimitedDue($profile, $path)
     {
         $clientIds = [];
-        $clients = $this->getClients();
+        $clients = $this->getPrivateLimitedClients();
         if(count($clients) > 0){
             foreach($clients as $client){
                 $companyProfile = $profile->fetch($client->company_number);
@@ -36,10 +41,10 @@ trait ApiDueCalculator
         return $clientIds;
     }
 
-    private function calculateOverDue($profile, $path)
+    private function calculatePrivateLimitedOverDue($profile, $path)
     {
         $clientIds = [];
-        $clients = $this->getClients();
+        $clients = $this->getPrivateLimitedClients();
         if(count($clients) > 0){
             foreach($clients as $client){
                 //fetch api

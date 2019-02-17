@@ -6091,10 +6091,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               clientIds = path.cisDue;
               break;
           }
-          this.$store.commit('toggleDialog', true);
-          this.$store.commit('setClientIds', clientIds);
-          this.$store.commit('setActiveDeadline', activeBar._model.label);
-          this.$store.commit('setActiveLegend', activeBar._model.datasetLabel);
         } else if (activeBar._model.datasetLabel === "Overdue") {
           switch (activeBar._model.label) {
             case "CS":
@@ -6117,11 +6113,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               clientIds = path.cisOverDue;
               break;
           }
-          this.$store.commit('toggleDialog', true);
-          this.$store.commit('setClientIds', clientIds);
-          this.$store.commit('setActiveDeadline', activeBar._model.label);
-          this.$store.commit('setActiveLegend', activeBar._model.datasetLabel);
         }
+        this.$store.commit('toggleDialog', true);
+        this.$store.commit('setClientIds', clientIds);
+        this.$store.commit('setActiveDeadline', activeBar._model.label);
+        this.$store.commit('setActiveLegend', activeBar._model.datasetLabel);
       }
     }
   }

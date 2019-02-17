@@ -22,55 +22,12 @@ class DeadlineController extends Controller
 
     public function vat()
     {
-        $csDueCounter = $this->clientRepository->getCsDueCounter($this->profile);
-        $csOverDueCounter = $this->clientRepository->getCsOverdueCounter($this->profile);
-        return response()->json(
-            [
-                'chartdata' => [
-                    'labels' => ['VAT'],
-                    'datasets' => [
-                        [
-                            'label' => 'Due',
-                            'backgroundColor' => '#f87979',
-                            'data' => [$csDueCounter]
-                        ],
-                        [
-                            'label' => 'Overdue',
-                            'backgroundColor' => 'red',
-                            'data' => [$csOverDueCounter]
-                        ]
-                    ]
-                ]
-            ]
-        );
+        return $this->clientRepository->fetchVat();
     }
 
     public function payeCis()
     {
-        $csDueCounter = $this->clientRepository->getCsDueCounter($this->profile);
-        $csOverDueCounter = $this->clientRepository->getCsOverdueCounter($this->profile);
-        $aaDueCounter = $this->clientRepository->getAaDueCounter($this->profile);
-        $aaOverDueCounter = $this->clientRepository->getAaOverDueCounter($this->profile);
-
-        return response()->json(
-            [
-                'chartdata' => [
-                    'labels' => ['PAYE', 'CIS'],
-                    'datasets' => [
-                        [
-                            'label' => 'Due',
-                            'backgroundColor' => '#f87979',
-                            'data' => [$aaDueCounter, $csDueCounter]
-                        ],
-                        [
-                            'label' => 'Overdue',
-                            'backgroundColor' => 'red',
-                            'data' => [$aaOverDueCounter, $csOverDueCounter]
-                        ]
-                    ]
-                ]
-            ]
-        );
+        return $this->clientRepository->fetchPayeCis();
     }
 
     
@@ -126,8 +83,6 @@ class DeadlineController extends Controller
                 'send_email' => true
             ];
         }
-        
-
         return $clientData;
     }
 }

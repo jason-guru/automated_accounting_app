@@ -12,4 +12,6 @@ return [
     'payout_weeks' => 2,
     
     'enable_affiliate' => false,
+    'due_color' => '#F7C600',
+    'overdue_color' => '#C63100'
 ];
