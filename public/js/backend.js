@@ -6368,7 +6368,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         _this.activeLegend = _this.$store.state.activeLegend;
         axios.post('/api/deadline/clients/prepare', response.data).then(function (response) {
           _this.companyData = response.data;
-          console.log(_this.companyData);
         });
         _this.loading = false;
       }).catch(function (err) {});

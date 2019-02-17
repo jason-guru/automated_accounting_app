@@ -120,7 +120,7 @@ class DeadlineController extends Controller
                 'is_active' => true,
                 'reference_number_id' => null,
                 'schedule_time' => null,
-                'recurring_id' => null,
+                'recurring_id' => 1,
                 'counter' => null,
                 'send_sms' => true,
                 'send_email' => true

@@ -198,7 +198,6 @@ export default {
           this.activeLegend = this.$store.state.activeLegend;
           axios.post('/api/deadline/clients/prepare', response.data).then(response => {
             this.companyData = response.data;
-            console.log(this.companyData);
           })
           this.loading = false;
         }).catch(err => {
