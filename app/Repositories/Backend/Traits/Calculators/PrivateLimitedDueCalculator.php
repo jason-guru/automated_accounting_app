@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Backend\Traits\Methods;
+namespace App\Repositories\Backend\Traits\Calculators;
 
 use Carbon\Carbon;
 

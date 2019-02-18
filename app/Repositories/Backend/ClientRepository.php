@@ -9,8 +9,8 @@ use App\Business\Api\CompanyHouse\CompanyProfile;
 use App\Repositories\Backend\Traits\Deadline\Vat;
 use App\Repositories\Backend\Traits\Deadline\AaCs;
 use App\Repositories\Backend\Traits\Methods\CommonDueCalculatorMethods;
-use App\Repositories\Backend\Traits\Methods\PrivateLimitedDueCalculator;
-use App\Repositories\Backend\Traits\Methods\NonPrivateLimitedDueCalculator;
+use App\Repositories\Backend\Traits\Calculators\PrivateLimitedDueCalculator;
+use App\Repositories\Backend\Traits\Calculators\NonPrivateLimitedDueCalculator;
 use App\Repositories\Backend\Traits\Deadline\PayeCis;
 
 /**

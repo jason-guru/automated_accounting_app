@@ -17,7 +17,7 @@
             <th>Company Name</th>
             <th>From</th>
             <th>To</th>
-            <th>Due On</th>
+            <th  v-if="activeLegend === 'Due'">Due On</th>
             <th v-if="activeLegend === 'Overdue'">Overdue</th>
             <th>Sms</th>
             <th>Email</th>
@@ -41,6 +41,9 @@
               <span v-else-if="activeDeadline === 'AA'">
                 {{company.aa_due}}
               </span>
+              <span v-else-if="activeDeadline === 'VAT'">
+                {{company.vat_due}}
+              </span>
             </td>
             <td v-if="activeLegend === 'Overdue'">
               <span v-if="activeDeadline === 'CS'">
@@ -48,6 +51,9 @@
               </span>
               <span v-else-if="activeDeadline === 'AA'">
                 {{company.aa_overdue}}
+              </span>
+              <span v-else-if="activeDeadline === 'VAT'">
+                {{company.vat_overdue}}
               </span>
             </td>
             <td>
@@ -76,7 +82,6 @@
             </td>
           </tr>
         </table>
-        
       </span>
       
       <span slot="footer" class="dialog-footer">
@@ -193,10 +198,11 @@ export default {
     fetchClients(){
       this.loading = true;
         axios.post('/api/deadline/clients/fetch', this.clientIds).then(response => {
-          this.companyData = response.data;
+          console.log(response.data);
           this.activeDeadline = this.$store.state.activeDeadline;
           this.activeLegend = this.$store.state.activeLegend;
           axios.post('/api/deadline/clients/prepare', response.data).then(response => {
+            
             this.companyData = response.data;
           })
           this.loading = false;

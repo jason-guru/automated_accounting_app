@@ -6230,6 +6230,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -6359,10 +6364,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
       this.loading = true;
       axios.post('/api/deadline/clients/fetch', this.clientIds).then(function (response) {
-        _this.companyData = response.data;
+        console.log(response.data);
         _this.activeDeadline = _this.$store.state.activeDeadline;
         _this.activeLegend = _this.$store.state.activeLegend;
         axios.post('/api/deadline/clients/prepare', response.data).then(function (response) {
+
           _this.companyData = response.data;
         });
         _this.loading = false;
@@ -93873,7 +93879,9 @@ var render = function() {
                       _vm._v(" "),
                       _c("th", [_vm._v("To")]),
                       _vm._v(" "),
-                      _c("th", [_vm._v("Due On")]),
+                      _vm.activeLegend === "Due"
+                        ? _c("th", [_vm._v("Due On")])
+                        : _vm._e(),
                       _vm._v(" "),
                       _vm.activeLegend === "Overdue"
                         ? _c("th", [_vm._v("Overdue")])
@@ -93940,6 +93948,14 @@ var render = function() {
                                         "\r\n              "
                                     )
                                   ])
+                                : _vm.activeDeadline === "VAT"
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(company.vat_due) +
+                                        "\r\n              "
+                                    )
+                                  ])
                                 : _vm._e()
                             ])
                           : _vm._e(),
@@ -93959,6 +93975,14 @@ var render = function() {
                                     _vm._v(
                                       "\r\n                " +
                                         _vm._s(company.aa_overdue) +
+                                        "\r\n              "
+                                    )
+                                  ])
+                                : _vm.activeDeadline === "VAT"
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(company.vat_overdue) +
                                         "\r\n              "
                                     )
                                   ])
