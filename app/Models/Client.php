@@ -11,7 +11,7 @@ class Client extends Model
     use ClientAttribute;
     
     protected $fillable = [
-        'company_number', 'company_name', 'company_type_id', 'accounts_next_due', 'accounts_overdue', 'address_line_1', 'address_line_2', 'postcode', 'city', 'county', 'country_id', 'phone', 'website', 'email', 'is_active', 'remind'
+        'company_number', 'company_name', 'company_type_id', 'accounts_next_due', 'accounts_overdue', 'address_line_1', 'address_line_2', 'postcode', 'city', 'county', 'country_id', 'phone', 'website', 'email', 'is_active', 'remind', 'is_api'
     ];
 
     protected $dates = ['deleted_at'];
@@ -54,5 +54,15 @@ class Client extends Model
             $client->business_info()->delete();
             $client->reminder()->delete();
         });
+    }
+
+    public function deadlines()
+    {
+        return $this->belongsToMany(Deadline::class)->withPivot('from', 'to', 'due_on');
+    }
+
+    public function getDeadlinesAttribute()
+    {
+        return $this->deadlines()->get();
     }
 }

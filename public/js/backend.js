@@ -5488,6 +5488,178 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['clients'],
+    data: function data() {
+        return {
+            clientsData: [],
+            loading: false,
+            dialogVisible: false,
+            dialogTitle: "",
+            disableInputField: false,
+            deadlineForm: {
+                from: null,
+                to: null,
+                due_on: null,
+                client_id: null,
+                deadline_id: null
+            },
+            rules: {
+                from: [{ required: true, message: 'Please input from date', trigger: 'blur' }],
+                to: [{ required: true, message: 'Please input to date', trigger: 'blur' }],
+                due_on: [{ required: true, message: 'Please input Due on date', trigger: 'blur' }]
+            }
+        };
+    },
+    beforeMount: function beforeMount() {
+        this.fetchClients();
+    },
+
+    methods: {
+        handleDeadlineEdit: function handleDeadlineEdit(pivotData, title, code) {
+            this.deadlineForm.client_id = pivotData.client_id;
+            this.deadlineForm.deadline_id = pivotData.deadline_id;
+            this.deadlineForm.from = pivotData.from;
+            this.deadlineForm.to = pivotData.to;
+            this.deadlineForm.due_on = pivotData.due_on;
+            if (code === 'AA' || code === 'CS') {
+                this.disableInputField = true;
+            } else {
+                this.disableInputField = false;
+            }
+            this.dialogVisible = true;
+            this.dialogTitle = title + ' Information';
+        },
+        handleSubmit: function handleSubmit(formName) {
+            var _this = this;
+
+            this.$refs[formName].validate(function (valid) {
+                console.log(formName);
+                if (valid) {
+                    var self = _this;
+                    var prepFromDate = new Date(self.deadlineForm.from);
+                    var convertedFromDate = prepFromDate.toISOString().substring(0, 10);
+                    _this.deadlineForm.from = convertedFromDate;
+
+                    var prepToDate = new Date(self.deadlineForm.to);
+                    var convertedToDate = prepToDate.toISOString().substring(0, 10);
+                    _this.deadlineForm.to = convertedToDate;
+
+                    var prepDueOnDate = new Date(self.deadlineForm.due_on);
+                    var convertedDueOnDate = prepDueOnDate.toISOString().substring(0, 10);
+                    _this.deadlineForm.due_on = convertedDueOnDate;
+
+                    _this.dialogVisible = false;
+                    axios.post('/admin/client/deadline', _this.deadlineForm).then(function (response) {
+                        _this.fetchClients();
+                        _this.success(response.data.message);
+                    }).catch(function (error) {
+                        _this.error(error.response.data);
+                    });
+                } else {
+                    return false;
+                }
+            });
+        },
+        fetchClients: function fetchClients() {
+            var _this2 = this;
+
+            this.loading = true;
+            var self = this;
+            axios.get('/admin/client/deadline/fetch').then(function (response) {
+                _this2.loading = false;
+                self.clientsData = response.data.clients;
+            }).catch(function (error) {});
+        },
+        success: function success(message) {
+            this.$message({
+                showClose: true,
+                message: message,
+                type: 'success'
+            });
+        },
+        warning: function warning(message) {
+            this.$message({
+                duration: 0,
+                showClose: true,
+                message: message,
+                type: 'warning'
+            });
+        },
+        error: function error(message) {
+            this.$message({
+                duration: 0,
+                showClose: true,
+                message: message,
+                type: 'error'
+            });
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/EnvEditor.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -22802,6 +22974,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-769b7d3a\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.deadline-types[data-v-769b7d3a]{\n    cursor: pointer;\n    color: #2DC3E8;\n}\n.deadline-types[data-v-769b7d3a]:hover{\n    text-decoration: underline\n}\n", ""]);
 
 // exports
 
@@ -93815,6 +94002,256 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-769b7d3a\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "el-table",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
+          staticStyle: { width: "100%" },
+          attrs: { data: _vm.clientsData }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { type: "expand" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(props) {
+                  return _vm._l(props.row.deadlines, function(deadline, index) {
+                    return _c(
+                      "p",
+                      {
+                        key: index,
+                        staticClass: "deadline-types",
+                        on: {
+                          click: function($event) {
+                            _vm.handleDeadlineEdit(
+                              deadline.pivot,
+                              deadline.name,
+                              deadline.code
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(deadline.name))]
+                    )
+                  })
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "Company Name", prop: "company_name" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "Company Type", prop: "company_type.name" }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: _vm.dialogTitle,
+            visible: _vm.dialogVisible,
+            width: "30%"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              ref: "deadlineForm",
+              attrs: { model: _vm.deadlineForm, "label-width": "120px" }
+            },
+            [
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: "From",
+                    rules: [
+                      {
+                        type: "date",
+                        required: true,
+                        message: "Please pick a date",
+                        trigger: "change"
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "Pick a date",
+                      disabled: _vm.disableInputField
+                    },
+                    model: {
+                      value: _vm.deadlineForm.from,
+                      callback: function($$v) {
+                        _vm.$set(_vm.deadlineForm, "from", $$v)
+                      },
+                      expression: "deadlineForm.from"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: "To",
+                    rules: [
+                      {
+                        type: "date",
+                        required: true,
+                        message: "Please pick a date",
+                        trigger: "change"
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "Pick a date",
+                      disabled: _vm.disableInputField
+                    },
+                    model: {
+                      value: _vm.deadlineForm.to,
+                      callback: function($$v) {
+                        _vm.$set(_vm.deadlineForm, "to", $$v)
+                      },
+                      expression: "deadlineForm.to"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                {
+                  attrs: {
+                    label: "Due On",
+                    rules: [
+                      {
+                        type: "date",
+                        required: true,
+                        message: "Please pick a date",
+                        trigger: "change"
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("el-date-picker", {
+                    staticStyle: { width: "100%" },
+                    attrs: {
+                      type: "date",
+                      placeholder: "Pick a date",
+                      disabled: _vm.disableInputField
+                    },
+                    model: {
+                      value: _vm.deadlineForm.due_on,
+                      callback: function($$v) {
+                        _vm.$set(_vm.deadlineForm, "due_on", $$v)
+                      },
+                      expression: "deadlineForm.due_on"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.dialogVisible = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", disabled: _vm.disableInputField },
+                  on: {
+                    click: function($event) {
+                      _vm.handleSubmit("deadlineForm")
+                    }
+                  }
+                },
+                [_vm._v("Confirm")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-769b7d3a", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-e34436a8\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/charts/BarChartContainer.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -94262,6 +94699,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-65216a42\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NonApiBusinessInfoComponent.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-65216a42\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NonApiBusinessInfoComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-769b7d3a\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-769b7d3a\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("65aaad3a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-769b7d3a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ClientDeadlineComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-769b7d3a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ClientDeadlineComponent.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -108617,6 +109081,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.settings = function (key) 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6_vuelidate___default.a);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_element_ui___default.a, { locale: __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default.a });
 
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('clientDeadline', __webpack_require__("./resources/js/backend/components/ClientDeadlineComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('non-api-business-info', __webpack_require__("./resources/js/backend/components/NonApiBusinessInfoComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-form', __webpack_require__("./resources/js/backend/components/ReminderFormComponent.vue"));
@@ -108702,6 +109167,58 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-20539062", Component.options)
   } else {
     hotAPI.reload("data-v-20539062", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/backend/components/ClientDeadlineComponent.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-769b7d3a\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]],\"env\":{\"test\":{\"presets\":[[\"env\",{\"targets\":{\"node\":\"current\"}}]]},\"development\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]},\"production\":{\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":\"> 2%\",\"uglify\":true}}]]}}}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-769b7d3a\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/backend/components/ClientDeadlineComponent.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-769b7d3a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/backend/components/ClientDeadlineComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-769b7d3a", Component.options)
+  } else {
+    hotAPI.reload("data-v-769b7d3a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

@@ -19,6 +19,11 @@
                             Clients
                         </a>
                     </li>
+                    <li class="nav-items">
+                        <a href="{{ route('admin.client.deadline.index') }}" class="nav-link {{ active_class(Active::checkUriPattern('admin/client/deadline')) }}">
+                            Client Deadlines
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/reminders*'), 'open') }}">

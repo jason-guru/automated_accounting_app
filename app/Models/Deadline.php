@@ -16,4 +16,9 @@ class Deadline extends Model
     {
         return $this->belongsTo(MessageFormat::class);
     }
+
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
+    }
 }

@@ -16,7 +16,7 @@ Vue.prototype.settings = (key) => {
 Vue.use(Vuelidate);
 Vue.use(ElementUI, { locale });
 
-
+Vue.component('clientDeadline', require('./components/ClientDeadlineComponent.vue'));
 Vue.component('business-info', require('./components/BusinessInfoComponent.vue'));
 Vue.component('non-api-business-info', require('./components/NonApiBusinessInfoComponent.vue'));
 Vue.component('reminder-form', require('./components/ReminderFormComponent.vue'));

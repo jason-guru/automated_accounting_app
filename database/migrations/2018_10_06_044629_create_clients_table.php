@@ -33,6 +33,7 @@ class CreateClientsTable extends Migration
             $table->string('email')->nullable(true);
             $table->boolean('is_active')->default(true);
             $table->boolean('remind')->default(true);
+            $table->boolean('is_api')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

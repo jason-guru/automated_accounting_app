@@ -62,12 +62,13 @@ class ClientSearchController extends Controller
             $vat_schemes = $this->vat_schemes;
             $vat_submit_types = $this->vat_submit_types;
             $company_number = trim($request->company_number);
+            $is_api = true;
             $response = $this->client->request('GET', '/company/'.$company_number, [
                 'auth' => [$this->api_key, '']
             ]);
             if($response->getStatusCode() == 200){
                 $client_data = json_decode($response->getBody()->getContents(), true);
-                return view('backend.clients.search-result', compact('client_data', 'countries', 'company_types', 'designations', 'initials', 'vat_submit_types', 'vat_schemes'));
+                return view('backend.clients.search-result', compact('client_data', 'countries', 'company_types', 'designations', 'initials', 'vat_submit_types', 'vat_schemes', 'is_api'));
             }
         }catch(\Exception $exception)
         {

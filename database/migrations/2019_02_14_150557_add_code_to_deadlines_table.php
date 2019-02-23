@@ -14,7 +14,7 @@ class AddCodeToDeadlinesTable extends Migration
     public function up()
     {
         Schema::table('deadlines', function (Blueprint $table) {
-            $table->string('code');
+            $table->string('code')->nullable(true);
         });
     }
 

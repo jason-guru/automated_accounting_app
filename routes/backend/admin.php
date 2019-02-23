@@ -24,6 +24,10 @@ Route::get('client/search', 'ClientSearchController@show_search')->name('client.
 Route::post('client/search/result', 'ClientSearchController@show_search_result')->name('client.search.result');
 Route::get('client/search/contact-person', 'ClientSearchController@prep_contact_person_view')->name('client.search.contact_person');
 
+Route::get('client/deadline', 'ClientDeadlineController@index')->name('client.deadline.index');
+Route::post('client/deadline', 'ClientDeadlineController@store')->name('client.deadline.store');
+Route::get('/client/deadline/fetch', 'ClientDeadlineController@fetchClients');
+
 //Deadline Routes
 Route::put('reminders/switch/update/{id}', 'ReminderController@switch_update')->name('reminders.switch.update');
 Route::get('reminder/delete/edit/{id}', 'ReminderController@destroy_from_edit' )->name('reminder.delete.from.edit');

@@ -4,6 +4,7 @@ namespace App\Repositories\Backend;
 
 use App\Repositories\BaseRepository;
 use App\Models\Deadline;
+//use the model here
 
 /**
  * Class DeadlineRepository.

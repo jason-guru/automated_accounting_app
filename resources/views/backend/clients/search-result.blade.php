@@ -26,6 +26,19 @@
                         <div class="form-group">
                             <label for="company-number">Client ID</label>
                             <input name="company_number" id="company-number" type="text" class="form-control" value="{{$client_data['company_number']}}" readonly>
+                            <input type="hidden" name="is_api" value="{{$is_api}}">
+
+                            <input type="hidden" name="aa_from" value="{{array_key_exists('next_accounts', $client_data['accounts']) ? $client_data['accounts']['next_accounts']['period_start_on'] : ''}}">
+
+                            <input type="hidden" name="aa_to" value="{{array_key_exists('next_accounts', $client_data['accounts']) ? $client_data['accounts']['next_accounts']['period_end_on'] : ''}}">
+
+                            <input type="hidden" name="aa_due" value="{{array_key_exists('next_accounts', $client_data['accounts']) ? $client_data['accounts']['next_accounts']['due_on'] : ''}}">
+
+                            <input type="hidden" name="cs_from" value="{{array_key_exists('next_accounts', $client_data['accounts']) ? $client_data['accounts']['next_accounts']['period_start_on'] : ''}}">
+                            
+                            <input type="hidden" name="cs_to" value="{{array_key_exists('next_accounts', $client_data['accounts']) ? $client_data['accounts']['next_accounts']['period_end_on'] : ''}}">
+
+                            <input type="hidden" name="cs_due" value="{{array_key_exists('confirmation_statement', $client_data) ? $client_data['confirmation_statement']['next_due'] : ''}}">
                         </div>
 
                         <div class="form-group">

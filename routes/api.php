@@ -24,5 +24,7 @@ Route::group(['namespace' => 'Backend\Api'], function () {
     Route::post('/deadline/clients/fetch', 'DeadlineController@fetchClients');
     Route::post('/deadline/clients/prepare', 'DeadlineController@prepareClients');
     Route::post('/reminders', 'ReminderController@store');
+    
 });
+
 
