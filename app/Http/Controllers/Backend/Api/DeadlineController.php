@@ -39,12 +39,14 @@ class DeadlineController extends Controller
     public function fetchClients(Request $request)
     {
         $clientData = [];
-        foreach($request->all() as $clientId){
+        foreach($request->all() as $key => $clientId){
             $client = $this->clientRepository->getById($clientId);
-            if($client->company_number != null && $client->company_type_id == 1){
-                $clientData[] = $this->profile->fetch($client->company_number)['body'];
-            }elseif($client->company_type_id != 1){
-                $clientData[] = $this->localCompanyProfile->fetch($client)['body'];
+            if($client->is_api){
+                $clientData[$key] = $this->profile->fetch($client->company_number)['body'];
+                $clientData[$key]['is_api'] = $client->is_api;
+            }else{
+                $clientData[$key] = $this->localCompanyProfile->fetch($client)['body'];
+                $clientData[$key]['is_api'] = $client->is_api;
             }
         }
         return $clientData;
@@ -67,7 +69,7 @@ class DeadlineController extends Controller
         $clientData = [];
         foreach($request->all() as $apiData)
         {
-            if(array_key_exists('company_number', $apiData)){
+            if($apiData['is_api']){
                 $client = $this->clientRepository->where('company_number', $apiData['company_number'])->first();
                 $clientData[] = [
                     'company_name' => $apiData['company_name'],
@@ -95,8 +97,21 @@ class DeadlineController extends Controller
                     'company_name' => $apiData['company_name'],
                     'from' => $apiData['vat']['from'],
                     'to' => $apiData['vat']['to'],
+                    'vat_from' => $apiData['vat']['from'],
+                    'vat_to' => $apiData['vat']['to'],
                     'vat_due' => $apiData['vat']['due'],
                     'vat_overdue' => $apiData['vat']['overdue'] == 1 ? 'true': 'false',
+
+                    'paye_from' => $apiData['paye']['from'],
+                    'paye_to' => $apiData['paye']['to'],
+                    'paye_due' => $apiData['paye']['due'],
+                    'paye_overdue' => $apiData['paye']['overdue'] == 1 ? 'true': 'false',
+
+                    'cis_from' => $apiData['cis']['from'],
+                    'cis_to' => $apiData['cis']['to'],
+                    'cis_due' => $apiData['cis']['due'],
+                    'cis_overdue' => $apiData['cis']['overdue'] == 1 ? 'true': 'false',
+
                     'client_id' => $apiData['client_id'],
                     'deadline_id' => null,
                     'remind_date' => null,

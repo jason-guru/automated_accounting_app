@@ -6,7 +6,9 @@
             style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <p v-for="(deadline, index) in props.row.deadlines" :key="index" @click="handleDeadlineEdit(deadline.pivot, deadline.name, deadline.code)" class="deadline-types">{{deadline.name}}</p>
+                    <p v-for="(deadline, index) in props.row.deadlines" :key="index" @click="handleDeadlineEdit(deadline.pivot, deadline.name, deadline.code, props.row.is_api)" class="deadline-types">
+                        {{deadline.name}}
+                    </p>
                 </template>
             </el-table-column>
             <el-table-column
@@ -89,23 +91,24 @@ export default {
         this.fetchClients();
     },
     methods: {
-        handleDeadlineEdit: function(pivotData, title, code){
+        handleDeadlineEdit: function(pivotData, title, code, is_api){
             this.deadlineForm.client_id = pivotData.client_id;
             this.deadlineForm.deadline_id = pivotData.deadline_id;
             this.deadlineForm.from = pivotData.from;
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
-            if(code === 'AA' || code === 'CS'){
-                this.disableInputField = true;
-            }else{
-                this.disableInputField = false;
+            if(is_api){
+                 if(code === 'AA' || code === 'CS'){
+                    this.disableInputField = true;
+                }else{
+                    this.disableInputField = false;
+                }
             }
             this.dialogVisible = true;
             this.dialogTitle = title + ' Information';
         },
         handleSubmit: function(formName){
             this.$refs[formName].validate((valid) => {
-                console.log(formName);
                 if(valid){
                     var self = this;
                     var prepFromDate = new Date(self.deadlineForm.from);
@@ -139,6 +142,7 @@ export default {
             axios.get('/admin/client/deadline/fetch').then(response => {
                 this.loading = false;
                 self.clientsData = response.data.clients;
+                console.log(self.clientsData);
             }).catch(error => {
 
             })

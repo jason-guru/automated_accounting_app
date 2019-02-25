@@ -28,7 +28,7 @@ export default {
         },
       title: {
             display: true,
-            text: 'Deadlines:- Limited Company'
+            text: 'Deadlines'
         },
       onClick: function(e){
         self.barClick(e)

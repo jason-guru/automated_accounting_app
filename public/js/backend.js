@@ -5548,6 +5548,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['clients'],
@@ -5577,16 +5579,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        handleDeadlineEdit: function handleDeadlineEdit(pivotData, title, code) {
+        handleDeadlineEdit: function handleDeadlineEdit(pivotData, title, code, is_api) {
             this.deadlineForm.client_id = pivotData.client_id;
             this.deadlineForm.deadline_id = pivotData.deadline_id;
             this.deadlineForm.from = pivotData.from;
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
-            if (code === 'AA' || code === 'CS') {
-                this.disableInputField = true;
-            } else {
-                this.disableInputField = false;
+            if (is_api) {
+                if (code === 'AA' || code === 'CS') {
+                    this.disableInputField = true;
+                } else {
+                    this.disableInputField = false;
+                }
             }
             this.dialogVisible = true;
             this.dialogTitle = title + ' Information';
@@ -5595,7 +5599,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.$refs[formName].validate(function (valid) {
-                console.log(formName);
                 if (valid) {
                     var self = _this;
                     var prepFromDate = new Date(self.deadlineForm.from);
@@ -5630,6 +5633,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/admin/client/deadline/fetch').then(function (response) {
                 _this2.loading = false;
                 self.clientsData = response.data.clients;
+                console.log(self.clientsData);
             }).catch(function (error) {});
         },
         success: function success(message) {
@@ -6225,7 +6229,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       title: {
         display: true,
-        text: 'Deadlines:- Limited Company'
+        text: 'Deadlines'
       },
       onClick: function onClick(e) {
         self.barClick(e);
@@ -6312,6 +6316,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6540,7 +6582,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         _this.activeDeadline = _this.$store.state.activeDeadline;
         _this.activeLegend = _this.$store.state.activeLegend;
         axios.post('/api/deadline/clients/prepare', response.data).then(function (response) {
-
           _this.companyData = response.data;
         });
         _this.loading = false;
@@ -94044,12 +94085,19 @@ var render = function() {
                             _vm.handleDeadlineEdit(
                               deadline.pivot,
                               deadline.name,
-                              deadline.code
+                              deadline.code,
+                              props.row.is_api
                             )
                           }
                         }
                       },
-                      [_vm._v(_vm._s(deadline.name))]
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(deadline.name) +
+                            "\n                "
+                        )
+                      ]
                     )
                   })
                 }
@@ -94363,9 +94411,79 @@ var render = function() {
                       return _c("tr", { key: index }, [
                         _c("td", [_vm._v(_vm._s(company.company_name))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(company.from))]),
+                        _c("td", [
+                          _vm.activeDeadline === "AA" ||
+                          _vm.activeDeadline === "CS"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.from) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "VAT"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.vat_from) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "PAYE"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.paye_from) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "CIS"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.cis_from) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm._e()
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(company.to))]),
+                        _c("td", [
+                          _vm.activeDeadline === "AA" ||
+                          _vm.activeDeadline === "CS"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.to) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "VAT"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.vat_to) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "PAYE"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.paye_to) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "CIS"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.cis_to) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm._e()
+                        ]),
                         _vm._v(" "),
                         _vm.activeLegend === "Due"
                           ? _c("td", [
@@ -94390,6 +94508,22 @@ var render = function() {
                                     _vm._v(
                                       "\r\n                " +
                                         _vm._s(company.vat_due) +
+                                        "\r\n              "
+                                    )
+                                  ])
+                                : _vm.activeDeadline === "PAYE"
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(company.paye_due) +
+                                        "\r\n              "
+                                    )
+                                  ])
+                                : _vm.activeDeadline === "CIS"
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(company.cis_due) +
                                         "\r\n              "
                                     )
                                   ])
@@ -94420,6 +94554,22 @@ var render = function() {
                                     _vm._v(
                                       "\r\n                " +
                                         _vm._s(company.vat_overdue) +
+                                        "\r\n              "
+                                    )
+                                  ])
+                                : _vm.activeDeadline === "PAYE"
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(company.paye_overdue) +
+                                        "\r\n              "
+                                    )
+                                  ])
+                                : _vm.activeDeadline === "CIS"
+                                ? _c("span", [
+                                    _vm._v(
+                                      "\r\n                " +
+                                        _vm._s(company.cis_overdue) +
                                         "\r\n              "
                                     )
                                   ])

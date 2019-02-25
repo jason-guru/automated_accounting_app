@@ -32,8 +32,34 @@
           </tr>
           <tr v-for="(company, index) in companyData" :key="index" >
             <td>{{company.company_name}}</td>
-            <td>{{company.from}}</td>
-            <td>{{company.to}}</td>
+            <td>
+              <span v-if="activeDeadline === 'AA' || activeDeadline === 'CS'">
+                {{company.from}}
+              </span>
+              <span v-else-if="activeDeadline==='VAT'">
+                {{company.vat_from}}
+              </span>
+              <span v-else-if="activeDeadline==='PAYE'">
+                {{company.paye_from}}
+              </span>
+               <span v-else-if="activeDeadline==='CIS'">
+                {{company.cis_from}}
+              </span>
+            </td>
+            <td>
+              <span v-if="activeDeadline === 'AA' || activeDeadline === 'CS'">
+                {{company.to}}
+              </span>
+              <span v-else-if="activeDeadline==='VAT'">
+                {{company.vat_to}}
+              </span>
+               <span v-else-if="activeDeadline==='PAYE'">
+                {{company.paye_to}}
+              </span>
+               <span v-else-if="activeDeadline==='CIS'">
+                {{company.cis_to}}
+              </span>
+            </td>
             <td v-if="activeLegend === 'Due'">
               <span v-if="activeDeadline === 'CS'">
                 {{company.cs_due}}
@@ -43,6 +69,12 @@
               </span>
               <span v-else-if="activeDeadline === 'VAT'">
                 {{company.vat_due}}
+              </span>
+               <span v-else-if="activeDeadline === 'PAYE'">
+                {{company.paye_due}}
+              </span>
+              <span v-else-if="activeDeadline === 'CIS'">
+                {{company.cis_due}}
               </span>
             </td>
             <td v-if="activeLegend === 'Overdue'">
@@ -54,6 +86,12 @@
               </span>
               <span v-else-if="activeDeadline === 'VAT'">
                 {{company.vat_overdue}}
+              </span>
+              <span v-else-if="activeDeadline === 'PAYE'">
+                {{company.paye_overdue}}
+              </span>
+              <span v-else-if="activeDeadline === 'CIS'">
+                {{company.cis_overdue}}
               </span>
             </td>
             <td>
@@ -202,7 +240,6 @@ export default {
           this.activeDeadline = this.$store.state.activeDeadline;
           this.activeLegend = this.$store.state.activeLegend;
           axios.post('/api/deadline/clients/prepare', response.data).then(response => {
-            
             this.companyData = response.data;
           })
           this.loading = false;

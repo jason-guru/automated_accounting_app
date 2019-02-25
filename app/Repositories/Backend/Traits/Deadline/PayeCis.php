@@ -9,33 +9,35 @@ use Carbon\Carbon;
  */
 trait PayeCis
 {
-    private function getPayeDueClients()
+    private function getPayeDueClients($code)
     {
-        return $this->calculateNonPrivateLimitedDue();
+        return $this->calculateNonPrivateLimitedDue($code);
     }
 
-    private function getPayeOverDueClients()
+    private function getPayeOverDueClients($code)
     {
-        return $this->calculateNonPrivateLimitedOverDue();
+        return $this->calculateNonPrivateLimitedOverDue($code);
     }
 
-    private function getCisDueClients()
+    private function getCisDueClients($code)
     {
-        return $this->calculateNonPrivateLimitedDue();
+        return $this->calculateNonPrivateLimitedDue($code);
     }
 
-    private function getCisOverDueClients()
+    private function getCisOverDueClients($code)
     {
-        return $this->calculateNonPrivateLimitedOverDue();
+        return $this->calculateNonPrivateLimitedOverDue($code);
     }
 
     public function fetchPayeCis()
     {
-        $payeDueClients = $this->getPayeDueClients();
-        $payeOverDueClients = $this->getPayeOverDueClients();
+        $code = config('deadline.code.3');
+        $payeDueClients = $this->getPayeDueClients($code);
+        $payeOverDueClients = $this->getPayeOverDueClients($code);
 
-        $cisDueClients = $this->getCisDueClients();
-        $cisOverDueClients = $this->getCisOverDueClients();
+        $code = config('deadline.code.4');
+        $cisDueClients = $this->getCisDueClients($code);
+        $cisOverDueClients = $this->getCisOverDueClients($code);
 
         return response()->json(
             [
