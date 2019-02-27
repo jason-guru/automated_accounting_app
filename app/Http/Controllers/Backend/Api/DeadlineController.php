@@ -62,7 +62,7 @@ class DeadlineController extends Controller
                 $clientData[] = $this->clientRepository->getAaCsDialogClientData($apiData);
                 
             }else{
-                $clientData[] = $this->clientRepository->getVatPayeCisClientData($apiData);
+                $clientData[] = $this->clientRepository->getVatPayeCisDialogClientData($apiData);
             }
         }
         return $clientData;
