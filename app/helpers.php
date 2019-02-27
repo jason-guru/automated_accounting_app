@@ -2,6 +2,7 @@
 
 use App\Helpers\General\Timezone;
 use App\Helpers\General\HtmlHelper;
+use App\Helpers\General\DateHelper;
 
 /*
  * Global helpers file with misc functions.
@@ -160,5 +161,12 @@ if (! function_exists('camelcase_to_word')) {
         | (?<=[A-Z])
           (?=[A-Z][a-z])
         /x', $str));
+    }
+}
+
+if (! function_exists('carbon_parse')) {
+    function carbon_parse($date)
+    {
+        return resolve(DateHelper::class)->carbonParse($date);
     }
 }

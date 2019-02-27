@@ -18,6 +18,8 @@ Route::resources([
     'message-formats' => 'MessageFormatController'
 ]);
 
+Route::put('clients/{client}/switch', 'ClientController@switchToggle')->name('client.switch');
+
 
 //Client Routes 
 Route::get('client/search', 'ClientSearchController@show_search')->name('client.search');

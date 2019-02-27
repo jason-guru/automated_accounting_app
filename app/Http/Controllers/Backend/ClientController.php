@@ -141,27 +141,17 @@ class ClientController extends Controller
             return back()->withFlashDanger('Not allowed in Demo mode');
         }
         try{
-            if($request->switch_value_update){
-                $client = $this->clientRepository->updateById($id,['remind' => $request->switch_value]);
-                foreach($client->reminders as $reminder){
-                    $this->reminder_repository->updateById($reminder->id, ['is_active' => $request->switch_value]);
-                };
-                return response()->json([
-                    'success' => true
-                ]);
-            }else{
 
-                $request->merge(['accounts_next_due' => Carbon::parse($request->accounts_next_due)->format('Y-m-d')]);
-                $request->merge(['business_start_date' => !is_null($request->business_start_date) ? Carbon::parse($request->business_start_date)->format('Y-m-d'): null]);
-                $request->merge(['book_start_date' => !is_null($request->book_start_date) ? Carbon::parse($request->book_start_date)->format('Y-m-d'): null]);
-                $request->merge(['year_end_date' => !is_null($request->year_end_date) ? Carbon::parse($request->year_end_date)->format('Y-m-d'): null]);
-                $request->merge(['vat_reg_date' => !is_null($request->vat_reg_date) ? Carbon::parse($request->vat_reg_date)->format('Y-m-d'): null]);
-                $request->merge(['last_bookkeeping_done' => !is_null($request->last_bookkeeping_done) ? Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d'): null]);
+            $request->merge(['accounts_next_due' => Carbon::parse($request->accounts_next_due)->format('Y-m-d')]);
+            $request->merge(['business_start_date' => !is_null($request->business_start_date) ? Carbon::parse($request->business_start_date)->format('Y-m-d'): null]);
+            $request->merge(['book_start_date' => !is_null($request->book_start_date) ? Carbon::parse($request->book_start_date)->format('Y-m-d'): null]);
+            $request->merge(['year_end_date' => !is_null($request->year_end_date) ? Carbon::parse($request->year_end_date)->format('Y-m-d'): null]);
+            $request->merge(['vat_reg_date' => !is_null($request->vat_reg_date) ? Carbon::parse($request->vat_reg_date)->format('Y-m-d'): null]);
+            $request->merge(['last_bookkeeping_done' => !is_null($request->last_bookkeeping_done) ? Carbon::parse($request->last_bookkeeping_done)->format('Y-m-d'): null]);
 
-                $client = $this->clientRepository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
-                $this->businessInfoRepository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
-                return redirect()->route('admin.clients.index')->withFlashSuccess('Client updated Successfully');
-            }
+            $client = $this->clientRepository->updateById($id, $request->except('_token','business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+            $this->businessInfoRepository->updateById($client->business_info->id, $request->only('business_start_date', 'book_start_date' , 'year_end_date', 'company_reg_number', 'utr_number', 'utr', 'vat_submit_type_id', 'vat_reg_number', 'vat_reg_date', 'social_media', 'last_bookkeeping_done', 'vat_scheme_id'));
+            return redirect()->route('admin.clients.index')->withFlashSuccess('Client updated Successfully');
         }catch(\Exception $exception)
         {
             return $exception->getMessage();
@@ -182,6 +172,17 @@ class ClientController extends Controller
         }
         $this->clientRepository->deleteById($id);
         return back()->withFlashSuccess('Client successfully deleted');
+    }
+
+    public function switchToggle(Request $request, $id)
+    {
+        $client = $this->clientRepository->updateById($id,['remind' => $request->switch_value]);
+        foreach($client->reminders as $reminder){
+            $this->reminder_repository->updateById($reminder->id, ['is_active' => $request->switch_value]);
+        };
+        return response()->json([
+            'success' => true
+        ]);
     }
 
 }

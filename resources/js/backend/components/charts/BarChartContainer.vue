@@ -204,6 +204,7 @@ export default {
       get(){
         if(this.$store.state.dialogVisible){
           this.fetchClients();
+          console.log('fetching');
         }
         return this.$store.state.dialogVisible;
       },

@@ -135,5 +135,21 @@ Class ClientTest extends TestCase
         ]);
 
    }
+
+   /** @test */
+   public function check_reminder_toggle()
+   {
+       $client = factory(Client::class)->create();
+       $this->loginAsAdmin();
+       $response = $this->put('admin/clients/1/switch', [
+        'switch_value_update' => true,
+        'switch_value' => true
+       ]);
+
+       $response->assertStatus(200);
+       $response->assertJson([
+           'success' => true
+       ]);
+   }
     
 }

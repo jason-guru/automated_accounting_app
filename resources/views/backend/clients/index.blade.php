@@ -46,7 +46,7 @@
                                                 <td>{{$client->accounts_next_due}}</td>
                                                 <td>
                                                     <label class="switch switch-label switch-pill switch-success mr-2" for="to-remind-{{$client->id}}">
-                                                    <input class="switch-input" data-id="{{$client->id}}" type="checkbox" name="remind[]" id="to-remind-{{$client->id}}" value="{{$client->remind}}" {{$client->remind == 1 ? "checked" : ""}} data-url="{{route('admin.clients.update', ['id' => $client->id])}}">
+                                                    <input class="switch-input" data-id="{{$client->id}}" type="checkbox" name="remind[]" id="to-remind-{{$client->id}}" value="{{$client->remind}}" {{$client->remind == 1 ? "checked" : ""}} data-url="{{route('admin.client.switch', ['id' => $client->id])}}">
                                                         <span class="switch-slider" data-checked="on" data-unchecked="off"></span>
                                                     </label>
                                                 </td>

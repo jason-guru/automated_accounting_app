@@ -6241,6 +6241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     barClick: function barClick(e) {
       var activeBar = this.$data._chart.getElementAtEvent(e)[0];
+      console.log(activeBar);
       var clientIds = [];
       this.dialogVisible = true;
       if (activeBar != undefined) {
@@ -6515,6 +6516,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       get: function get() {
         if (this.$store.state.dialogVisible) {
           this.fetchClients();
+          console.log('fetching');
         }
         return this.$store.state.dialogVisible;
       },

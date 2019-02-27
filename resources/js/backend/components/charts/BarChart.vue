@@ -39,6 +39,7 @@ export default {
   methods: {
     barClick: function(e){
       var activeBar = this.$data._chart.getElementAtEvent(e)[0];
+      console.log(activeBar);
       var clientIds = [];
       this.dialogVisible = true;
       if(activeBar != undefined){

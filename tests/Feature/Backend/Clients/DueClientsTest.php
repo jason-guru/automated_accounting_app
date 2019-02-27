@@ -47,7 +47,7 @@ class DueClientsTest extends TestCase
         );
 
         $csAaChartData = $this->clientRepository->fetchAaCs($this->profile);
-        dd(json_decode($csAaChartData->getContent(),true));
+        //dd(json_decode($csAaChartData->getContent(),true));
         //the first thing to check is cs due it should be 2
         $this->assertContains([
             'chartdata'
@@ -58,16 +58,26 @@ class DueClientsTest extends TestCase
     public function check_if_clients_are_returned_via_api_url(){
         //Create Clients
         factory(Client::class)->create(
-            ['company_number' => 10202689]
+            [
+                'company_number' => 10202689,
+                'is_api' => true
+            ]
         );
         factory(Client::class)->create(
-            ['company_number' => 11141106]
+            [
+                'company_number' => 11141106,
+                'is_api' => true
+            ]
         );
 
         $clients = Client::all()->pluck('id')->toArray();
         $response = $this->post('/api/deadline/clients/fetch', $clients);
         $responseData = json_decode($response->content(), true);
         $prepResponse = $this->post('/api/deadline/clients/prepare', $responseData);
-        dd($prepResponse->content());
+        $prepResponse->assertJsonFragment(
+            [
+                'company_name' => 'A.E VAN HIRE LIMITED'
+            ]
+        );
     }
 }

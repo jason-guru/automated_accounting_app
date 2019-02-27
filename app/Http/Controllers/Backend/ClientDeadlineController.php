@@ -6,17 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\ClientDeadline;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\ClientRepository;
-use App\Repositories\Backend\DeadlineRepository;
 use App\Http\Requests\Backend\ClientDeadlineRequest;
 
 class ClientDeadlineController extends Controller
 {
     protected $clientRepository;
-    protected $deadlineRepository;
-    public function __construct(ClientRepository $clientRepository, DeadlineRepository $deadlineRepository)
+    public function __construct(ClientRepository $clientRepository)
     {
         $this->clientRepository = $clientRepository;
-        $this->deadlineRepository = $deadlineRepository;
     }
     public function index()
     {
@@ -34,9 +31,7 @@ class ClientDeadlineController extends Controller
 
     public function store(ClientDeadlineRequest $request)
     {
-        $client = $this->clientRepository->getById($request->client_id);
-        $clientDeadline = $client->deadlines();
-        $clientDeadline->updateExistingPivot($request->deadline_id, [
+        $this->clientRepository->getById($request->client_id)->deadlines()->updateExistingPivot($request->deadline_id, [
             'from' => $request->from,
             'to' => $request->to,
             'due_on' => $request->due_on

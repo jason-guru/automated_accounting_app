@@ -51,14 +51,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        //throw $exception;
-        if ($exception instanceof UnauthorizedException) {
-            return redirect()
-                ->route(home_route())
-                ->withFlashDanger(__('auth.general_error'));
-        }
+        throw $exception;
+        // if ($exception instanceof UnauthorizedException) {
+        //     return redirect()
+        //         ->route(home_route())
+        //         ->withFlashDanger(__('auth.general_error'));
+        // }
 
-        return parent::render($request, $exception);
+        // return parent::render($request, $exception);
     }
 
     /**

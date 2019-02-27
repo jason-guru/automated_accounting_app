@@ -13,5 +13,6 @@ return [
     
     'enable_affiliate' => false,
     'due_color' => '#F7C600',
-    'overdue_color' => '#C63100'
+    'overdue_color' => '#C63100',
+    'date_format' => 'Y-m-d'
 ];
