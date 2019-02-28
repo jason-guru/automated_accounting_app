@@ -144,8 +144,8 @@ class SendDynamicReminderNotifications
             if(mail($this->email, 'Filing Reminder',  strtr($this->emailTemplate['format'], $this->emailDynamics), "From:".Config::get('mail.from.address'))){
                 $this->reminderRepository->updateById($reminder_id, ['has_reminded' => true]);
             }
-        } catch (\Throwable $th) {
-            throw $th;
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
