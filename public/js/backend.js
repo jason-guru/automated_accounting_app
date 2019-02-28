@@ -6625,10 +6625,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       this.companyData.forEach(function (element) {
         reminder.push(JSON.stringify(element));
       });
-      axios.post('/api/reminders', reminder).then(function (response) {
-        self.dialogVisible = false;
-        console.log(response.data);
-      });
+      console.log(reminder);
+      // axios.post('/api/reminders', reminder).then(response => {
+      // self.dialogVisible = false;
+      // })
     }
   },
   components: { BarChart: __WEBPACK_IMPORTED_MODULE_1__BarChart_vue___default.a }

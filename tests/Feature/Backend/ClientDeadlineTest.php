@@ -71,7 +71,7 @@ class DeadlineTest extends TestCase
             'to' => Carbon::parse('+1 year'),
             'due_on' => Carbon::parse('+1 year')
         ]);
-
+        dd($client->deadlines);
         $response->assertStatus(200);
         $this->assertDatabaseHas('client_deadline', [
             'from' => Carbon::parse('-1 year'),
@@ -79,4 +79,5 @@ class DeadlineTest extends TestCase
             'due_on' => Carbon::parse('+1 year')
         ]);
     }
+    
 }

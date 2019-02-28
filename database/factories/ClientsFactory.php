@@ -10,6 +10,8 @@ $factory->define(Client::class, function (Faker $faker) {
         'company_type_id' => 1,
         'accounts_next_due' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'accounts_overdue' => false,
-        'country_id' => 4
+        'country_id' => 4,
+        'phone' => '+918794515903',
+        'email' => 'jobmails1689@gmail.com'
     ];
 });

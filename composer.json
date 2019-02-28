@@ -1,7 +1,7 @@
 {
-    "name": "rappasoft/laravel-5-boilerplate",
-    "description": "The Laravel Boilerplate Project.",
-    "keywords": ["framework", "laravel", "boilerplate"],
+    "name": "jason-guru/Automatic Reminder App",
+    "description": "An automatic web application for sending reminders to clients",
+    "keywords": ["framework", "laravel", "automatic", "accounts", "reminder"],
     "license": "MIT",
     "type": "project",
     "require": {

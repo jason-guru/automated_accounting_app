@@ -11,15 +11,15 @@ class ReminderMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $email_body;
+    public $emailTemplate;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email_body)
+    public function __construct($emailTemplate)
     {
-        $this->email_body = $email_body;
+        $this->emailTemplate = $emailTemplate;
     }
 
     /**
