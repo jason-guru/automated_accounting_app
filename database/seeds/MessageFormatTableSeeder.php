@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Business\MessageFormatOptions;
+use App\Repositories\Backend\MessageFormatRepository;
 
 
 class MessageFormatTableSeeder extends Seeder
@@ -12,18 +14,11 @@ class MessageFormatTableSeeder extends Seeder
      */
     public function run()
     {
-        $sms_body = 'Hi %mail_to,
-        With regards to your tax payment, please use the following info to make the payment:
-        Reference: %reference_number
-        Amount: %amount
-        Thanks and kind regards,
-        Nathan';
-        $email_body = 'Hi %mail_to,
-        With regards to your tax payment, please use the following info to make the payment:
-        Reference: %reference_number
-        Amount: %amount
-        Thanks and kind regards,
-        Nathan';
-        DB::table('message_formats')->insert(['name'=> "Sample Message Format",'sms_format' => $sms_body, 'email_format' => $email_body]);
+        $messageOptions = new MessageFormatOptions();
+        $messageFormatRepository = new MessageFormatRepository();
+        for($i=0; $i<5; $i++){
+            $code = config('deadline.code.'.$i);
+            $formatData = $messageOptions->select($code);
+        }
     }
 }

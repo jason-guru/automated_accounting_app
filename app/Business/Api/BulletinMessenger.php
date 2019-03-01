@@ -17,7 +17,7 @@ class BulletinMessenger
     public function dispatch($phone, $smsTemplate, $smsDynamics)
     {
         $response = $this->smsClient->request('GET', 'https://www.bulletinmessenger.net/api/3/sms/out', [
-            'query' => ['to' => $phone,'body' => strtr($smsTemplate['format'], $smsDynamics)],
+            'query' => ['to' => $phone,'body' => strtr(strip_tags($smsTemplate['format']), $smsDynamics)],
             'headers' => ['Authorization' => "Bearer {$this->smsApiKey}"]
         ]);
         if($response->getStatusCode() == 200){

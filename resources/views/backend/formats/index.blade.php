@@ -38,8 +38,8 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$message_format->name}}</td>
-                                    <td>{{substr($message_format->sms_format, 0, 10)}}</td>
-                                    <td>{{substr($message_format->email_format, 0, 10)}}</td>
+                                    <td>{!!substr($message_format->sms_format, 0, 10)!!}</td>
+                                    <td>{!!substr($message_format->email_format, 0, 10)!!}</td>
                                     <td>{!!$message_format->action_buttons!!}</td>
                                 </tr>
                             @endforeach

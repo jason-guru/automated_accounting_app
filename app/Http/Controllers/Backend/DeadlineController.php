@@ -89,11 +89,17 @@ class DeadlineController extends Controller
      */
     public function update(DeadlineRequest $request, $id)
     {
-        if(config('settings.enable_demo')){
-            return back()->withFlashDanger('Not allowed in Demo mode');
+        try {
+            if(config('settings.enable_demo')){
+                return back()->withFlashDanger('Not allowed in Demo mode');
+            }
+            $this->deadline_repository->updateById($id, $request->except('_token'));
+            
+            return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Edited Successfully.');
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
         }
-        $this->message_format_repository->updateById($id, $request->except('_token'));
-        return redirect()->route('admin.deadlines.index')->withFlashSuccess('Deadline Edited Successfully.');
+        
     }
 
 

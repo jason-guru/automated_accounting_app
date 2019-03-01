@@ -284,11 +284,19 @@ export default {
         this.companyData.forEach(function(element){
           reminder.push(JSON.stringify(element))
       });
-      console.log(reminder);
-      // axios.post('/api/reminders', reminder).then(response => {
-      // self.dialogVisible = false;
-      // })
-    }
+      axios.post('/api/reminders', reminder).then(response => {
+        self.dialogVisible = false;
+        this.success('Reminder Set Successfully');
+      })
+    },
+    success(message) {
+      this.$message({
+          showClose: true,
+          message: message,
+          type: 'success'
+      });
+    },
+
   },
   components: { BarChart }
 }

@@ -8,7 +8,7 @@ use App\Models\Client;
 use App\Models\Deadline;
 use App\Fake\ReminderData;
 use App\Models\MessageFormat;
-use App\Fake\MessageFormatOptions;
+use App\Business\MessageFormatOptions;
 use GuzzleHttp\Client as SmsCient;
 use App\Events\Backend\ReminderEvent;
 use App\Repositories\Backend\ClientRepository;

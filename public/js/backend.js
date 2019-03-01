@@ -6595,6 +6595,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       this.companyData = [];
     },
     handleReminder: function handleReminder(e) {
+      var _this2 = this;
+
       e.preventDefault();
       var self = this;
       this.companyData.forEach(function (element) {
@@ -6625,10 +6627,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       this.companyData.forEach(function (element) {
         reminder.push(JSON.stringify(element));
       });
-      console.log(reminder);
-      // axios.post('/api/reminders', reminder).then(response => {
-      // self.dialogVisible = false;
-      // })
+      axios.post('/api/reminders', reminder).then(function (response) {
+        self.dialogVisible = false;
+        _this2.success('Reminder Set Successfully');
+      });
+    },
+    success: function success(message) {
+      this.$message({
+        showClose: true,
+        message: message,
+        type: 'success'
+      });
     }
   },
   components: { BarChart: __WEBPACK_IMPORTED_MODULE_1__BarChart_vue___default.a }

@@ -8,11 +8,11 @@
                     </tr>
                     <tr>
                         <th>SMS Format</th>
-                        <td>{{$message_format->sms_format}}</td>
+                        <td>{!!$message_format->sms_format!!}</td>
                     </tr>
                     <tr>
                         <th>Email Format</th>
-                        <td>{{$message_format->email_format}}</td>
+                        <td>{!!$message_format->email_format!!}</td>
                     </tr>
                 </table>
             </div><!--table-responsive-->
