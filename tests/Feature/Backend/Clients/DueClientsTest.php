@@ -128,6 +128,83 @@ class DueClientsTest extends TestCase
             'chartdata',json_decode($vatChartData->getContent(),true));
         $this->assertEquals(2, json_decode($vatChartData->getContent(),true)['chartdata']['datasets'][0]['data'][0]);
     }
+
+    /** @test */
+    public function check_if_chart_data_is_correct_for_paye_cis()
+    {
+        $this->loginAsAdmin();
+        $deadlineA = factory(Deadline::class)->create([
+            'name' => 'paye',
+            'code' => config('deadline.code.3')
+        ]);
+        $deadlineB = factory(Deadline::class)->create([
+            'name' => 'cis',
+            'code' => config('deadline.code.4')
+        ]);
+        $this->post('/admin/clients', [
+            'company_number' => 1234,
+            'company_name' => "Oxmonk",
+            'company_type_id' => 1,
+            'accounts_next_due' => Carbon::parse('+1 year'),
+            'accounts_overdue' => false,
+            'country_id' => 1,
+            'phone' => "8794515903",
+            'email' => "admin@admin.com",
+        ]);
+        $clientA = $this->clientRepository->getById(1);
+
+        $this->post('/admin/clients', [
+            'company_number' => 1234,
+            'company_name' => "Larasoft",
+            'company_type_id' => 1,
+            'accounts_next_due' => Carbon::parse('+1 year'),
+            'accounts_overdue' => false,
+            'country_id' => 1,
+            'phone' => "8794515903",
+            'email' => "admin@admin.com",
+        ]);
+        $clientB = $this->clientRepository->getById(2);
+
+
+        $this->post('/admin/client/deadline', [
+            'client_id' => $clientA->id,
+            'deadline_id'=> $deadlineA->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => Carbon::now()
+        ]);
+        $this->post('/admin/client/deadline', [
+            'client_id' => $clientB->id,
+            'deadline_id'=> $deadlineB->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => Carbon::now()
+        ]);
+        $this->assertDatabaseHas('client_deadline', [
+            'client_id' => $clientB->id,
+            'deadline_id'=> $deadlineB->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => Carbon::now()
+        ]);
+        $this->assertDatabaseHas('client_deadline', [
+            'client_id' => $clientA->id,
+            'deadline_id'=> $deadlineA->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => Carbon::now()
+        ]);
+        
+        $filterValue = config('filter.value.0');
+        $payeCisChartData = $this->clientRepository->fetchPayeCis($filterValue);
+        // dd(json_decode($payeCisChartData->getContent(),true));
+        // //the first thing to check is cs due it should be 2
+        $this->assertArrayHasKey(
+            'chartdata',json_decode($payeCisChartData->getContent(),true));
+
+        $this->assertEquals(1, json_decode($payeCisChartData->getContent(),true)['chartdata']['datasets'][0]['data'][0]);
+        $this->assertEquals(1, json_decode($payeCisChartData->getContent(),true)['chartdata']['datasets'][0]['data'][1]);
+    }
     
     /** @test*/
     public function check_if_clients_are_returned_via_api_url(){
