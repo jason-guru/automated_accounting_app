@@ -20,19 +20,19 @@ class DeadlineController extends Controller
         $this->localCompanyProfile = $localCompanyProfile;
     }
     
-    public function aaCs()
+    public function aaCs(Request $request)
     {
-        return $this->clientRepository->fetchAaCs($this->profile);
+        return $this->clientRepository->fetchAaCs($this->profile, $request->q);
     }
 
-    public function vat()
+    public function vat(Request $request)
     {
-        return $this->clientRepository->fetchVat();
+        return $this->clientRepository->fetchVat($request->q);
     }
 
-    public function payeCis()
+    public function payeCis(Request $request)
     {
-        return $this->clientRepository->fetchPayeCis();
+        return $this->clientRepository->fetchPayeCis($request->q);
     }
 
     

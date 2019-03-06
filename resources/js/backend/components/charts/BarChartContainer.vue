@@ -204,7 +204,6 @@ export default {
       get(){
         if(this.$store.state.dialogVisible){
           this.fetchClients();
-          console.log('fetching');
         }
         return this.$store.state.dialogVisible;
       },
@@ -214,6 +213,28 @@ export default {
     },
     clientIds: function(){
       return this.$store.state.dialogClientIds;
+    },
+    filterValue() {
+      return this.$store.state.filterValue;
+    }
+  },
+  watch:{
+    async filterValue(val){
+      var self = this;
+      this.loaded = false;
+      this.fullLoading = true;
+      try {
+        await fetch(this.url+'?q='+val)
+        .then(response => response.json())
+        .then((data) => {
+            self.chartdata = data.chartdata;
+            }
+          )
+        this.fullLoading = false;
+        this.loaded = true
+      } catch (e) {
+        console.error(e)
+    }
     }
   },
   async mounted () {

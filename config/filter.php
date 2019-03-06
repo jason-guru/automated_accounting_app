@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'value' => ['Yearly', 'Monthly', 'Weekly']
+    'value' => ["This Year", 'This Month', 'This Week']
 ];

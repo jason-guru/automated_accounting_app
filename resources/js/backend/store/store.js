@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
         dialogVisible: false,
         dialogClientIds: [],
         activeDeadline: '',
-        activeLegend: ''
+        activeLegend: '',
+        filterValue: ''
     },
     mutations: {
         toggleDialog: (state, payload) => {
@@ -22,6 +23,9 @@ export const store = new Vuex.Store({
         },
         setActiveLegend: (state, payload) => {
             state.activeLegend = payload;
+        },
+        setFilter: (state, payload) => {
+            state.filterValue = payload;
         }
     }
 });

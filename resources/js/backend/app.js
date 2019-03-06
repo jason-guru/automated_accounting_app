@@ -22,6 +22,7 @@ Vue.component('non-api-business-info', require('./components/NonApiBusinessInfoC
 Vue.component('reminder-form', require('./components/ReminderFormComponent.vue'));
 Vue.component('env-editor', require('./components/EnvEditor.vue'));
 Vue.component('bar-chart-container', require('./components/charts/BarChartContainer.vue'));
+Vue.component('filter-component', require('./components/FilterComponent'));
 
 export const eventBus = new Vue();
 

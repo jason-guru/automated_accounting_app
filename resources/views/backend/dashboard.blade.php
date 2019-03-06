@@ -10,7 +10,13 @@
                     <strong>@lang('strings.backend.dashboard.welcome') {{ $logged_in_user->name }}!</strong>
                 </div><!--card-header-->
                 <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <filter-component :values="{{json_encode(config('filter.value'), true)}}"></filter-component>
+                        </div>
+                    </div>
                     <div class="row">
+                    
                     <div class="col-md-4 col-sm-6 mb-3">
                         <bar-chart-container :url="'{{url('api/deadline/aa-cs')}}'" ></bar-chart-container>
                     </div>
