@@ -15,16 +15,17 @@ trait NonApiBasedDueCalculator
         return $this->where('is_api', false)->get();
     }
     
-    private function calculateNonPrivateLimitedDue($code)
+    private function calculateNonPrivateLimitedDue($code, $filterValue)
     {
+        $whenAndFormat = $this->getWhenAndFormat($filterValue);
+
         $clientIds = [];
         $clients = $this->getLocalClients();
         if(count($clients) > 0){
             foreach($clients as $client){
-                $nextDue = $this->getDueOnYear($client, $code);
+                $nextDue = $this->getDueOn($client, $code, $whenAndFormat, $filterValue);
                 if(!is_null($nextDue)){
-                    $currentYear = Carbon::now()->format('Y');
-                    if($currentYear >= $nextDue){
+                    if($whenAndFormat['when'] >= $nextDue){
                         array_push($clientIds, $client->id);
                     }else{
                         break;
@@ -53,11 +54,15 @@ trait NonApiBasedDueCalculator
         return $clientIds;
     }
 
-    private function getDueOnYear($client, $code)
+    private function getDueOn($client, $code, $whenAndFormat, $filterValue)
     {
         if(!is_null($client->deadlines->where('code', $code)->first()->pivot->due_on))
         {
-            return Carbon::parse($client->deadlines->where('code', $code)->first()->pivot->due_on)->format('Y');
+            if($filterValue != config('filter.value.2')){
+                return Carbon::parse($client->deadlines->where('code', $code)->first()->pivot->due_on)->format($whenAndFormat['format']);
+            }else{
+                return Carbon::parse($client->deadlines->where('code', $code)->first()->pivot->due_on)->weekOfYear;
+            }
         }else{
             return null;
         }
