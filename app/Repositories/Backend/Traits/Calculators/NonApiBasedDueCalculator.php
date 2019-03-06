@@ -8,7 +8,7 @@ use App\Business\LocalCompanyProfile;
 /**
  * 
  */
-trait NonPrivateLimitedDueCalculator
+trait NonApiBasedDueCalculator
 {
     private function getLocalClients()
     {

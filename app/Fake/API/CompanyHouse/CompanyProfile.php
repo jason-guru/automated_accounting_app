@@ -29,7 +29,7 @@ class CompanyProfile
             "confirmation_statement" => [
                 "last_made_up_to" => $this->faker->date($format = 'Y-m-d', $max = 'now'),
                 "next_made_up_to" => $this->faker->date($format = 'Y-m-d', $max = 'now'),
-                "next_due" => $this->faker->date($format = 'Y-m-d', $min = 'now'),
+                "next_due" => '2019-03-6',
                 "overdue" => true
             ],
             "undeliverable_registered_office_address"=> false,
@@ -52,11 +52,11 @@ class CompanyProfile
                   "month"=> "08"
                 ],
                 "overdue"=> true,
-                "next_due"=> $this->faker->date($format = 'Y-m-d', $min = 'now'),
+                "next_due"=> "2019-03-6",
                 "next_accounts"=> [
                   "period_start_on"=> $this->faker->date($format = 'Y-m-d', $max = 'now'),
                   "overdue"=> true,
-                  "due_on"=> $this->faker->date($format = 'Y-m-d', $min = 'now'),
+                  "due_on"=> "2019-03-6",
                   "period_end_on"=> $this->faker->date($format = 'Y-m-d', $max = 'now')
                 ],
                 "next_made_up_to"=> "2019-08-31"

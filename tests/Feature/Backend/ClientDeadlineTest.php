@@ -9,7 +9,7 @@ use App\Models\Deadline;
 use App\Repositories\Backend\ClientRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class DeadlineTest extends TestCase
+class ClientDeadlineTest extends TestCase
 {
     use RefreshDatabase;
     protected $clientRepository;
@@ -71,13 +71,39 @@ class DeadlineTest extends TestCase
             'to' => Carbon::parse('+1 year'),
             'due_on' => Carbon::parse('+1 year')
         ]);
-        dd($client->deadlines);
         $response->assertStatus(200);
         $this->assertDatabaseHas('client_deadline', [
             'from' => Carbon::parse('-1 year'),
             'to' => Carbon::parse('+1 year'),
             'due_on' => Carbon::parse('+1 year')
         ]);
+    }
+
+    /** @test */
+    public function filter_deadline_on_dashboard()
+    {
+        $this->loginAsAdmin();
+        $deadline = factory(Deadline::class)->create([
+            'name' => 'Vat'
+        ]);
+        $clientResponse = $this->post('/admin/clients', $this->clientData);
+        $client = $this->clientRepository->getById(1);
+
+        $response = $this->post('/admin/client/deadline', [
+            'client_id' => $client->id,
+            'deadline_id'=> $deadline->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => Carbon::parse('+1 year')
+        ]);
+
+        $deadlines = $client->deadlines;
+        $currentYear = carbon_parse(Carbon::now(), 'Y');
+        foreach($deadlines as $deadline){
+            $deadlineDueYear = carbon_parse($deadline->due_on, 'Y');
+            if()
+        }
+        
     }
     
 }

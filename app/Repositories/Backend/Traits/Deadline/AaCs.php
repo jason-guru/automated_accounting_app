@@ -9,10 +9,10 @@ use Carbon\Carbon;
  */
 trait AaCs
 {
-    private function getCsDueClients($profile)
+    private function getCsDueClients($profile, $filterValue)
     {
         $path = "body, confirmation_statement, next_due";
-        return $this->calculatePrivateLimitedDue($profile, $path);
+        return $this->calculatePrivateLimitedDue($profile, $path, $filterValue);
     }
 
     private function getCsOverDueClients($profile)
@@ -21,10 +21,10 @@ trait AaCs
         return $this->calculatePrivateLimitedOverDue($profile, $path);
     }
 
-    private function getAaDueClients($profile)
+    private function getAaDueClients($profile, $filterValue)
     {
         $path = "body, accounts, next_accounts, due_on";
-        return $this->calculatePrivateLimitedDue($profile, $path);
+        return $this->calculatePrivateLimitedDue($profile, $path, $filterValue);
     }
 
     private function getAaOverDueClients($profile)
@@ -33,12 +33,12 @@ trait AaCs
         return $this->calculatePrivateLimitedOverDue($profile, $path);
     }
 
-    public function fetchAaCs($profile)
+    public function fetchAaCs($profile, $filterValue = null)
     {
-        $csDueClients = $this->getCsDueClients($profile);
+        $csDueClients = $this->getCsDueClients($profile, $filterValue);
         $csOverDueClients = $this->getCsOverDueClients($profile);
 
-        $aaDueClients = $this->getAaDueClients($profile);
+        $aaDueClients = $this->getAaDueClients($profile, $filterValue);
         $aaOverDueClients = $this->getAaOverDueClients($profile);
         return response()->json(
             [

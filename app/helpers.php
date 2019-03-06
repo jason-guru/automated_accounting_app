@@ -165,8 +165,8 @@ if (! function_exists('camelcase_to_word')) {
 }
 
 if (! function_exists('carbon_parse')) {
-    function carbon_parse($date)
+    function carbon_parse($date, $format=null)
     {
-        return resolve(DateHelper::class)->carbonParse($date);
+        return resolve(DateHelper::class)->carbonParse($date, $format);
     }
 }

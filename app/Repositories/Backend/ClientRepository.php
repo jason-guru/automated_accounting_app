@@ -10,8 +10,8 @@ use App\Repositories\Backend\Traits\Deadline\Vat;
 use App\Repositories\Backend\Traits\Deadline\AaCs;
 use App\Repositories\Backend\Traits\Deadline\PayeCis;
 use App\Repositories\Backend\Traits\Methods\CommonDueCalculatorMethods;
-use App\Repositories\Backend\Traits\Calculators\PrivateLimitedDueCalculator;
-use App\Repositories\Backend\Traits\Calculators\NonPrivateLimitedDueCalculator;
+use App\Repositories\Backend\Traits\Calculators\ApiBaseDueCalculator;
+use App\Repositories\Backend\Traits\Calculators\NonApiBasedDueCalculator;
 
 /**
  * Class ClientRepository.
@@ -19,8 +19,8 @@ use App\Repositories\Backend\Traits\Calculators\NonPrivateLimitedDueCalculator;
 class ClientRepository extends BaseRepository
 {
     use CommonDueCalculatorMethods;
-    use PrivateLimitedDueCalculator;
-    use NonPrivateLimitedDueCalculator;
+    use ApiBaseDueCalculator;
+    use NonApiBasedDueCalculator;
     use AaCs;
     use Vat;
     use PayeCis;

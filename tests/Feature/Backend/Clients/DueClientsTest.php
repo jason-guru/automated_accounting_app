@@ -3,12 +3,12 @@
 namespace Tests\Feature\Backend;
 
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Client;
-use Illuminate\Support\Carbon;
 use App\Repositories\Backend\ClientRepository;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Business\Api\CompanyHouse\CompanyProfile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Fake\API\CompanyHouse\CompanyProfile as CompanyFakeProfile;
 
 class DueClientsTest extends TestCase
@@ -34,24 +34,37 @@ class DueClientsTest extends TestCase
     {
         //Create Clients
         factory(Client::class)->create(
-            ['company_number' => 10202689]
+            [
+                'company_number' => 10202689,
+                'is_api' => true
+            ]
         );
         factory(Client::class)->create(
-            ['company_number' => 11141106]
+            [
+                'company_number' => 11141106,
+                'is_api' => true    
+            ]
         );
         factory(Client::class)->create(
-            ['company_number' => 9608793]
+            [
+                'company_number' => 9608793,
+                'is_api' => true    
+            ]
         );
         factory(Client::class)->create(
-            ['company_number' => 10924993]
+            [
+                'company_number' => 10924993,
+                'is_api' => true
+            ]
         );
-
-        $csAaChartData = $this->clientRepository->fetchAaCs($this->profile);
+        $filterValue = config('filter.value.0');
+        $csAaChartData = $this->clientRepository->fetchAaCs($this->fakeProfile, $filterValue);
         //dd(json_decode($csAaChartData->getContent(),true));
         //the first thing to check is cs due it should be 2
-        $this->assertContains([
-            'chartdata'
-        ],json_decode($csAaChartData->getContent(),true));
+        $this->assertArrayHasKey(
+            'chartdata',json_decode($csAaChartData->getContent(),true));
+        $this->assertEquals(4, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][0]);
+        $this->assertEquals(4, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][1]);
     }
     
     /** @test*/
@@ -80,4 +93,26 @@ class DueClientsTest extends TestCase
             ]
         );
     }
+
+    /** @test */
+    public function check_if_clients_can_be_picked_by_filter()
+    {
+        //Create Clients
+        factory(Client::class)->create(
+            [
+                'company_number' => 10202689,
+                'is_api' => true
+            ]
+        );
+        factory(Client::class)->create(
+            [
+                'company_number' => 11141106,
+                'is_api' => true
+            ]
+        );
+
+        $clients = Client::all()->pluck('id')->toArray();
+    }
+
+
 }
