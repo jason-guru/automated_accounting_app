@@ -109415,7 +109415,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css");
 
 
-
+ //please check out this npm library for some of my helper functions
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
 

@@ -317,7 +317,6 @@ export default {
           type: 'success'
       });
     },
-
   },
   components: { BarChart }
 }

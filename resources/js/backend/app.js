@@ -6,7 +6,7 @@ import { store } from './store/store';
 require('@chenfengyuan/datepicker/dist/datepicker.min.css');
 import locale from 'element-ui/lib/locale/lang/en'
 import Vuelidate from 'vuelidate'
-import helpers from 'helping-monk'
+import helpers from 'helping-monk'; //please check out this npm library for some of my helper functions
 
 window.Vue = Vue;
 
