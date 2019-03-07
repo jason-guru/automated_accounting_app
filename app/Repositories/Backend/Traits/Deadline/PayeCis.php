@@ -9,35 +9,13 @@ use Carbon\Carbon;
  */
 trait PayeCis
 {
-    private function getPayeDueClients($code, $filterValue)
-    {
-        return $this->calculateNonPrivateLimitedDue($code, $filterValue);
-    }
-
-    private function getPayeOverDueClients($code)
-    {
-        return $this->calculateNonPrivateLimitedOverDue($code);
-    }
-
-    private function getCisDueClients($code, $filterValue)
-    {
-        return $this->calculateNonPrivateLimitedDue($code, $filterValue);
-    }
-
-    private function getCisOverDueClients($code)
-    {
-        return $this->calculateNonPrivateLimitedOverDue($code);
-    }
-
     public function fetchPayeCis($filterValue =null)
     {
-        $code = config('deadline.code.3');
-        $payeDueClients = $this->getPayeDueClients($code, $filterValue);
-        $payeOverDueClients = $this->getPayeOverDueClients($code);
+        $payeDueClients = $this->calculateNonPrivateLimitedDue(config('deadline.code.3'), $filterValue);
+        $payeOverDueClients = $this->calculateNonPrivateLimitedOverDue(config('deadline.code.3'));
 
-        $code = config('deadline.code.4');
-        $cisDueClients = $this->getCisDueClients($code, $filterValue);
-        $cisOverDueClients = $this->getCisOverDueClients($code);
+        $cisDueClients = $this->calculateNonPrivateLimitedDue(config('deadline.code.4'), $filterValue);
+        $cisOverDueClients = $this->calculateNonPrivateLimitedOverDue(config('deadline.code.4'));
 
         return response()->json(
             [

@@ -108,27 +108,18 @@ export default {
             this.dialogTitle = title + ' Information';
         },
         handleSubmit: function(formName){
+            var self = this;
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    var self = this;
-                    var prepFromDate = new Date(self.deadlineForm.from);
-                    var convertedFromDate = prepFromDate.toISOString().substring(0,10);
-                    this.deadlineForm.from = convertedFromDate;
-
-                    var prepToDate = new Date(self.deadlineForm.to);
-                    var convertedToDate = prepToDate.toISOString().substring(0,10);
-                    this.deadlineForm.to = convertedToDate;
-
-                    var prepDueOnDate = new Date(self.deadlineForm.due_on);
-                    var convertedDueOnDate = prepDueOnDate.toISOString().substring(0,10);
-                    this.deadlineForm.due_on = convertedDueOnDate;
-
-                    this.dialogVisible = false;
-                    axios.post('/admin/client/deadline', this.deadlineForm).then(response => {
-                        this.fetchClients();
-                        this.success(response.data.message);
+                    self.deadlineForm.from = this.elementUiDateConvert(self.deadlineForm.from);
+                    self.deadlineForm.to = this.elementUiDateConvert(self.deadlineForm.to);
+                    self.deadlineForm.due_on = this.elementUiDateConvert(self.deadlineForm.due_on);
+                    self.dialogVisible = false;
+                    axios.post('/admin/client/deadline', self.deadlineForm).then(response => {
+                        self.fetchClients();
+                        self.success(response.data.message);
                     }).catch(error => {
-                        this.error(error.response.data);
+                        self.error(error.response.data);
                     })
                 }else {
                     return false;

@@ -5598,27 +5598,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleSubmit: function handleSubmit(formName) {
             var _this = this;
 
+            var self = this;
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
-                    var self = _this;
-                    var prepFromDate = new Date(self.deadlineForm.from);
-                    var convertedFromDate = prepFromDate.toISOString().substring(0, 10);
-                    _this.deadlineForm.from = convertedFromDate;
-
-                    var prepToDate = new Date(self.deadlineForm.to);
-                    var convertedToDate = prepToDate.toISOString().substring(0, 10);
-                    _this.deadlineForm.to = convertedToDate;
-
-                    var prepDueOnDate = new Date(self.deadlineForm.due_on);
-                    var convertedDueOnDate = prepDueOnDate.toISOString().substring(0, 10);
-                    _this.deadlineForm.due_on = convertedDueOnDate;
-
-                    _this.dialogVisible = false;
-                    axios.post('/admin/client/deadline', _this.deadlineForm).then(function (response) {
-                        _this.fetchClients();
-                        _this.success(response.data.message);
+                    self.deadlineForm.from = _this.elementUiDateConvert(self.deadlineForm.from);
+                    self.deadlineForm.to = _this.elementUiDateConvert(self.deadlineForm.to);
+                    self.deadlineForm.due_on = _this.elementUiDateConvert(self.deadlineForm.due_on);
+                    self.dialogVisible = false;
+                    axios.post('/admin/client/deadline', self.deadlineForm).then(function (response) {
+                        self.fetchClients();
+                        self.success(response.data.message);
                     }).catch(function (error) {
-                        _this.error(error.response.data);
+                        self.error(error.response.data);
                     });
                 } else {
                     return false;
@@ -109392,12 +109383,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuelidate__ = __webpack_require__("./node_modules/vuelidate/lib/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuelidate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuelidate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__helpers__ = __webpack_require__("./resources/js/backend/helpers/index.js");
 
 
 
 
 
 __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css");
+
 
 
 
@@ -109409,6 +109402,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.settings = function (key) 
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6_vuelidate___default.a);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_element_ui___default.a, { locale: __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default.a });
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7__helpers__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('clientDeadline', __webpack_require__("./resources/js/backend/components/ClientDeadlineComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
@@ -109417,6 +109411,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-form', __webpack
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('env-editor', __webpack_require__("./resources/js/backend/components/EnvEditor.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('bar-chart-container', __webpack_require__("./resources/js/backend/components/charts/BarChartContainer.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('filter-component', __webpack_require__("./resources/js/backend/components/FilterComponent.vue"));
+
+//mixins
+
 
 var eventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
@@ -109861,6 +109858,29 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+
+/***/ "./resources/js/backend/helpers/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    install: function install() {
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin({
+            methods: {
+                elementUiDateConvert: function elementUiDateConvert(date) {
+                    var prepDate = new Date(date);
+                    prepDate.setDate(prepDate.getDate() + 1);
+                    return prepDate.toISOString().substring(0, 10);
+                }
+            }
+        });
+    }
+});
 
 /***/ }),
 

@@ -9,21 +9,10 @@ use Carbon\Carbon;
  */
 trait Vat
 {
-    private function getVatDueClients($code, $filterValue)
-    {
-        return $this->calculateNonPrivateLimitedDue($code, $filterValue);
-    }
-
-    private function getVatOverDueClients($code)
-    {
-        return $this->calculateNonPrivateLimitedOverDue($code);
-    }
-
     public function fetchVat($filterValue=null)
     {
-        $code = config('deadline.code.2');
-        $vatDueClients = $this->getVatDueClients($code, $filterValue);
-        $vatOverDueClients = $this->getVatOverDueClients($code);
+        $vatDueClients = $this->calculateNonPrivateLimitedDue(config('deadline.code.2'), $filterValue);
+        $vatOverDueClients = $this->calculateNonPrivateLimitedOverDue(config('deadline.code.2'));
 
         return response()->json(
             [
