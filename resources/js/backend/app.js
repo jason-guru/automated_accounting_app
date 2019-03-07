@@ -6,7 +6,7 @@ import { store } from './store/store';
 require('@chenfengyuan/datepicker/dist/datepicker.min.css');
 import locale from 'element-ui/lib/locale/lang/en'
 import Vuelidate from 'vuelidate'
-import helpers from './helpers'
+import helpers from 'helping-monk'
 
 window.Vue = Vue;
 
@@ -25,9 +25,6 @@ Vue.component('reminder-form', require('./components/ReminderFormComponent.vue')
 Vue.component('env-editor', require('./components/EnvEditor.vue'));
 Vue.component('bar-chart-container', require('./components/charts/BarChartContainer.vue'));
 Vue.component('filter-component', require('./components/FilterComponent'));
-
-//mixins
-
 
 export const eventBus = new Vue();
 

@@ -70069,6 +70069,29 @@ exports.default = {
 
 /***/ }),
 
+/***/ "./node_modules/helping-monk/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    install(){
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin({
+            methods: {
+                elementUiDateConvert(date){
+                    var prepDate = new Date(date);
+                    prepDate.setDate(prepDate.getDate() + 1);
+                    return prepDate.toISOString().substring(0,10);
+                },
+            }
+        })
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/moment/locale recursive ^\\.\\/.*$":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -109383,7 +109406,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuelidate__ = __webpack_require__("./node_modules/vuelidate/lib/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuelidate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuelidate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__helpers__ = __webpack_require__("./resources/js/backend/helpers/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_helping_monk__ = __webpack_require__("./node_modules/helping-monk/index.js");
 
 
 
@@ -109402,7 +109425,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.settings = function (key) 
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6_vuelidate___default.a);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_element_ui___default.a, { locale: __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default.a });
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7__helpers__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_helping_monk__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('clientDeadline', __webpack_require__("./resources/js/backend/components/ClientDeadlineComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
@@ -109411,9 +109434,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('reminder-form', __webpack
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('env-editor', __webpack_require__("./resources/js/backend/components/EnvEditor.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('bar-chart-container', __webpack_require__("./resources/js/backend/components/charts/BarChartContainer.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('filter-component', __webpack_require__("./resources/js/backend/components/FilterComponent.vue"));
-
-//mixins
-
 
 var eventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
@@ -109858,29 +109878,6 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
-
-/***/ }),
-
-/***/ "./resources/js/backend/helpers/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    install: function install() {
-        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin({
-            methods: {
-                elementUiDateConvert: function elementUiDateConvert(date) {
-                    var prepDate = new Date(date);
-                    prepDate.setDate(prepDate.getDate() + 1);
-                    return prepDate.toISOString().substring(0, 10);
-                }
-            }
-        });
-    }
-});
 
 /***/ }),
 
