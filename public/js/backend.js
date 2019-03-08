@@ -5870,6 +5870,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -5878,6 +5882,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: true
         }
 
+    },
+    computed: {
+        filterName: function filterName() {
+            return this.$store.state.filterValue;
+        }
     },
     methods: {
         handleCommand: function handleCommand(command) {
@@ -23113,7 +23122,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -94173,26 +94182,38 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-dropdown",
-    { on: { command: _vm.handleCommand } },
+    "span",
     [
-      _c("el-button", { attrs: { type: "primary" } }, [
-        _vm._v("\n        Filter"),
-        _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
+      _c(
+        "el-dropdown",
+        { on: { command: _vm.handleCommand } },
+        [
+          _c("el-button", { attrs: { type: "primary" } }, [
+            _vm._v("\r\n            Sort By"),
+            _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-dropdown-menu",
+            { attrs: { slot: "dropdown" }, slot: "dropdown" },
+            _vm._l(_vm.values, function(value, index) {
+              return _c(
+                "el-dropdown-item",
+                { key: index, attrs: { command: value } },
+                [_vm._v(_vm._s(value))]
+              )
+            }),
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "pull-right text-uppercase" }, [
+        _c("strong", [_vm._v(_vm._s(_vm.filterName))])
       ]),
       _vm._v(" "),
-      _c(
-        "el-dropdown-menu",
-        { attrs: { slot: "dropdown" }, slot: "dropdown" },
-        _vm._l(_vm.values, function(value, index) {
-          return _c(
-            "el-dropdown-item",
-            { key: index, attrs: { command: value } },
-            [_vm._v(_vm._s(value))]
-          )
-        }),
-        1
-      )
+      _c("hr")
     ],
     1
   )
