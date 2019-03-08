@@ -1,7 +1,7 @@
 <template>
 <span>
     <el-dropdown @command="handleCommand">
-        <el-button type="primary">
+        <el-button type="success">
             Sort By<i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">

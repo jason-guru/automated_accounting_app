@@ -94188,7 +94188,7 @@ var render = function() {
         "el-dropdown",
         { on: { command: _vm.handleCommand } },
         [
-          _c("el-button", { attrs: { type: "primary" } }, [
+          _c("el-button", { attrs: { type: "success" } }, [
             _vm._v("\r\n            Sort By"),
             _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
           ]),
