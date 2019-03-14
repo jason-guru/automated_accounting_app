@@ -5872,6 +5872,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -5881,6 +5904,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
 
     },
+    data: function data() {
+        return {
+            dateFilter: {
+                'from': '',
+                'to': ''
+            }
+        };
+    },
+
     computed: {
         filterName: function filterName() {
             return this.$store.state.filterValue;
@@ -23124,7 +23156,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -94183,42 +94215,122 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "span",
-    [
+  return _c("span", [
+    _c("div", { staticClass: "row" }, [
       _c(
-        "el-dropdown",
-        { on: { command: _vm.handleCommand } },
+        "div",
+        { staticClass: "col-md-2" },
         [
-          _c("el-button", { attrs: { type: "success" } }, [
-            _vm._v("\r\n            Sort By"),
-            _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
-          ]),
-          _vm._v(" "),
           _c(
-            "el-dropdown-menu",
-            { attrs: { slot: "dropdown" }, slot: "dropdown" },
-            _vm._l(_vm.values, function(value, index) {
-              return _c(
-                "el-dropdown-item",
-                { key: index, attrs: { command: value } },
-                [_vm._v(_vm._s(value))]
+            "el-dropdown",
+            { on: { command: _vm.handleCommand } },
+            [
+              _c("el-button", { attrs: { type: "success" } }, [
+                _vm._v("\r\n                    Sort By"),
+                _c("i", { staticClass: "el-icon-arrow-down el-icon--right" })
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-dropdown-menu",
+                { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                _vm._l(_vm.values, function(value, index) {
+                  return _c(
+                    "el-dropdown-item",
+                    { key: index, attrs: { command: value } },
+                    [_vm._v(_vm._s(value))]
+                  )
+                }),
+                1
               )
-            }),
+            ],
             1
           )
         ],
         1
       ),
       _vm._v(" "),
-      _c("p", { staticClass: "pull-right text-uppercase" }, [
-        _c("strong", [_vm._v(_vm._s(_vm.filterName))])
-      ]),
+      _c(
+        "div",
+        { staticClass: "col-md-8" },
+        [
+          _c(
+            "el-form",
+            { attrs: { "label-width": "160px" } },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "Filter By Date Range" } },
+                [
+                  _c(
+                    "el-row",
+                    { attrs: { gutter: 3 } },
+                    [
+                      _c(
+                        "el-col",
+                        { attrs: { span: 7 } },
+                        [
+                          _c("el-date-picker", {
+                            staticStyle: { width: "100%" },
+                            attrs: { type: "date", placeholder: "From" },
+                            model: {
+                              value: _vm.dateFilter.from,
+                              callback: function($$v) {
+                                _vm.$set(_vm.dateFilter, "from", $$v)
+                              },
+                              expression: "dateFilter.from"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-col",
+                        { attrs: { span: 7 } },
+                        [
+                          _c("el-date-picker", {
+                            staticStyle: { width: "100%" },
+                            attrs: { placeholder: "To" },
+                            model: {
+                              value: _vm.dateFilter.to,
+                              callback: function($$v) {
+                                _vm.$set(_vm.dateFilter, "to", $$v)
+                              },
+                              expression: "dateFilter.to"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-col",
+                        { attrs: { span: 7 } },
+                        [_c("el-button", [_vm._v("Submit")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("hr")
-    ],
-    1
-  )
+      _c("div", { staticClass: "col-md-2" }, [
+        _c("p", { staticClass: "pull-right text-uppercase" }, [
+          _c("strong", [_vm._v(_vm._s(_vm.filterName))])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("hr")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

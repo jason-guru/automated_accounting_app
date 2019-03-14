@@ -8,7 +8,7 @@ use App\Models\Deadline;
 use App\Repositories\Backend\ClientRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
  
-Class DueCalculatorTest extends TestCase
+Class DueFilterTest extends TestCase
 {
     use RefreshDatabase;
     protected $clientRepository;
