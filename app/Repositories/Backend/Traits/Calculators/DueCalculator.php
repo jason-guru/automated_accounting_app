@@ -26,12 +26,14 @@ trait DueCalculator
                 if(!is_null($nextDue)){
                     if(!is_null($whenAndFormat['parentYear'])){
                         if(!is_null($whenAndFormat['parentMonth'])){
-                            if($whenAndFormat['when'] >= $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code) && $whenAndFormat['parentMonth'] == $this->getDueMonth($client, $code)){
+                            //This Week Filter
+                            if($whenAndFormat['when'] == $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code) && $whenAndFormat['parentMonth'] == $this->getDueMonth($client, $code)){
                                 array_push($clientIds, $client->id);
                             }else{
                                 break;
                             }
                         }else{
+                            //This Month filter
                             if($whenAndFormat['when'] >= $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code)){
                                 array_push($clientIds, $client->id);
                             }else{

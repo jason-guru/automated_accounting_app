@@ -41,11 +41,11 @@ Class DueCalculatorTest extends TestCase
         $this->clientData['is_api'] = true;
         $this->clientData['aa_from'] = Carbon::parse('-1 year');
         $this->clientData['aa_to'] = Carbon::parse('+2 year');
-        $this->clientData['aa_due'] = Carbon::parse('2019-09-03');
+        $this->clientData['aa_due'] = Carbon::parse('2019-03-07');
         $this->clientData['aa_overdue'] = true;
         $this->clientData['cs_from'] = Carbon::parse('-1 year');
         $this->clientData['cs_to'] = Carbon::parse('+2 year');
-        $this->clientData['cs_due'] = Carbon::parse('2019-09-03');
+        $this->clientData['cs_due'] = Carbon::parse('2019-03-07');
         $this->clientData['cs_overdue'] = true;
         $response = $this->post('/admin/clients', $this->clientData);
         $this->assertDatabaseHas('client_deadline', [
@@ -55,7 +55,7 @@ Class DueCalculatorTest extends TestCase
             'due_on' => $this->clientData['aa_due']
         ]);
         $code = config('deadline.code.1');
-        $filterValue = config('filter.value.1');
+        $filterValue = config('filter.value.2');
         $clientIds = $this->calculateDue($code, $filterValue);
         $this->assertEquals($clientIds, []);
     }
@@ -72,7 +72,7 @@ Class DueCalculatorTest extends TestCase
                     if(!is_null($whenAndFormat['parentYear'])){
                         if(!is_null($whenAndFormat['parentMonth'])){
                             //This week filter
-                            if($whenAndFormat['when'] >= $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code) && $whenAndFormat['parentMonth'] == $this->getDueMonth($client, $code)){
+                            if($whenAndFormat['when'] == $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code) && $whenAndFormat['parentMonth'] == $this->getDueMonth($client, $code)){
                                 array_push($clientIds, $client->id);
                             }else{
                                 break;
