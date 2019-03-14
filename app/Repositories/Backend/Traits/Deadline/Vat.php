@@ -11,8 +11,8 @@ trait Vat
 {
     public function fetchVat($filterValue=null)
     {
-        $vatDueClients = $this->calculateNonPrivateLimitedDue(config('deadline.code.2'), $filterValue);
-        $vatOverDueClients = $this->calculateNonPrivateLimitedOverDue(config('deadline.code.2'));
+        $vatDueClients = $this->calculateDue(config('deadline.code.2'), $filterValue);
+        $vatOverDueClients = $this->calculateOverDue(config('deadline.code.2'));
 
         return response()->json(
             [

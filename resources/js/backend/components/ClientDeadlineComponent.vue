@@ -97,12 +97,10 @@ export default {
             this.deadlineForm.from = pivotData.from;
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
-            if(is_api){
-                 if(code === 'AA' || code === 'CS'){
-                    this.disableInputField = true;
-                }else{
-                    this.disableInputField = false;
-                }
+            if(is_api && code === 'AA' || code === 'CS'){
+                this.disableInputField = true;
+            }else{
+                this.disableInputField = false;
             }
             this.dialogVisible = true;
             this.dialogTitle = title + ' Information';

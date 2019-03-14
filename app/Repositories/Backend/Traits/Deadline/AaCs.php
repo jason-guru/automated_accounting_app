@@ -9,37 +9,12 @@ use Carbon\Carbon;
  */
 trait AaCs
 {
-    private function getCsDueClients($profile, $filterValue)
+    public function fetchAaCs($filterValue = null)
     {
-        $path = "body, confirmation_statement, next_due";
-        return $this->calculatePrivateLimitedDue($profile, $path, $filterValue);
-    }
-
-    private function getCsOverDueClients($profile)
-    {
-        $path = "body, confirmation_statement, overdue";
-        return $this->calculatePrivateLimitedOverDue($profile, $path);
-    }
-
-    private function getAaDueClients($profile, $filterValue)
-    {
-        $path = "body, accounts, next_accounts, due_on";
-        return $this->calculatePrivateLimitedDue($profile, $path, $filterValue);
-    }
-
-    private function getAaOverDueClients($profile)
-    {
-        $path = "body, accounts, next_accounts, overdue";
-        return $this->calculatePrivateLimitedOverDue($profile, $path);
-    }
-
-    public function fetchAaCs($profile, $filterValue = null)
-    {
-        $csDueClients = $this->getCsDueClients($profile, $filterValue);
-        $csOverDueClients = $this->getCsOverDueClients($profile);
-
-        $aaDueClients = $this->getAaDueClients($profile, $filterValue);
-        $aaOverDueClients = $this->getAaOverDueClients($profile);
+        $csDueClients = $this->calculateDue(config('deadline.code.1'), $filterValue);
+        $csOverDueClients = $this->calculateOverDue(config('deadline.code.1'));
+        $aaDueClients = $this->calculateDue(config('deadline.code.0'), $filterValue);
+        $aaOverDueClients = $this->calculateOverDue(config('deadline.code.0'));
         return response()->json(
             [
                 'chartdata' => [

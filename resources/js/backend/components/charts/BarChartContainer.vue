@@ -33,8 +33,11 @@
           <tr v-for="(company, index) in companyData" :key="index" >
             <td>{{company.company_name}}</td>
             <td>
-              <span v-if="activeDeadline === 'AA' || activeDeadline === 'CS'">
-                {{company.from}}
+              <span v-if="activeDeadline === 'AA'">
+                {{company.aa_from}}
+              </span>
+              <span v-if="activeDeadline === 'CS'">
+                {{company.cs_from}}
               </span>
               <span v-else-if="activeDeadline==='VAT'">
                 {{company.vat_from}}
@@ -47,8 +50,11 @@
               </span>
             </td>
             <td>
-              <span v-if="activeDeadline === 'AA' || activeDeadline === 'CS'">
-                {{company.to}}
+              <span v-if="activeDeadline === 'AA'">
+                {{company.aa_to}}
+              </span>
+              <span v-else-if="activeDeadline === 'CS'">
+                {{company.cs_to}}
               </span>
               <span v-else-if="activeDeadline==='VAT'">
                 {{company.vat_to}}
@@ -256,15 +262,15 @@ export default {
   },
   methods:{
     fetchClients(){
+      var self = this;
       this.loading = true;
         axios.post('/api/deadline/clients/fetch', this.clientIds).then(response => {
-          console.log(response.data);
-          this.activeDeadline = this.$store.state.activeDeadline;
-          this.activeLegend = this.$store.state.activeLegend;
+          self.activeDeadline = self.$store.state.activeDeadline;
+          self.activeLegend = self.$store.state.activeLegend;
           axios.post('/api/deadline/clients/prepare', response.data).then(response => {
-            this.companyData = response.data;
+            self.companyData = response.data;
           })
-          this.loading = false;
+          self.loading = false;
         }).catch(err => {
            
         });

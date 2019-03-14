@@ -11,11 +11,11 @@ trait PayeCis
 {
     public function fetchPayeCis($filterValue =null)
     {
-        $payeDueClients = $this->calculateNonPrivateLimitedDue(config('deadline.code.3'), $filterValue);
-        $payeOverDueClients = $this->calculateNonPrivateLimitedOverDue(config('deadline.code.3'));
+        $payeDueClients = $this->calculateDue(config('deadline.code.3'), $filterValue);
+        $payeOverDueClients = $this->calculateOverDue(config('deadline.code.3'));
 
-        $cisDueClients = $this->calculateNonPrivateLimitedDue(config('deadline.code.4'), $filterValue);
-        $cisOverDueClients = $this->calculateNonPrivateLimitedOverDue(config('deadline.code.4'));
+        $cisDueClients = $this->calculateDue(config('deadline.code.4'), $filterValue);
+        $cisOverDueClients = $this->calculateOverDue(config('deadline.code.4'));
 
         return response()->json(
             [

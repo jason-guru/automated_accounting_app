@@ -33,39 +33,55 @@ class DueClientsTest extends TestCase
     /** @test */
     public function check_if_chart_data_is_correct_api_based()
     {
-        //Create Clients
-        factory(Client::class)->create(
-            [
-                'company_number' => 10202689,
-                'is_api' => true
-            ]
-        );
-        factory(Client::class)->create(
-            [
-                'company_number' => 11141106,
-                'is_api' => true    
-            ]
-        );
-        factory(Client::class)->create(
-            [
-                'company_number' => 9608793,
-                'is_api' => true    
-            ]
-        );
-        factory(Client::class)->create(
-            [
-                'company_number' => 10924993,
-                'is_api' => true
-            ]
-        );
+        $this->loginAsAdmin();
+        $deadlineA = factory(Deadline::class)->create([
+            'name' => 'annual accounts',
+            'code' => config('deadline.code.0')
+        ]);
+        $deadlineB = factory(Deadline::class)->create([
+            'name' => 'confirmation statement',
+            'code' => config('deadline.code.1')
+        ]);
+        $this->post('/admin/clients', [
+            'company_number' => 1234,
+            'company_name' => "Oxmonk",
+            'company_type_id' => 1,
+            'accounts_next_due' => Carbon::parse('+1 year'),
+            'accounts_overdue' => false,
+            'country_id' => 1,
+            'phone' => "8794515903",
+            'email' => "admin@admin.com",
+            'is_api' => true,
+            'aa_from' => Carbon::parse('-1 year'),
+            'aa_to' =>  Carbon::parse('+2 year'),
+            'aa_due' => Carbon::now(),
+            'cs_from' => Carbon::parse('-1 year'),
+            'cs_to' =>  Carbon::parse('+2 year'),
+            'cs_due' => Carbon::now(),
+        ]);
+        $clientA = $this->clientRepository->getById(1);
+        $this->assertDatabaseHas('client_deadline', [
+            'client_id' => $clientA->id,
+            'deadline_id' => $deadlineA->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' =>  Carbon::parse('+2 year'),
+            'due_on' => Carbon::now(),
+        ]);
+        $this->assertDatabaseHas('client_deadline', [
+            'client_id' => $clientA->id,
+            'deadline_id' => $deadlineB->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' =>  Carbon::parse('+2 year'),
+            'due_on' => Carbon::now(),
+        ]);
         $filterValue = config('filter.value.0');
-        $csAaChartData = $this->clientRepository->fetchAaCs($this->fakeProfile, $filterValue);
+        $csAaChartData = $this->clientRepository->fetchAaCs();
         //dd(json_decode($csAaChartData->getContent(),true));
         //the first thing to check is cs due it should be 2
         $this->assertArrayHasKey(
             'chartdata',json_decode($csAaChartData->getContent(),true));
-        $this->assertEquals(4, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][0]);
-        $this->assertEquals(4, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][1]);
+        $this->assertEquals(1, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][0]);
+        $this->assertEquals(1, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][1]);
     }
 
     /** @test */
@@ -232,26 +248,5 @@ class DueClientsTest extends TestCase
             ]
         );
     }
-
-    /** @test */
-    public function check_if_clients_can_be_picked_by_filter()
-    {
-        //Create Clients
-        factory(Client::class)->create(
-            [
-                'company_number' => 10202689,
-                'is_api' => true
-            ]
-        );
-        factory(Client::class)->create(
-            [
-                'company_number' => 11141106,
-                'is_api' => true
-            ]
-        );
-
-        $clients = Client::all()->pluck('id')->toArray();
-    }
-
 
 }

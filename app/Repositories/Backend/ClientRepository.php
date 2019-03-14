@@ -11,7 +11,7 @@ use App\Repositories\Backend\Traits\Deadline\AaCs;
 use App\Repositories\Backend\Traits\Deadline\PayeCis;
 use App\Repositories\Backend\Traits\Methods\CommonDueCalculatorMethods;
 use App\Repositories\Backend\Traits\Calculators\ApiBaseDueCalculator;
-use App\Repositories\Backend\Traits\Calculators\NonApiBasedDueCalculator;
+use App\Repositories\Backend\Traits\Calculators\DueCalculator;
 
 /**
  * Class ClientRepository.
@@ -19,8 +19,8 @@ use App\Repositories\Backend\Traits\Calculators\NonApiBasedDueCalculator;
 class ClientRepository extends BaseRepository
 {
     use CommonDueCalculatorMethods;
-    use ApiBaseDueCalculator;
-    use NonApiBasedDueCalculator;
+    //use ApiBaseDueCalculator;
+    use DueCalculator;
     use AaCs;
     use Vat;
     use PayeCis;
@@ -133,50 +133,23 @@ class ClientRepository extends BaseRepository
         }
     }
 
-    /**
-     * Requiremnets from API: 
-     *  1. company_name
-     *  2. accounts.next_accounts.period_start_on
-     *  3. accounts.next_accounts.period_end_on
-     *  4. confirmation_statement.next_due
-     *  5. confirmation_statement.overdue
-     *  6. accounts.next_accounts.due_on
-     *  7. accounts.next_accounts.overdue
-     * 
-     * Requirement for database
-     */
-    public function getAaCsDialogClientData($apiData)
-    {
-        $client = $this->where('company_number', $apiData['company_number'])->first();
-        return [
-            'company_name' => $apiData['company_name'],
-            'from' => $apiData['accounts']['next_accounts']['period_start_on'],
-            'to' => $apiData['accounts']['next_accounts']['period_end_on'],
-            'cs_due' => $apiData['confirmation_statement']['next_due'],
-            'cs_overdue' => $apiData['confirmation_statement']['overdue'],
-            'aa_due' => $apiData['accounts']['next_accounts']['due_on'],
-            'aa_overdue' => $apiData['accounts']['next_accounts']['overdue'],
-            //from database
-            'client_id' => $client->id,
-            'deadline_id' => null,
-            'remind_date' => null,
-            'has_reminded' => false,
-            'is_active' => true,
-            'reference_number_id' => null,
-            'schedule_time' => null,
-            'recurring_id' => 1,
-            'counter' => null,
-            'send_sms' => true,
-            'send_email' => true
-        ];
-    }
-
-    public function getVatPayeCisDialogClientData($apiData)
+    public function getDialogClientData($apiData)
     {
         return [
             'company_name' => $apiData['company_name'],
             'from' => $apiData['vat']['from'],
             'to' => $apiData['vat']['to'],
+
+            'aa_from' => $apiData['aa']['from'],
+            'aa_to' => $apiData['aa']['to'],
+            'aa_due' => $apiData['aa']['due'],
+            'aa_overdue' => $apiData['aa']['overdue'] == 1 ? 'true': 'false',
+
+            'cs_from' => $apiData['cs']['from'],
+            'cs_to' => $apiData['cs']['to'],
+            'cs_due' => $apiData['cs']['due'],
+            'cs_overdue' => $apiData['cs']['overdue'] == 1 ? 'true': 'false',
+
             'vat_from' => $apiData['vat']['from'],
             'vat_to' => $apiData['vat']['to'],
             'vat_due' => $apiData['vat']['due'],

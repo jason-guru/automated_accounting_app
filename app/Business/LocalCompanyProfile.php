@@ -12,6 +12,18 @@ class LocalCompanyProfile
             "client_id" => $client->id,
             "date_of_creation"=> $client->business_start_date,
             "type"=> $client->company_type->name,
+            "aa" => [
+                "overdue" => $this->calculateOverDue($client, config('deadline.code.0')),
+                "due"=> $this->getDueOnDate($client,config('deadline.code.0')),
+                'from' => $this->getFromDate($client, config('deadline.code.0')),
+                'to' => $this->getToDate($client, config('deadline.code.0')),
+            ],
+            "cs" => [
+                "overdue" => $this->calculateOverDue($client, config('deadline.code.1')),
+                "due"=> $this->getDueOnDate($client,config('deadline.code.1')),
+                'from' => $this->getFromDate($client, config('deadline.code.1')),
+                'to' => $this->getToDate($client, config('deadline.code.1')),
+            ],
             "vat" => [
                 "overdue"=> $this->calculateOverDue($client, config('deadline.code.2')),
                 "due"=> $this->getDueOnDate($client,config('deadline.code.2')),

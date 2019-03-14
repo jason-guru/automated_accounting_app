@@ -5585,12 +5585,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.deadlineForm.from = pivotData.from;
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
-            if (is_api) {
-                if (code === 'AA' || code === 'CS') {
-                    this.disableInputField = true;
-                } else {
-                    this.disableInputField = false;
-                }
+            if (is_api && code === 'AA' || code === 'CS') {
+                this.disableInputField = true;
+            } else {
+                this.disableInputField = false;
             }
             this.dialogVisible = true;
             this.dialogTitle = title + ' Information';
@@ -6483,6 +6481,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6658,17 +6662,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
   methods: {
     fetchClients: function fetchClients() {
-      var _this = this;
-
+      var self = this;
       this.loading = true;
       axios.post('/api/deadline/clients/fetch', this.clientIds).then(function (response) {
-        console.log(response.data);
-        _this.activeDeadline = _this.$store.state.activeDeadline;
-        _this.activeLegend = _this.$store.state.activeLegend;
+        self.activeDeadline = self.$store.state.activeDeadline;
+        self.activeLegend = self.$store.state.activeLegend;
         axios.post('/api/deadline/clients/prepare', response.data).then(function (response) {
-          _this.companyData = response.data;
+          self.companyData = response.data;
         });
-        _this.loading = false;
+        self.loading = false;
       }).catch(function (err) {});
     },
     handleClose: function handleClose() {
@@ -6677,7 +6679,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       this.companyData = [];
     },
     handleReminder: function handleReminder(e) {
-      var _this2 = this;
+      var _this = this;
 
       e.preventDefault();
       var self = this;
@@ -6711,7 +6713,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       });
       axios.post('/api/reminders', reminder).then(function (response) {
         self.dialogVisible = false;
-        _this2.success('Reminder Set Successfully');
+        _this.success('Reminder Set Successfully');
       });
     },
     success: function success(message) {
@@ -94599,12 +94601,21 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(company.company_name))]),
                         _vm._v(" "),
                         _c("td", [
-                          _vm.activeDeadline === "AA" ||
+                          _vm.activeDeadline === "AA"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.aa_from) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
                           _vm.activeDeadline === "CS"
                             ? _c("span", [
                                 _vm._v(
                                   "\r\n                " +
-                                    _vm._s(company.from) +
+                                    _vm._s(company.cs_from) +
                                     "\r\n              "
                                 )
                               ])
@@ -94636,12 +94647,19 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", [
-                          _vm.activeDeadline === "AA" ||
-                          _vm.activeDeadline === "CS"
+                          _vm.activeDeadline === "AA"
                             ? _c("span", [
                                 _vm._v(
                                   "\r\n                " +
-                                    _vm._s(company.to) +
+                                    _vm._s(company.aa_to) +
+                                    "\r\n              "
+                                )
+                              ])
+                            : _vm.activeDeadline === "CS"
+                            ? _c("span", [
+                                _vm._v(
+                                  "\r\n                " +
+                                    _vm._s(company.cs_to) +
                                     "\r\n              "
                                 )
                               ])
