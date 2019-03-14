@@ -5622,7 +5622,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/admin/client/deadline/fetch').then(function (response) {
                 _this2.loading = false;
                 self.clientsData = response.data.clients;
-                console.log(self.clientsData);
             }).catch(function (error) {});
         },
         success: function success(message) {
@@ -5906,12 +5905,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            dateFilter: {
+            dateRangeFilter: {
                 'from': '',
                 'to': ''
             }
         };
     },
+    updated: function updated() {},
 
     computed: {
         filterName: function filterName() {
@@ -5921,6 +5921,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         handleCommand: function handleCommand(command) {
             this.$store.commit('setFilter', command);
+        },
+        handleDateRangeFilter: function handleDateRangeFilter() {
+            this.dateRangeFilter.from = this.elementUiDateConvert(this.dateRangeFilter.from);
+            this.dateRangeFilter.to = this.elementUiDateConvert(this.dateRangeFilter.to);
+            this.$store.commit('setDateRange', this.dateRangeFilter);
         }
     }
 });
@@ -6597,6 +6602,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     },
     filterValue: function filterValue() {
       return this.$store.state.filterValue;
+    },
+    dateRangeFilterValue: function dateRangeFilterValue() {
+      return this.$store.state.dateRangeFilterValue;
     }
   },
   watch: {
@@ -6644,21 +6652,76 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       }
 
       return filterValue;
-    }()
+    }(),
+
+    dateRangeFilterValue: {
+      handler: function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(val) {
+          var self;
+          return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  if (!(val.from != null && val.to != null)) {
+                    _context2.next = 15;
+                    break;
+                  }
+
+                  self = this;
+
+                  this.loaded = false;
+                  this.fullLoading = true;
+                  console.log(val);
+                  _context2.prev = 5;
+                  _context2.next = 8;
+                  return fetch(this.url + '?dateRange=' + JSON.stringify(val)).then(function (response) {
+                    return response.json();
+                  }).then(function (data) {
+                    self.chartdata = data.chartdata;
+                  });
+
+                case 8:
+                  this.fullLoading = false;
+                  this.loaded = true;
+                  _context2.next = 15;
+                  break;
+
+                case 12:
+                  _context2.prev = 12;
+                  _context2.t0 = _context2['catch'](5);
+
+                  console.log(_context2.t0);
+
+                case 15:
+                case 'end':
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, this, [[5, 12]]);
+        }));
+
+        function handler(_x2) {
+          return _ref2.apply(this, arguments);
+        }
+
+        return handler;
+      }(),
+      deep: true
+    }
   },
   mounted: function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
       var self;
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               self = this;
 
               this.loaded = false;
               this.fullLoading = true;
-              _context2.prev = 3;
-              _context2.next = 6;
+              _context3.prev = 3;
+              _context3.next = 6;
               return fetch(this.url).then(function (response) {
                 return response.json();
               }).then(function (data) {
@@ -6668,25 +6731,25 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             case 6:
               this.fullLoading = false;
               this.loaded = true;
-              _context2.next = 13;
+              _context3.next = 13;
               break;
 
             case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2['catch'](3);
+              _context3.prev = 10;
+              _context3.t0 = _context3['catch'](3);
 
-              console.error(_context2.t0);
+              console.error(_context3.t0);
 
             case 13:
             case 'end':
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2, this, [[3, 10]]);
+      }, _callee3, this, [[3, 10]]);
     }));
 
     function mounted() {
-      return _ref2.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     }
 
     return mounted;
@@ -23156,7 +23219,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -94255,7 +94318,7 @@ var render = function() {
         [
           _c(
             "el-form",
-            { attrs: { "label-width": "160px" } },
+            { ref: "dateRangeForm", attrs: { "label-width": "160px" } },
             [
               _c(
                 "el-form-item",
@@ -94273,11 +94336,11 @@ var render = function() {
                             staticStyle: { width: "100%" },
                             attrs: { type: "date", placeholder: "From" },
                             model: {
-                              value: _vm.dateFilter.from,
+                              value: _vm.dateRangeFilter.from,
                               callback: function($$v) {
-                                _vm.$set(_vm.dateFilter, "from", $$v)
+                                _vm.$set(_vm.dateRangeFilter, "from", $$v)
                               },
-                              expression: "dateFilter.from"
+                              expression: "dateRangeFilter.from"
                             }
                           })
                         ],
@@ -94292,11 +94355,11 @@ var render = function() {
                             staticStyle: { width: "100%" },
                             attrs: { placeholder: "To" },
                             model: {
-                              value: _vm.dateFilter.to,
+                              value: _vm.dateRangeFilter.to,
                               callback: function($$v) {
-                                _vm.$set(_vm.dateFilter, "to", $$v)
+                                _vm.$set(_vm.dateRangeFilter, "to", $$v)
                               },
-                              expression: "dateFilter.to"
+                              expression: "dateRangeFilter.to"
                             }
                           })
                         ],
@@ -94306,7 +94369,19 @@ var render = function() {
                       _c(
                         "el-col",
                         { attrs: { span: 7 } },
-                        [_c("el-button", [_vm._v("Submit")])],
+                        [
+                          _c(
+                            "el-button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.handleDateRangeFilter()
+                                }
+                              }
+                            },
+                            [_vm._v("Submit")]
+                          )
+                        ],
                         1
                       )
                     ],
@@ -110051,7 +110126,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         dialogClientIds: [],
         activeDeadline: '',
         activeLegend: '',
-        filterValue: ''
+        filterValue: '',
+        dateRangeFilterValue: {}
     },
     mutations: {
         toggleDialog: function toggleDialog(state, payload) {
@@ -110068,6 +110144,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         setFilter: function setFilter(state, payload) {
             state.filterValue = payload;
+        },
+        setDateRange: function setDateRange(state, payload) {
+            state.dateRangeFilterValue = payload;
         }
     }
 });

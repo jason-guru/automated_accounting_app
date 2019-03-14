@@ -75,7 +75,61 @@ class DueClientsTest extends TestCase
             'due_on' => Carbon::now(),
         ]);
         $filterValue = config('filter.value.0');
-        $csAaChartData = $this->clientRepository->fetchAaCs();
+        $csAaChartData = $this->clientRepository->fetchAaCs($filterValue);
+        //dd(json_decode($csAaChartData->getContent(),true));
+        //the first thing to check is cs due it should be 2
+        $this->assertArrayHasKey(
+            'chartdata',json_decode($csAaChartData->getContent(),true));
+        $this->assertEquals(1, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][0]);
+        $this->assertEquals(1, json_decode($csAaChartData->getContent(),true)['chartdata']['datasets'][0]['data'][1]);
+    }
+
+    /** @test */
+    public function check_if_chart_data_is_correct_for_date_range()
+    {
+        $this->loginAsAdmin();
+        $deadlineA = factory(Deadline::class)->create([
+            'name' => 'annual accounts',
+            'code' => config('deadline.code.0')
+        ]);
+        $deadlineB = factory(Deadline::class)->create([
+            'name' => 'confirmation statement',
+            'code' => config('deadline.code.1')
+        ]);
+        $this->post('/admin/clients', [
+            'company_number' => 1234,
+            'company_name' => "Oxmonk",
+            'company_type_id' => 1,
+            'accounts_next_due' => Carbon::parse('+1 year'),
+            'accounts_overdue' => false,
+            'country_id' => 1,
+            'phone' => "8794515903",
+            'email' => "admin@admin.com",
+            'is_api' => true,
+            'aa_from' => Carbon::parse('-1 year'),
+            'aa_to' =>  Carbon::parse('+2 year'),
+            'aa_due' => Carbon::now(),
+            'cs_from' => Carbon::parse('-1 year'),
+            'cs_to' =>  Carbon::parse('+2 year'),
+            'cs_due' => Carbon::now(),
+        ]);
+        $clientA = $this->clientRepository->getById(1);
+        $this->assertDatabaseHas('client_deadline', [
+            'client_id' => $clientA->id,
+            'deadline_id' => $deadlineA->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' =>  Carbon::parse('+2 year'),
+            'due_on' => Carbon::now(),
+        ]);
+        $this->assertDatabaseHas('client_deadline', [
+            'client_id' => $clientA->id,
+            'deadline_id' => $deadlineB->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' =>  Carbon::parse('+2 year'),
+            'due_on' => Carbon::now(),
+        ]);
+        $filterValue = json_encode(['from' => '2019-03-01', 'to' => '2019-04-01']);
+        $csAaChartData = $this->clientRepository->fetchAaCs($filterValue);
         //dd(json_decode($csAaChartData->getContent(),true));
         //the first thing to check is cs due it should be 2
         $this->assertArrayHasKey(

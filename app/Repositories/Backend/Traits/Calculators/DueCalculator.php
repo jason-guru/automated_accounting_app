@@ -15,45 +15,57 @@ trait DueCalculator
         return $this->all();
     }
     
-    private function calculateDue($code, $filterValue)
+    private function getDueClientIds($code, $filterValue)
     {
-        $whenAndFormat = $this->getWhenAndFormat($filterValue);
         $clientIds = [];
         $clients = $this->getLocalClients();
         if(count($clients) > 0){
-            foreach($clients as $client){
-                $nextDue = $this->getDueOn($client, $code, $whenAndFormat, $filterValue);
-                if(!is_null($nextDue)){
-                    if(!is_null($whenAndFormat['parentYear'])){
-                        if(!is_null($whenAndFormat['parentMonth'])){
-                            //This Week Filter
-                            if($whenAndFormat['when'] == $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code) && $whenAndFormat['parentMonth'] == $this->getDueMonth($client, $code)){
-                                array_push($clientIds, $client->id);
-                            }else{
-                                break;
-                            }
-                        }else{
-                            //This Month filter
-                            if($whenAndFormat['when'] >= $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code)){
-                                array_push($clientIds, $client->id);
-                            }else{
-                                break;
-                            }
-                        }
+            if(is_json($filterValue)){
+                $filterValue = json_decode($filterValue, true);
+                foreach($clients as $client){
+                    $clientDealineDueDate = $client->deadlines->where('code', $code)->first()->pivot->due_on;
+                    if($clientDealineDueDate >= $filterValue['from'] && $clientDealineDueDate <= $filterValue['to']){
+                        array_push($clientIds, $client->id);
                     }else{
-                        if($whenAndFormat['when'] >= $nextDue){
-                            array_push($clientIds, $client->id);
-                        }else{
-                            break;
+                        break;
+                    }       
+                }
+            }else{
+                $whenAndFormat = $this->getWhenAndFormat($filterValue);
+                    foreach($clients as $client){
+                        $nextDue = $this->getDueOn($client, $code, $whenAndFormat, $filterValue);
+                        if(!is_null($nextDue)){
+                            if(!is_null($whenAndFormat['parentYear'])){
+                                if(!is_null($whenAndFormat['parentMonth'])){
+                                    //This Week Filter
+                                    if($whenAndFormat['when'] == $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code) && $whenAndFormat['parentMonth'] == $this->getDueMonth($client, $code)){
+                                        array_push($clientIds, $client->id);
+                                    }else{
+                                        break;
+                                    }
+                                }else{
+                                    //This Month filter
+                                    if($whenAndFormat['when'] >= $nextDue && $whenAndFormat['parentYear'] == $this->getDueYear($client, $code)){
+                                        array_push($clientIds, $client->id);
+                                    }else{
+                                        break;
+                                    }
+                                }
+                            }else{
+                                if($whenAndFormat['when'] >= $nextDue){
+                                    array_push($clientIds, $client->id);
+                                }else{
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
         return $clientIds;
     }
 
-    private function calculateOverDue($code)
+    private function getOverDueClientIds($code)
     {
         $localOverDue = new LocalCompanyProfile();
         $clientIds = [];

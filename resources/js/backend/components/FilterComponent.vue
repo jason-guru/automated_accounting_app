@@ -12,17 +12,17 @@
             </el-dropdown>
         </div>
         <div class="col-md-8">
-           <el-form label-width="160px">
+           <el-form ref="dateRangeForm" label-width="160px">
                <el-form-item label="Filter By Date Range">
                     <el-row :gutter="3">
                         <el-col :span="7" >
-                            <el-date-picker type="date" placeholder="From" v-model="dateFilter.from" style="width: 100%;"></el-date-picker>
+                            <el-date-picker type="date" placeholder="From" v-model="dateRangeFilter.from" style="width: 100%;"></el-date-picker>
                         </el-col>
                         <el-col :span="7">
-                            <el-date-picker placeholder="To" v-model="dateFilter.to" style="width: 100%;"></el-date-picker>
+                            <el-date-picker placeholder="To" v-model="dateRangeFilter.to" style="width: 100%;"></el-date-picker>
                         </el-col>
                         <el-col :span="7">
-                            <el-button>Submit</el-button>
+                            <el-button @click="handleDateRangeFilter()">Submit</el-button>
                         </el-col>
                     </el-row>
                </el-form-item>
@@ -47,11 +47,14 @@ export default {
     },
     data() {
         return {
-            dateFilter: {
+            dateRangeFilter: {
                 'from': '',
                 'to': ''
             }
         }
+    },
+    updated(){
+        
     },
     computed:{
         filterName : function(){
@@ -61,6 +64,11 @@ export default {
     methods:{
         handleCommand(command){
             this.$store.commit('setFilter', command);
+        },
+        handleDateRangeFilter(){
+            this.dateRangeFilter.from = this.elementUiDateConvert(this.dateRangeFilter.from);
+            this.dateRangeFilter.to = this.elementUiDateConvert(this.dateRangeFilter.to);
+            this.$store.commit('setDateRange', this.dateRangeFilter)
         }
     }
 }

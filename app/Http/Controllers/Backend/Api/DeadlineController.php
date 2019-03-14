@@ -19,20 +19,30 @@ class DeadlineController extends Controller
         $this->profile = $profile;
         $this->localCompanyProfile = $localCompanyProfile;
     }
+
+    private function determineMethod(Request $request, $methodName)
+    {
+        if(isset($request->dateRange)){
+            return $this->clientRepository->$methodName($request->dateRange);
+        }else{
+            return $this->clientRepository->$methodName($request->q);
+        }
+    }
     
     public function aaCs(Request $request)
     {
-        return $this->clientRepository->fetchAaCs($request->q);
+        return $this->determineMethod($request, 'fetchAaCs');
+        
     }
 
     public function vat(Request $request)
     {
-        return $this->clientRepository->fetchVat($request->q);
+        return $this->determineMethod($request, 'fetchVat');
     }
 
     public function payeCis(Request $request)
     {
-        return $this->clientRepository->fetchPayeCis($request->q);
+        return $this->determineMethod($request, 'fetchPayeCis');
     }
 
     

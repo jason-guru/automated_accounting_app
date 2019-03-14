@@ -131,7 +131,6 @@ export default {
             axios.get('/admin/client/deadline/fetch').then(response => {
                 this.loading = false;
                 self.clientsData = response.data.clients;
-                console.log(self.clientsData);
             }).catch(error => {
 
             })

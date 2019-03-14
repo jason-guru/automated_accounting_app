@@ -11,10 +11,10 @@ trait AaCs
 {
     public function fetchAaCs($filterValue = null)
     {
-        $csDueClients = $this->calculateDue(config('deadline.code.1'), $filterValue);
-        $csOverDueClients = $this->calculateOverDue(config('deadline.code.1'));
-        $aaDueClients = $this->calculateDue(config('deadline.code.0'), $filterValue);
-        $aaOverDueClients = $this->calculateOverDue(config('deadline.code.0'));
+        $csDueClients = $this->getDueClientIds(config('deadline.code.1'), $filterValue);
+        $csOverDueClients = $this->getOverDueClientIds(config('deadline.code.1'));
+        $aaDueClients = $this->getDueClientIds(config('deadline.code.0'), $filterValue);
+        $aaOverDueClients = $this->getOverDueClientIds(config('deadline.code.0'));
         return response()->json(
             [
                 'chartdata' => [
