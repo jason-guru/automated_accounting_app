@@ -5,12 +5,11 @@ namespace App\Repositories\Backend;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
-use App\Business\Api\CompanyHouse\CompanyProfile;
+use App\Business\Services\CompanyHouse\CompanyProfile;
 use App\Repositories\Backend\Traits\Deadline\Vat;
 use App\Repositories\Backend\Traits\Deadline\AaCs;
 use App\Repositories\Backend\Traits\Deadline\PayeCis;
 use App\Repositories\Backend\Traits\Methods\CommonDueCalculatorMethods;
-use App\Repositories\Backend\Traits\Calculators\ApiBaseDueCalculator;
 use App\Repositories\Backend\Traits\Calculators\DueCalculator;
 
 /**
@@ -18,12 +17,15 @@ use App\Repositories\Backend\Traits\Calculators\DueCalculator;
  */
 class ClientRepository extends BaseRepository
 {
+    /*
+     * Type: Traits
+     * */
     use CommonDueCalculatorMethods;
-    //use ApiBaseDueCalculator;
     use DueCalculator;
     use AaCs;
     use Vat;
     use PayeCis;
+
     /**
      * @return string
      *  Return the model

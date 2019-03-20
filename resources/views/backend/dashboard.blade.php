@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <filter-component :values="{{json_encode(config('filter.value'), true)}}"></filter-component>
+                            <filter-component :values="{{json_encode(config('filter.value'), true)}}" :url="'{{url('api/deadlines/auto/update')}}'"></filter-component>
                         </div>
                     </div>
                     <div class="row">

@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Business\Services\DueDateUpdate;
+
+
+use Exception;
+use Carbon\Carbon;
+use App\Repositories\Backend\ClientRepository;
+use App\Repositories\Backend\DeadlineRepository;
+use App\Business\Services\CompanyHouse\CompanyProfile;
+use App\Business\Services\DueDateUpdate\Traits\ApiBasedMethods;
+
+class Processor
+{
+    use ApiBasedMethods;
+    private $companyHouse;
+    private $clientRepository;
+    private $deadlineRepository; 
+    private $companyHouseDueDates;
+    private $deadline;
+    private $deadlineCode;
+    private $client;
+    public function __construct()
+    {
+        $this->companyHouse = new CompanyProfile();
+        $this->clientRepository = new ClientRepository();
+        $this->deadlineRepository = new DeadlineRepository;
+    }
+
+    /**
+     * Next quater due date finder
+     * @return String
+     */
+    public function quaterly($dueDate)
+    {
+        return Carbon::parse($dueDate)->addMonths('3')->format('d-m-Y');
+    }
+
+    /**
+     * Next Month due date
+     * @return String
+     */
+    public function monthly($dueDate)
+    {
+        return Carbon::parse($dueDate)->addMonth('1')->format('d-m-Y');
+    }
+
+    public function update($date)
+    {
+        try {
+            $this->client->deadlines()->updateExistingPivot($this->deadline->id, [
+                'due_on' => $date
+            ]);
+            return;
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+        
+    }
+}

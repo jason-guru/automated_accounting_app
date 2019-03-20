@@ -1,6 +1,6 @@
 {
-    "name": "jason-guru/Automatic Reminder App",
-    "description": "An automatic web application for sending reminders to clients",
+    "name": "jason-guru/automatic-accounts-due-date-reminder-with-company-house",
+    "description": "An automatic web application for sending account due date reminders to clients with capability to fetch data from Company House",
     "keywords": ["framework", "laravel", "automatic", "accounts", "reminder"],
     "license": "MIT",
     "type": "project",

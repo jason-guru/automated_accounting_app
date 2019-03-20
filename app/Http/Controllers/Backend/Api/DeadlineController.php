@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\ClientRepository;
-use App\Business\Api\CompanyHouse\CompanyProfile;
+use App\Business\Services\CompanyHouse\CompanyProfile;
 use App\Business\LocalCompanyProfile;
 
 class DeadlineController extends Controller

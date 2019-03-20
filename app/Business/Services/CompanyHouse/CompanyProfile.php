@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Business\Api\CompanyHouse;
+namespace App\Business\Services\CompanyHouse;
 
 use GuzzleHttp\Client;
 

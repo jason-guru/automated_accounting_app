@@ -8,7 +8,7 @@ use Tests\TestCase;
 use App\Models\Client;
 use App\Models\Deadline;
 use App\Repositories\Backend\ClientRepository;
-use App\Business\Api\CompanyHouse\CompanyProfile;
+use App\Business\Services\CompanyHouse\CompanyProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Fake\API\CompanyHouse\CompanyProfile as CompanyFakeProfile;
 

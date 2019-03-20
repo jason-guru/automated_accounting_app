@@ -5900,8 +5900,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         values: {
             type: Array,
             required: true
+        },
+        url: {
+            type: String,
+            required: true
         }
-
     },
     data: function data() {
         return {
@@ -5911,7 +5914,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         };
     },
-    updated: function updated() {},
+    beforeMount: function beforeMount() {
+        axios.get(this.url).then(function (response) {}).catch(function (error) {
+            console.log(error.response);
+        });
+    },
 
     computed: {
         filterName: function filterName() {
@@ -23219,7 +23226,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 

@@ -42,8 +42,11 @@ export default {
         values:{
             type: Array,
             required: true
+        },
+        url: {
+            type: String,
+            required: true
         }
-       
     },
     data() {
         return {
@@ -53,8 +56,12 @@ export default {
             }
         }
     },
-    updated(){
-        
+    beforeMount(){
+        axios.get(this.url).then(response => {
+            
+        }).catch(error => {
+            console.log(error.response);
+        });
     },
     computed:{
         filterName : function(){
