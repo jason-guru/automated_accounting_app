@@ -7,13 +7,16 @@ use App\Models\ClientDeadline;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\ClientRepository;
 use App\Http\Requests\Backend\ClientDeadlineRequest;
+use App\Repositories\Backend\FilingFrequencyRepository;
 
 class ClientDeadlineController extends Controller
 {
     protected $clientRepository;
-    public function __construct(ClientRepository $clientRepository)
+    protected $filingFrequencyRepository;
+    public function __construct(ClientRepository $clientRepository, FilingFrequencyRepository $filingFrequencyRepository)
     {
         $this->clientRepository = $clientRepository;
+        $this->filingFrequencyRepository = $filingFrequencyRepository;
     }
     public function index()
     {
@@ -37,6 +40,13 @@ class ClientDeadlineController extends Controller
             'due_on' => $request->due_on
         ]);
 
+        $clientDeadline =  $this->clientRepository->getById($request->client_id)->deadlines()->where('deadline_id', $request->deadline_id)->first();
+        if(isset($request->frequency)){
+            $this->filingFrequencyRepository->create([
+                'client_deadline_id' => $clientDeadline->id,
+                'frequency' => $request->frequency
+            ]);
+        }
         return response()->json([
             'message' => 'Client Deadline saved successfully'
         ],200);

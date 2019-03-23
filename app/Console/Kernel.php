@@ -2,9 +2,10 @@
 
 namespace App\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Events\Backend\ReminderEvent;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Business\Services\DueDateUpdate\Processor;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 /**
  * Class Kernel.
@@ -32,6 +33,11 @@ class Kernel extends ConsoleKernel
         $schedule->call(function(){
             event(new ReminderEvent());
         })->everyMinute();
+
+        $schedule->call(function(){
+            $processor = new Processor();
+            $processor->timerBased();
+        })->dailyAt('00:00');
     }
 
     /**

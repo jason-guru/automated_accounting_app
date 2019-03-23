@@ -41,7 +41,7 @@ trait ApiBasedMethods
     {
         try {
             $result = [];
-            $this->client = $this->clientRepository->where('company_number', $companyNumber)->where('is_api', true)->first();
+            $this->load();
             if(!is_null($this->client)){
                 foreach($this->client->deadlines as $deadline){
                     $this->deadline = $deadline;

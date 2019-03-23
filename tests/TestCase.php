@@ -97,4 +97,50 @@ abstract class TestCase extends BaseTestCase
         ]);
         return $client;
     }
+
+    protected function setUpNonApiClientWithDeadline()
+    {
+        $clientRepository = new ClientRepository();
+        $this->loginAsAdmin();
+        $deadline1 = factory(Deadline::class)->create([
+            'name' => 'VAT',
+            'code' => config('deadline.code.2')
+        ]);
+        $deadline2 = factory(Deadline::class)->create([
+            'name' => 'PAYE',
+            'code' => config('deadline.code.3')
+        ]);
+        $deadline3 = factory(Deadline::class)->create([
+            'name' => 'CIS',
+            'code' => config('deadline.code.4')
+        ]);
+        $this->post('/admin/clients', [
+            'company_name' => "Oxmonk",
+            'company_type_id' => 1,
+            'accounts_next_due' => Carbon::parse('+1 year'),
+            'accounts_overdue' => false,
+            'country_id' => 1,
+            'phone' => "8794515903",
+            'email' => "admin@admin.com",
+        ]);
+        $client = $clientRepository->getById(1);
+        $this->post('/admin/client/deadline', [
+            'client_id' => $client->id,
+            'deadline_id'=> $deadline1->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => '2019-03-21',
+            'frequency' => config('dropdowns.deadline_type.VAT.filing.frequency.0')
+        ]);
+        $this->post('/admin/client/deadline', [
+            'client_id' => $client->id,
+            'deadline_id'=> $deadline2->id,
+            'from' => Carbon::parse('-1 year'),
+            'to' => Carbon::parse('+1 year'),
+            'due_on' => '2019-03-21',
+            'frequency' => config('dropdowns.deadline_type.PAYE.filing.frequency.1')
+        ]);
+        
+        return $client;
+    }
 }
