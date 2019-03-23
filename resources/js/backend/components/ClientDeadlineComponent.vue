@@ -46,6 +46,14 @@
                 >
                     <el-date-picker type="date" placeholder="Pick a date" v-model="deadlineForm.due_on" style="width: 100%;" :disabled="disableInputField"></el-date-picker>
                 </el-form-item>
+
+                <el-form-item v-if="showFrequency" label="Frequency">
+                    <el-select v-model="deadlineForm.frequency" placeholder="please select Frequency">
+                        <el-option :value="vatFrequency" v-for="(vatFrequency, index) in vatFrequencies" :key="index">
+                            {{vatFrequency}}
+                        </el-option>
+                    </el-select>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -58,11 +66,12 @@
 <script>
 export default {
     props: [
-        'clients'
+        'clients', 'vatFrequencies'
     ],
     data() {
         return {
             clientsData: [],
+            showFrequency: false,
             loading: false,
             dialogVisible: false,
             dialogTitle: "",
@@ -72,7 +81,8 @@ export default {
                 to: null,
                 due_on: null,
                 client_id: null,
-                deadline_id: null
+                deadline_id: null,
+                frequency: null,
             },
             rules: {
                 from: [
@@ -91,16 +101,24 @@ export default {
         this.fetchClients();
     },
     methods: {
-        handleDeadlineEdit: function(pivotData, title, code, is_api){
+        handleDeadlineEdit: function(pivotData, title, code, is_api, deadline){
             this.deadlineForm.client_id = pivotData.client_id;
             this.deadlineForm.deadline_id = pivotData.deadline_id;
             this.deadlineForm.from = pivotData.from;
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
-            if(is_api && code === 'AA' || code === 'CS'){
+            this.deadlineForm.frequency = pivotData.frequency;
+            console.log(deadline);
+            if(is_api && code === 'AA' || is_api && code === 'CS'){
                 this.disableInputField = true;
-            }else{
+                this.showFrequency = false;
+            }else if(code === 'VAT' || code === 'PAYE' || code === 'CIS'){
+                this.showFrequency = true;
                 this.disableInputField = false;
+            }
+            else{
+                this.disableInputField = false;
+                this.showFrequency = false;
             }
             this.dialogVisible = true;
             this.dialogTitle = title + ' Information';
@@ -117,7 +135,7 @@ export default {
                         self.fetchClients();
                         self.success(response.data.message);
                     }).catch(error => {
-                        self.error(error.response.data);
+                        self.error(error.response.data.message);
                     })
                 }else {
                     return false;

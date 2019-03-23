@@ -5,11 +5,9 @@ namespace App\Business\Services\DueDateUpdate;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\ClientDeadline;
 use App\Repositories\Backend\ClientRepository;
 use App\Repositories\Backend\DeadlineRepository;
 use App\Business\Services\CompanyHouse\CompanyProfile;
-use App\Repositories\Backend\FilingFrequencyRepository;
 use App\Business\Services\DueDateUpdate\Traits\ApiBasedMethods;
 use App\Business\Services\DueDateUpdate\Traits\TimerBasedMethods;
 
@@ -30,8 +28,6 @@ class Processor
         $this->companyHouse = new CompanyProfile();
         $this->clientRepository = new ClientRepository();
         $this->deadlineRepository = new DeadlineRepository();
-        $this->filingFrequencyRepository = new FilingFrequencyRepository();
-        $this->clientDeadline = new ClientDeadline();
     }
 
     private function load()
@@ -62,7 +58,7 @@ class Processor
         try {
             
             $this->client->deadlines()->updateExistingPivot($this->deadline->id, [
-                'due_on' => $date
+                'due_on' => carbon_parse($date)
             ]);
             return;
         } catch (Exception $ex) {

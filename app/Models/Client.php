@@ -58,7 +58,7 @@ class Client extends Model
 
     public function deadlines()
     {
-        return $this->belongsToMany(Deadline::class)->withPivot('from', 'to', 'due_on');
+        return $this->belongsToMany(Deadline::class)->withPivot('from', 'to', 'due_on','frequency');
     }
 
     public function getDeadlinesAttribute()

@@ -5550,12 +5550,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['clients'],
+    props: ['clients', 'vatFrequencies'],
     data: function data() {
         return {
             clientsData: [],
+            showFrequency: false,
             loading: false,
             dialogVisible: false,
             dialogTitle: "",
@@ -5565,7 +5574,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 to: null,
                 due_on: null,
                 client_id: null,
-                deadline_id: null
+                deadline_id: null,
+                frequency: null
             },
             rules: {
                 from: [{ required: true, message: 'Please input from date', trigger: 'blur' }],
@@ -5579,16 +5589,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        handleDeadlineEdit: function handleDeadlineEdit(pivotData, title, code, is_api) {
+        handleDeadlineEdit: function handleDeadlineEdit(pivotData, title, code, is_api, deadline) {
             this.deadlineForm.client_id = pivotData.client_id;
             this.deadlineForm.deadline_id = pivotData.deadline_id;
             this.deadlineForm.from = pivotData.from;
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
-            if (is_api && code === 'AA' || code === 'CS') {
+            this.deadlineForm.frequency = pivotData.frequency;
+            console.log(deadline);
+            if (is_api && code === 'AA' || is_api && code === 'CS') {
                 this.disableInputField = true;
+                this.showFrequency = false;
+            } else if (code === 'VAT' || code === 'PAYE' || code === 'CIS') {
+                this.showFrequency = true;
+                this.disableInputField = false;
             } else {
                 this.disableInputField = false;
+                this.showFrequency = false;
             }
             this.dialogVisible = true;
             this.dialogTitle = title + ' Information';
@@ -5607,7 +5624,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         self.fetchClients();
                         self.success(response.data.message);
                     }).catch(function (error) {
-                        self.error(error.response.data);
+                        self.error(error.response.data.message);
                     });
                 } else {
                     return false;
@@ -94624,7 +94641,47 @@ var render = function() {
                   })
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _vm.showFrequency
+                ? _c(
+                    "el-form-item",
+                    { attrs: { label: "Frequency" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { placeholder: "please select Frequency" },
+                          model: {
+                            value: _vm.deadlineForm.frequency,
+                            callback: function($$v) {
+                              _vm.$set(_vm.deadlineForm, "frequency", $$v)
+                            },
+                            expression: "deadlineForm.frequency"
+                          }
+                        },
+                        _vm._l(_vm.vatFrequencies, function(
+                          vatFrequency,
+                          index
+                        ) {
+                          return _c(
+                            "el-option",
+                            { key: index, attrs: { value: vatFrequency } },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(vatFrequency) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
             ],
             1
           ),

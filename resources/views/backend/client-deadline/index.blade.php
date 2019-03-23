@@ -22,7 +22,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <client-deadline :clients="{{$clients}}"></client-deadline>
+                        <client-deadline :clients="{{$clients}}" 
+                        :vat-frequencies="{{json_encode(config('dropdowns.deadline_type.VAT.filing.frequency'), true)}}"
+                        ></client-deadline>
                     </div>
                 </div>
             </div>

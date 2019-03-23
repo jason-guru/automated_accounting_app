@@ -12,14 +12,14 @@ return [
         'PAYE' => [
             'filing' => [
                 'frequency' => [
-                    'Monthly', 'Quaterly'
+                    'Monthly'
                 ]
             ]
         ],
         'CIS' => [
             'filing' => [
                 'frequency' => [
-                    'Monthly', 'Quanterly'
+                    'Monthly'
                 ]
             ]
         ]

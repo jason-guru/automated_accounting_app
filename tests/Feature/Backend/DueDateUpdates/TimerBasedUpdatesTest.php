@@ -16,13 +16,12 @@ Class TimerBasedUpdatesTest extends TestCase
         $client = $this->setUpNonApiClientWithDeadline();
         $processor = new Processor();
         $nextDueDate = $processor->timerBased();
-
         $this->assertDatabaseHas('client_deadline', [
-            'due_on' => '21-04-2019'
+            'frequency' => config('dropdowns.deadline_type.VAT.filing.frequency.0')
         ]);
 
         $this->assertDatabaseHas('client_deadline', [
-            'due_on' => '21-06-2019'
+            'due_on' => '21-04-2019'
         ]);
     }
 }

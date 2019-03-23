@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\TimerBasedUpdate',
     ];
 
     /**
@@ -29,15 +29,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('inspire')->hourly();
         $schedule->call(function(){
             event(new ReminderEvent());
         })->everyMinute();
 
-        $schedule->call(function(){
-            $processor = new Processor();
-            $processor->timerBased();
-        })->dailyAt('00:00');
+        $schedule->command('duedate:update')->dailyAt('00:00');
     }
 
     /**

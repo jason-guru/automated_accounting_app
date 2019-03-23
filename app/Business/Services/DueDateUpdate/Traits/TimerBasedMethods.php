@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Business\Services\DueDateUpdate\Traits;
+
+use Carbon\Carbon;
 /**
  * Timer Based methods
  */
@@ -23,7 +25,7 @@ trait TimerBasedMethods
                     $today = carbon_parse(Carbon::now());
                     if(!is_null($dueOnDate)){
                         if($dueOnDate <= $today){
-                            $frequency = $this->clientDeadline->getFrequency($this->deadline->id, $this->client->id);
+                            $frequency = $this->deadline->pivot->frequency;
                             switch($frequency){
                                 case 'Monthly':
                                     $nextDueDate = $this->monthly($dueOnDate);

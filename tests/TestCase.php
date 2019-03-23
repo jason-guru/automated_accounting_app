@@ -132,14 +132,14 @@ abstract class TestCase extends BaseTestCase
             'due_on' => '2019-03-21',
             'frequency' => config('dropdowns.deadline_type.VAT.filing.frequency.0')
         ]);
-        $this->post('/admin/client/deadline', [
-            'client_id' => $client->id,
-            'deadline_id'=> $deadline2->id,
-            'from' => Carbon::parse('-1 year'),
-            'to' => Carbon::parse('+1 year'),
-            'due_on' => '2019-03-21',
-            'frequency' => config('dropdowns.deadline_type.PAYE.filing.frequency.1')
-        ]);
+        // $this->post('/admin/client/deadline', [
+        //     'client_id' => $client->id,
+        //     'deadline_id'=> $deadline2->id,
+        //     'from' => Carbon::parse('-1 year'),
+        //     'to' => Carbon::parse('+1 year'),
+        //     'due_on' => '2019-03-21',
+        //     'frequency' => config('dropdowns.deadline_type.PAYE.filing.frequency.1')
+        // ]);
         
         return $client;
     }

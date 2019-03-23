@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilingFrequenciesTable extends Migration
+class AddFrequencyToClientDeadlineTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateFilingFrequenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('filing_frequencies', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('client_deadline_id');
-            $table->string('frequency');
-            $table->timestamps();
+        Schema::table('client_deadline', function (Blueprint $table) {
+            $table->string('frequency')->nullable(true);
         });
     }
 
@@ -28,6 +25,8 @@ class CreateFilingFrequenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('filing_frequencies');
+        Schema::table('client_deadline', function (Blueprint $table) {
+            $table->dropColumn('frequency');
+        });
     }
 }
