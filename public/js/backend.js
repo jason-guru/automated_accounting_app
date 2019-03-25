@@ -5943,13 +5943,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        handleCommand: function handleCommand(command) {
+        handleSort: function handleSort(command) {
             this.$store.commit('setFilter', command);
         },
         handleDateRangeFilter: function handleDateRangeFilter() {
+            var self = this;
             this.dateRangeFilter.from = this.elementUiDateConvert(this.dateRangeFilter.from);
             this.dateRangeFilter.to = this.elementUiDateConvert(this.dateRangeFilter.to);
             this.$store.commit('setDateRange', this.dateRangeFilter);
+            self.$store.commit('setDateRangeFilterViaButton', true);
+            setTimeout(function () {
+                self.$store.commit('setDateRangeFilterViaButton', false);
+            }, 100);
         }
     }
 });
@@ -6686,6 +6691,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
+                  if (!this.$store.state.dateRangeFilterViaButton) {
+                    _context2.next = 15;
+                    break;
+                  }
+
                   if (!(val.from != null && val.to != null)) {
                     _context2.next = 15;
                     break;
@@ -6695,7 +6705,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
                   this.loaded = false;
                   this.fullLoading = true;
-                  console.log(val);
                   _context2.prev = 5;
                   _context2.next = 8;
                   return fetch(this.url + '?dateRange=' + JSON.stringify(val)).then(function (response) {
@@ -23243,7 +23252,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -94310,7 +94319,7 @@ var render = function() {
         [
           _c(
             "el-dropdown",
-            { on: { command: _vm.handleCommand } },
+            { on: { command: _vm.handleSort } },
             [
               _c("el-button", { attrs: { type: "success" } }, [
                 _vm._v("\r\n                    Sort By"),
@@ -94342,7 +94351,10 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "dateRangeForm", attrs: { "label-width": "160px" } },
+            {
+              ref: "dateRangeForm",
+              attrs: { "label-width": "160px", model: _vm.dateRangeFilter }
+            },
             [
               _c(
                 "el-form-item",
@@ -110191,7 +110203,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         activeDeadline: '',
         activeLegend: '',
         filterValue: '',
-        dateRangeFilterValue: {}
+        dateRangeFilterValue: {},
+        dateRangeFilterViaButton: false
     },
     mutations: {
         toggleDialog: function toggleDialog(state, payload) {
@@ -110211,7 +110224,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         setDateRange: function setDateRange(state, payload) {
             state.dateRangeFilterValue = payload;
+        },
+        setDateRangeFilterViaButton: function setDateRangeFilterViaButton(state, payload) {
+            state.dateRangeFilterViaButton = payload;
         }
+
     }
 });
 

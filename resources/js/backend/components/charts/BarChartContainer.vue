@@ -247,23 +247,25 @@ export default {
     },
      dateRangeFilterValue: {
         handler: async function (val){
-        if(val.from != null && val.to != null){
-          var self = this;
-          this.loaded = false;
-          this.fullLoading = true;
-          console.log(val);
-          try {
-            await fetch(this.url+'?dateRange='+JSON.stringify(val))
-            .then(response => response.json())
-            .then((data) => {
-                self.chartdata = data.chartdata;
-                
-                }
-              )
-            this.fullLoading = false;
-            this.loaded = true
-          } catch (error) {
-              console.log(error);
+        // Don't relaod if button hasn't been clicked
+        if(this.$store.state.dateRangeFilterViaButton){
+          if(val.from != null && val.to != null){
+            var self = this;
+            this.loaded = false;
+            this.fullLoading = true;
+            try {
+              await fetch(this.url+'?dateRange='+JSON.stringify(val))
+              .then(response => response.json())
+              .then((data) => {
+                  self.chartdata = data.chartdata;
+                  
+                  }
+                )
+              this.fullLoading = false;
+              this.loaded = true
+            } catch (error) {
+                console.log(error);
+            }
           }
         }
       },

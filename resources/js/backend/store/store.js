@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
         activeDeadline: '',
         activeLegend: '',
         filterValue: '',
-        dateRangeFilterValue: {}
+        dateRangeFilterValue: {},
+        dateRangeFilterViaButton: false,
     },
     mutations: {
         toggleDialog: (state, payload) => {
@@ -30,6 +31,10 @@ export const store = new Vuex.Store({
         },
         setDateRange: (state, payload)=> {
             state.dateRangeFilterValue = payload;
+        },
+        setDateRangeFilterViaButton: (state, payload) => {
+            state.dateRangeFilterViaButton = payload;
         }
+        
     }
 });

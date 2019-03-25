@@ -2,7 +2,7 @@
 <span>
     <div class="row">
         <div class="col-md-2">
-            <el-dropdown @command="handleCommand">
+            <el-dropdown @command="handleSort">
                 <el-button type="success">
                     Sort By<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -12,7 +12,7 @@
             </el-dropdown>
         </div>
         <div class="col-md-8">
-           <el-form ref="dateRangeForm" label-width="160px">
+           <el-form ref="dateRangeForm" label-width="160px" :model="dateRangeFilter">
                <el-form-item label="Filter By Date Range">
                     <el-row :gutter="3">
                         <el-col :span="7" >
@@ -69,13 +69,18 @@ export default {
         }
     },
     methods:{
-        handleCommand(command){
+        handleSort(command){
             this.$store.commit('setFilter', command);
         },
         handleDateRangeFilter(){
+            var self = this;
             this.dateRangeFilter.from = this.elementUiDateConvert(this.dateRangeFilter.from);
             this.dateRangeFilter.to = this.elementUiDateConvert(this.dateRangeFilter.to);
-            this.$store.commit('setDateRange', this.dateRangeFilter)
+            this.$store.commit('setDateRange', this.dateRangeFilter);
+            self.$store.commit('setDateRangeFilterViaButton', true);
+            setTimeout(function(){
+                self.$store.commit('setDateRangeFilterViaButton', false);
+            }, 100)
         }
     }
 }

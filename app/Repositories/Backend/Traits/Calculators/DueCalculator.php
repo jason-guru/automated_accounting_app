@@ -27,7 +27,7 @@ trait DueCalculator
                 foreach($clients as $client){
                     $clientDealineDueDate = carbon_parse($client->deadlines->where('code', $code)->first()->pivot->due_on);
                     if(!is_null($clientDealineDueDate)):
-                        if($clientDealineDueDate >= Carbon::parse($filterValue['from'])->toDateString() && $clientDealineDueDate <= Carbon::parse($filterValue['to'])->toDateString()):
+                        if($clientDealineDueDate >= carbon_parse($filterValue['from']) && $clientDealineDueDate <= carbon_parse($filterValue['to'])):
                             array_push($clientIds, $client->id);
                         endif;
                     endif;
