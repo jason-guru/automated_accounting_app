@@ -54,6 +54,7 @@ class LocalCompanyProfile
     public function calculateOverDue($client, $code)
     {
         $due_on = !is_null($client->deadlines->where('code', $code)->first()->pivot->due_on) ? Carbon::parse($client->deadlines->where('code', $code)->first()->pivot->due_on)->format('Y-m-d') : null;
+        
         $today = Carbon::now();
         if(!is_null($due_on)){
             if($due_on <= $today){

@@ -13,7 +13,6 @@ trait Vat
     {
         $vatDueClients = $this->getDueClientIds(config('deadline.code.2'), $filterValue);
         $vatOverDueClients = $this->getOverDueClientIds(config('deadline.code.2'));
-
         return response()->json(
             [
                 'chartdata' => [
