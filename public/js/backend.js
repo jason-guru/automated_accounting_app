@@ -5596,7 +5596,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
             this.deadlineForm.frequency = pivotData.frequency;
-            console.log(deadline);
             if (is_api && code === 'AA' || is_api && code === 'CS') {
                 this.disableInputField = true;
                 this.showFrequency = false;
@@ -109701,14 +109700,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui__ = __webpack_require__("./node_modules/element-ui/lib/element-ui.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_element_ui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_element_ui__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_ui_lib_theme_chalk_index_css__ = __webpack_require__("./node_modules/element-ui/lib/theme-chalk/index.css");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_element_ui_lib_theme_chalk_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_element_ui_lib_theme_chalk_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_store__ = __webpack_require__("./resources/js/backend/store/store.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en__ = __webpack_require__("./node_modules/element-ui/lib/locale/lang/en.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuelidate__ = __webpack_require__("./node_modules/vuelidate/lib/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuelidate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuelidate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuelidate__ = __webpack_require__("./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuelidate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vuelidate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_element_ui_lib_theme_chalk_index_css__ = __webpack_require__("./node_modules/element-ui/lib/theme-chalk/index.css");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_element_ui_lib_theme_chalk_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_element_ui_lib_theme_chalk_index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store_store__ = __webpack_require__("./resources/js/backend/store/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_locale_lang_en__ = __webpack_require__("./node_modules/element-ui/lib/locale/lang/en.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_locale_lang_en___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_element_ui_lib_locale_lang_en__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_helping_monk__ = __webpack_require__("./node_modules/helping-monk/index.js");
+
 
 
 
@@ -109720,14 +109720,12 @@ __webpack_require__("./node_modules/@chenfengyuan/datepicker/dist/datepicker.min
  //please check out this npm library for some of my helper functions
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
-
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_element_ui___default.a, { locale: __WEBPACK_IMPORTED_MODULE_6_element_ui_lib_locale_lang_en___default.a });
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_helping_monk__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vuelidate___default.a);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.prototype.settings = function (key) {
     return _.get(window.stg, key, key);
 };
-
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6_vuelidate___default.a);
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_element_ui___default.a, { locale: __WEBPACK_IMPORTED_MODULE_5_element_ui_lib_locale_lang_en___default.a });
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_7_helping_monk__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('clientDeadline', __webpack_require__("./resources/js/backend/components/ClientDeadlineComponent.vue"));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('business-info', __webpack_require__("./resources/js/backend/components/BusinessInfoComponent.vue"));
@@ -109740,8 +109738,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('filter-component', __webp
 var eventBus = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a();
 
 var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
+    validations: {},
     el: '#back-app',
-    store: __WEBPACK_IMPORTED_MODULE_4__store_store__["a" /* store */],
+    store: __WEBPACK_IMPORTED_MODULE_5__store_store__["a" /* store */],
     beforeMount: function beforeMount() {},
     methods: {
         companyTypeChanged: function companyTypeChanged(e) {

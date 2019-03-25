@@ -108,7 +108,6 @@ export default {
             this.deadlineForm.to = pivotData.to;
             this.deadlineForm.due_on = pivotData.due_on;
             this.deadlineForm.frequency = pivotData.frequency;
-            console.log(deadline);
             if(is_api && code === 'AA' || is_api && code === 'CS'){
                 this.disableInputField = true;
                 this.showFrequency = false;
